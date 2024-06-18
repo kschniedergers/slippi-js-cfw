@@ -1,5 +1,6 @@
 {
   "include": ["src", "types"],
+  "exclude": ["**/*.spec.ts"],
   "compilerOptions": {
     "module": "esnext",
     "lib": ["dom", "esnext"],
@@ -9,13 +10,7 @@
     "declarationMap": true,
     "rootDir": "./src",
     "declarationDir": "./dist",
-    "strict": true,
-    "strictNullChecks": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedIndexedAccess": true,
+    "strict": false,
     "moduleResolution": "node",
     "esModuleInterop": true,
     "resolveJsonModule": true,

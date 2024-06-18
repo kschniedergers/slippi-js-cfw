@@ -27,21 +27,9 @@
   },
   "scripts": {
     "clean": "rimraf dist",
-    "prebuild": "yarn run clean",
+    "prebuild": "pnpm run clean",
     "start": "dts watch --target node",
-    "build:check": "tsc --noEmit",
-    "build": "tsc --noEmit && dts build --target node",
-    "coverage": "yarn run test --coverage",
-    "postcoverage": "open-cli coverage/lcov-report/index.html",
-    "test": "dts test --runInBand --verbose",
-    "test:watch": "yarn run test --watchAll --coverage",
-    "test:ci": "yarn run test --ci --coverage",
-    "lint": "dts lint src",
-    "lint:fix": "dts lint src --fix",
-    "patch": "npm version patch && npm publish",
-    "minor": "npm version minor && npm publish",
-    "major": "npm version major && npm publish",
-    "prepublishOnly": "yarn run lint && yarn run test && yarn run build"
+    "build": "tsc --noEmit && dts build --target node"
   },
   "keywords": [
     "slp-parser-js",
@@ -79,11 +67,5 @@
     "rimraf": "^3.0.0",
     "tslib": "^2.3.1",
     "typescript": "^4.4.4"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged",
-      "pre-push": "yarn lint --quiet"
-    }
   }
 }

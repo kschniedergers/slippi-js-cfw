@@ -1,5 +1,4 @@
 import { EventEmitter } from "events";
-import net from "net";
 import inject from "reconnect-core";
 
 import type { CommunicationMessage } from "./communication";
@@ -58,8 +57,8 @@ export class ConsoleConnection extends EventEmitter implements Connection {
   private isRealtime: boolean;
   private connectionStatus = ConnectionStatus.DISCONNECTED;
   private connDetails: ConnectionDetails = { ...defaultConnectionDetails };
-  private client: net.Socket | null = null;
-  private connection: inject.Instance<unknown, net.Socket> | null = null;
+  private client: any | null = null;
+  private connection: inject.Instance<unknown, any> | null = null;
   private options: ConsoleConnectionOptions;
   private shouldReconnect = false;
 
@@ -112,12 +111,13 @@ export class ConsoleConnection extends EventEmitter implements Connection {
 
   private _connectOnPort(ip: string, port: number, timeout: number): void {
     // set up reconnect
-    const reconnect = inject(() =>
-      net.connect({
-        host: ip,
-        port: port,
-        timeout: timeout,
-      }),
+    const reconnect = inject(
+      () => {},
+      // net.connect({
+      //   host: ip,
+      //   port: port,
+      //   timeout: timeout,
+      // }),
     );
 
     // Indicate we are connecting
@@ -142,62 +142,62 @@ export class ConsoleConnection extends EventEmitter implements Connection {
         this.client = client;
 
         let commState: CommunicationState = CommunicationState.INITIAL;
-        client.on("data", (data) => {
-          if (commState === CommunicationState.INITIAL) {
-            commState = this._getInitialCommState(data);
-            console.log(`Connected to ${ip}:${port} with type: ${commState}`);
-            this._setStatus(ConnectionStatus.CONNECTED);
-            console.log(data.toString("hex"));
-          }
+        // client.on("data", (data) => {
+        //   if (commState === CommunicationState.INITIAL) {
+        //     commState = this._getInitialCommState(data);
+        //     console.log(`Connected to ${ip}:${port} with type: ${commState}`);
+        //     this._setStatus(ConnectionStatus.CONNECTED);
+        //     console.log(data.toString("hex"));
+        //   }
 
-          if (commState === CommunicationState.LEGACY) {
-            // If the first message received was not a handshake message, either we
-            // connected to an old Nintendont version or a relay instance
-            this._handleReplayData(data);
-            return;
-          }
+        //   if (commState === CommunicationState.LEGACY) {
+        //     // If the first message received was not a handshake message, either we
+        //     // connected to an old Nintendont version or a relay instance
+        //     this._handleReplayData(data);
+        //     return;
+        //   }
 
-          try {
-            consoleComms.receive(data);
-          } catch (err) {
-            console.error("Failed to process new data from server...", {
-              error: err,
-              prevDataBuf: consoleComms.getReceiveBuffer(),
-              rcvData: data,
-            });
-            client.destroy();
-            this.emit(ConnectionEvent.ERROR, err);
-            return;
-          }
-          const messages = consoleComms.getMessages();
+        //   try {
+        //     consoleComms.receive(data);
+        //   } catch (err) {
+        //     console.error("Failed to process new data from server...", {
+        //       error: err,
+        //       prevDataBuf: consoleComms.getReceiveBuffer(),
+        //       rcvData: data,
+        //     });
+        //     client.destroy();
+        //     this.emit(ConnectionEvent.ERROR, err);
+        //     return;
+        //   }
+        //   const messages = consoleComms.getMessages();
 
-          // Process all of the received messages
-          try {
-            messages.forEach((message) => this._processMessage(message));
-          } catch (err) {
-            // Disconnect client to send another handshake message
-            console.error(err);
-            client.destroy();
-            this.emit(ConnectionEvent.ERROR, err);
-          }
-        });
+        //   // Process all of the received messages
+        //   try {
+        //     messages.forEach((message) => this._processMessage(message));
+        //   } catch (err) {
+        //     // Disconnect client to send another handshake message
+        //     console.error(err);
+        //     client.destroy();
+        //     this.emit(ConnectionEvent.ERROR, err);
+        //   }
+        // });
 
-        client.on("timeout", () => {
-          // const previouslyConnected = this.connectionStatus === ConnectionStatus.CONNECTED;
-          console.warn(`Attempted connection to ${ip}:${port} timed out after ${timeout}ms`);
-          client.destroy();
-        });
+        // client.on("timeout", () => {
+        //   // const previouslyConnected = this.connectionStatus === ConnectionStatus.CONNECTED;
+        //   console.warn(`Attempted connection to ${ip}:${port} timed out after ${timeout}ms`);
+        //   client.destroy();
+        // });
 
-        client.on("end", () => {
-          console.log("disconnect");
-          if (!this.shouldReconnect) {
-            client.destroy();
-          }
-        });
+        // client.on("end", () => {
+        //   console.log("disconnect");
+        //   if (!this.shouldReconnect) {
+        //     client.destroy();
+        //   }
+        // });
 
-        client.on("close", () => {
-          console.log("connection was closed");
-        });
+        // client.on("close", () => {
+        //   console.log("connection was closed");
+        // });
 
         const handshakeMsgOut = consoleComms.genHandshakeOut(
           this.connDetails.gameDataCursor as Uint8Array,
@@ -205,7 +205,7 @@ export class ConsoleConnection extends EventEmitter implements Connection {
           this.isRealtime,
         );
 
-        client.write(handshakeMsgOut);
+        // client.write(handshakeMsgOut);
       },
     );
 

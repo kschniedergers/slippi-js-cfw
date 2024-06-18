@@ -1,5 +1,4 @@
 import type { WriteStream } from "fs";
-import fs from "fs";
 import forEach from "lodash/forEach";
 import type { WritableOptions } from "stream";
 import { Writable } from "stream";
@@ -166,9 +165,7 @@ export class SlpFile extends Writable {
 
     this.on("finish", () => {
       // Update file with bytes written
-      const fd = fs.openSync(this.filePath, "r+");
-      fs.writeSync(fd, createUInt32Buffer(this.rawDataLength), 0, 4, 11);
-      fs.closeSync(fd);
+      console.error("removed stuff here for cloudflare worker support");
 
       // Unsubscribe from the stream
       this.slpStream.removeListener(SlpStreamEvent.COMMAND, streamListener);
@@ -180,17 +177,7 @@ export class SlpFile extends Writable {
   }
 
   private _initializeNewGame(filePath: string): void {
-    this.fileStream = fs.createWriteStream(filePath, {
-      encoding: "binary",
-    });
-
-    const header = Buffer.concat([
-      Buffer.from("{U"),
-      Buffer.from([3]),
-      Buffer.from("raw[$U#l"),
-      Buffer.from([0, 0, 0, 0]),
-    ]);
-    this.fileStream.write(header);
+    console.error("removed stuff here for cloudflare worker support");
   }
 
   public _final(callback: (error?: Error | null) => void): void {
