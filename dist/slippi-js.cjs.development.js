@@ -2705,6 +2705,9 @@ function readRef(ref, buffer, offset, length, position) {
 }
 function getLenRef(ref) {
   switch (ref.source) {
+    case exports.SlpInputSource.FILE:
+      console.error("deleted this for cloudflare worker support :)");
+      throw new Error("cfw support");
     case exports.SlpInputSource.BUFFER:
       return ref.buffer.length;
     default:
