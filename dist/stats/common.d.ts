@@ -1,5 +1,5 @@
 import type { GameStartType, PostFrameUpdateType } from "../types";
-export type StatsType = {
+export declare type StatsType = {
     gameComplete: boolean;
     lastFrame: number;
     playableFrameCount: number;
@@ -9,62 +9,62 @@ export type StatsType = {
     actionCounts: ActionCountsType[];
     overall: OverallType[];
 };
-export type StadiumStatsType = HomeRunContestResultType | TargetTestResultType;
-export type TargetTestResultType = {
+export declare type StadiumStatsType = HomeRunContestResultType | TargetTestResultType;
+export declare type TargetTestResultType = {
     type: "target-test";
     targetBreaks: TargetBreakType[];
 };
-export type HomeRunContestResultType = {
+export declare type HomeRunContestResultType = {
     type: "home-run-contest";
     distance: number;
     units: "feet" | "meters";
 };
-export type RatioType = {
+export declare type RatioType = {
     count: number;
     total: number;
     ratio: number | null;
 };
-export type PlayerIndexedType = {
+export declare type PlayerIndexedType = {
     playerIndex: number;
     opponentIndex: number;
 };
-export type DurationType = {
+export declare type DurationType = {
     startFrame: number;
     endFrame?: number | null;
 };
-export type DamageType = {
+export declare type DamageType = {
     startPercent: number;
     currentPercent: number;
     endPercent?: number | null;
 };
-export type StockType = DurationType & DamageType & {
+export declare type StockType = DurationType & DamageType & {
     playerIndex: number;
     count: number;
     deathAnimation?: number | null;
 };
-export type MoveLandedType = {
+export declare type MoveLandedType = {
     playerIndex: number;
     frame: number;
     moveId: number;
     hitCount: number;
     damage: number;
 };
-export type ComboType = DurationType & DamageType & {
+export declare type ComboType = DurationType & DamageType & {
     playerIndex: number;
     moves: MoveLandedType[];
     didKill: boolean;
     lastHitBy: number | null;
 };
-export type TargetBreakType = {
+export declare type TargetBreakType = {
     spawnId: number;
     frameDestroyed: number | null;
     positionX: number;
     positionY: number;
 };
-export type ConversionType = ComboType & {
+export declare type ConversionType = ComboType & {
     openingType: string;
 };
-export type ActionCountsType = {
+export declare type ActionCountsType = {
     playerIndex: number;
     wavedashCount: number;
     wavelandCount: number;
@@ -116,14 +116,14 @@ export type ActionCountsType = {
         fail: number;
     };
 };
-export type InputCountsType = {
+export declare type InputCountsType = {
     buttons: number;
     triggers: number;
     joystick: number;
     cstick: number;
     total: number;
 };
-export type OverallType = {
+export declare type OverallType = {
     playerIndex: number;
     inputCounts: InputCountsType;
     conversionCount: number;

@@ -6,9 +6,11 @@ const UnknownStage = {
 };
 function getStageInfo(stageId) {
   const stageName = stageNames[stageId.toString()];
+
   if (!stageName) {
     return UnknownStage;
   }
+
   return {
     id: stageId,
     name: stageName

@@ -1,4 +1,5 @@
 var State;
+
 (function (State) {
   // Animation ID ranges
   State[State["DAMAGE_START"] = 75] = "DAMAGE_START";
@@ -26,8 +27,8 @@ var State;
   State[State["ATTACK_FTILT_START"] = 51] = "ATTACK_FTILT_START";
   State[State["ATTACK_FTILT_END"] = 55] = "ATTACK_FTILT_END";
   State[State["ATTACK_FSMASH_START"] = 58] = "ATTACK_FSMASH_START";
-  State[State["ATTACK_FSMASH_END"] = 62] = "ATTACK_FSMASH_END";
-  // Animation ID specific
+  State[State["ATTACK_FSMASH_END"] = 62] = "ATTACK_FSMASH_END"; // Animation ID specific
+
   State[State["ROLL_FORWARD"] = 233] = "ROLL_FORWARD";
   State[State["ROLL_BACKWARD"] = 234] = "ROLL_BACKWARD";
   State[State["SPOT_DODGE"] = 235] = "SPOT_DODGE";
@@ -75,27 +76,28 @@ var State;
   State[State["AERIAL_FAIR"] = 66] = "AERIAL_FAIR";
   State[State["AERIAL_BAIR"] = 67] = "AERIAL_BAIR";
   State[State["AERIAL_UAIR"] = 68] = "AERIAL_UAIR";
-  State[State["AERIAL_DAIR"] = 69] = "AERIAL_DAIR";
-  // Weird GnW IDs
+  State[State["AERIAL_DAIR"] = 69] = "AERIAL_DAIR"; // Weird GnW IDs
+
   State[State["GNW_JAB1"] = 341] = "GNW_JAB1";
   State[State["GNW_JABM"] = 342] = "GNW_JABM";
   State[State["GNW_DTILT"] = 345] = "GNW_DTILT";
   State[State["GNW_FSMASH"] = 346] = "GNW_FSMASH";
   State[State["GNW_NAIR"] = 347] = "GNW_NAIR";
   State[State["GNW_BAIR"] = 348] = "GNW_BAIR";
-  State[State["GNW_UAIR"] = 349] = "GNW_UAIR";
-  // Peach FSMASH ID
+  State[State["GNW_UAIR"] = 349] = "GNW_UAIR"; // Peach FSMASH ID
   // FSMASH1 = Golf Club, FSMASH2 = Frying Pan, FSMASH3 = Tennis Racket
+
   State[State["PEACH_FSMASH1"] = 349] = "PEACH_FSMASH1";
   State[State["PEACH_FSMASH2"] = 350] = "PEACH_FSMASH2";
-  State[State["PEACH_FSMASH3"] = 351] = "PEACH_FSMASH3";
-  // Command Grabs
+  State[State["PEACH_FSMASH3"] = 351] = "PEACH_FSMASH3"; // Command Grabs
+
   State[State["BARREL_WAIT"] = 293] = "BARREL_WAIT";
   State[State["COMMAND_GRAB_RANGE1_START"] = 266] = "COMMAND_GRAB_RANGE1_START";
   State[State["COMMAND_GRAB_RANGE1_END"] = 304] = "COMMAND_GRAB_RANGE1_END";
   State[State["COMMAND_GRAB_RANGE2_START"] = 327] = "COMMAND_GRAB_RANGE2_START";
   State[State["COMMAND_GRAB_RANGE2_END"] = 338] = "COMMAND_GRAB_RANGE2_END";
 })(State || (State = {}));
+
 const Timers = {
   PUNISH_RESET_FRAMES: 45,
   RECOVERY_RESET_FRAMES: 45,
@@ -106,6 +108,7 @@ function getSinglesPlayerPermutationsFromSettings(settings) {
     // Only return opponent indices for singles
     return [];
   }
+
   return [{
     playerIndex: settings.players[0].playerIndex,
     opponentIndex: settings.players[1].playerIndex
@@ -118,14 +121,15 @@ function didLoseStock(frame, prevFrame) {
   if (!frame || !prevFrame) {
     return false;
   }
+
   return prevFrame.stocksRemaining - frame.stocksRemaining > 0;
 }
 function isInControl(state) {
   const ground = state >= State.GROUNDED_CONTROL_START && state <= State.GROUNDED_CONTROL_END;
   const squat = state >= State.SQUAT_START && state <= State.SQUAT_END;
   const groundAttack = state > State.GROUND_ATTACK_START && state <= State.GROUND_ATTACK_END;
-  const isGrab = state === State.GRAB;
-  // TODO: Add grounded b moves?
+  const isGrab = state === State.GRAB; // TODO: Add grounded b moves?
+
   return ground || squat || groundAttack || isGrab;
 }
 function isTeching(state) {
@@ -139,8 +143,8 @@ function isDamaged(state) {
 }
 function isGrabbed(state) {
   return state >= State.CAPTURE_START && state <= State.CAPTURE_END;
-}
-// TODO: Find better implementation of 3 seperate ranges
+} // TODO: Find better implementation of 3 seperate ranges
+
 function isCommandGrabbed(state) {
   return (state >= State.COMMAND_GRAB_RANGE1_START && state <= State.COMMAND_GRAB_RANGE1_END || state >= State.COMMAND_GRAB_RANGE2_START && state <= State.COMMAND_GRAB_RANGE2_END) && state !== State.BARREL_WAIT;
 }
@@ -149,6 +153,7 @@ function isDead(state) {
 }
 function calcDamageTaken(frame, prevFrame) {
   var _frame$percent, _prevFrame$percent;
+
   const percent = (_frame$percent = frame.percent) != null ? _frame$percent : 0;
   const prevPercent = (_prevFrame$percent = prevFrame.percent) != null ? _prevFrame$percent : 0;
   return percent - prevPercent;

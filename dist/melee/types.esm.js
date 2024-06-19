@@ -1,4 +1,5 @@
 var Character;
+
 (function (Character) {
   Character[Character["CAPTAIN_FALCON"] = 0] = "CAPTAIN_FALCON";
   Character[Character["DONKEY_KONG"] = 1] = "DONKEY_KONG";
@@ -34,7 +35,9 @@ var Character;
   Character[Character["SANDBAG"] = 31] = "SANDBAG";
   Character[Character["POPO"] = 32] = "POPO";
 })(Character || (Character = {}));
+
 var Stage;
+
 (function (Stage) {
   Stage[Stage["FOUNTAIN_OF_DREAMS"] = 2] = "FOUNTAIN_OF_DREAMS";
   Stage[Stage["POKEMON_STADIUM"] = 3] = "POKEMON_STADIUM";

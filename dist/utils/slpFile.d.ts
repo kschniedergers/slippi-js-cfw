@@ -2,7 +2,7 @@
 import type { WritableOptions } from "stream";
 import { Writable } from "stream";
 import { SlpStream } from "./slpStream";
-export type SlpFileMetadata = {
+export declare type SlpFileMetadata = {
     startTime: Date;
     lastFrame: number;
     players: {

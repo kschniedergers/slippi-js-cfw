@@ -4,7 +4,7 @@ export declare enum CommunicationType {
     REPLAY = 2,
     KEEP_ALIVE = 3
 }
-export type CommunicationMessage = {
+export declare type CommunicationMessage = {
     type: CommunicationType;
     payload: {
         cursor: Uint8Array;

@@ -1,4 +1,5 @@
 var Command;
+
 (function (Command) {
   Command[Command["SPLIT_MESSAGE"] = 16] = "SPLIT_MESSAGE";
   Command[Command["MESSAGE_SIZES"] = 53] = "MESSAGE_SIZES";
@@ -11,25 +12,33 @@ var Command;
   Command[Command["FRAME_BOOKEND"] = 60] = "FRAME_BOOKEND";
   Command[Command["GECKO_LIST"] = 61] = "GECKO_LIST";
 })(Command || (Command = {}));
+
 var GameMode;
+
 (function (GameMode) {
   GameMode[GameMode["VS"] = 2] = "VS";
   GameMode[GameMode["ONLINE"] = 8] = "ONLINE";
   GameMode[GameMode["TARGET_TEST"] = 15] = "TARGET_TEST";
   GameMode[GameMode["HOME_RUN_CONTEST"] = 32] = "HOME_RUN_CONTEST";
 })(GameMode || (GameMode = {}));
+
 var Language;
+
 (function (Language) {
   Language[Language["JAPANESE"] = 0] = "JAPANESE";
   Language[Language["ENGLISH"] = 1] = "ENGLISH";
 })(Language || (Language = {}));
+
 var TimerType;
+
 (function (TimerType) {
   TimerType[TimerType["NONE"] = 0] = "NONE";
   TimerType[TimerType["DECREASING"] = 2] = "DECREASING";
   TimerType[TimerType["INCREASING"] = 3] = "INCREASING";
 })(TimerType || (TimerType = {}));
+
 var ItemSpawnType;
+
 (function (ItemSpawnType) {
   ItemSpawnType[ItemSpawnType["OFF"] = 255] = "OFF";
   ItemSpawnType[ItemSpawnType["VERY_LOW"] = 0] = "VERY_LOW";
@@ -38,12 +47,14 @@ var ItemSpawnType;
   ItemSpawnType[ItemSpawnType["HIGH"] = 3] = "HIGH";
   ItemSpawnType[ItemSpawnType["VERY_HIGH"] = 4] = "VERY_HIGH";
 })(ItemSpawnType || (ItemSpawnType = {}));
+
 var EnabledItemType;
+
 (function (EnabledItemType) {
   EnabledItemType[EnabledItemType["METAL_BOX"] = 1] = "METAL_BOX";
   EnabledItemType[EnabledItemType["CLOAKING_DEVICE"] = 2] = "CLOAKING_DEVICE";
-  EnabledItemType[EnabledItemType["POKEBALL"] = 4] = "POKEBALL";
-  // Bits 4 through 8 of item bitfield 1 are unknown
+  EnabledItemType[EnabledItemType["POKEBALL"] = 4] = "POKEBALL"; // Bits 4 through 8 of item bitfield 1 are unknown
+
   EnabledItemType[EnabledItemType["UNKNOWN_ITEM_BIT_4"] = 8] = "UNKNOWN_ITEM_BIT_4";
   EnabledItemType[EnabledItemType["UNKNOWN_ITEM_BIT_5"] = 16] = "UNKNOWN_ITEM_BIT_5";
   EnabledItemType[EnabledItemType["UNKNOWN_ITEM_BIT_6"] = 32] = "UNKNOWN_ITEM_BIT_6";
@@ -82,16 +93,20 @@ var EnabledItemType;
   EnabledItemType[EnabledItemType["BOMB_OMB"] = 274877906944] = "BOMB_OMB";
   EnabledItemType[EnabledItemType["MR_SATURN"] = 549755813888] = "MR_SATURN";
 })(EnabledItemType || (EnabledItemType = {}));
+
 var GameEndMethod;
+
 (function (GameEndMethod) {
   GameEndMethod[GameEndMethod["UNRESOLVED"] = 0] = "UNRESOLVED";
-  GameEndMethod[GameEndMethod["RESOLVED"] = 3] = "RESOLVED";
-  // The following options are only returned in version 2.0.0 onwards
+  GameEndMethod[GameEndMethod["RESOLVED"] = 3] = "RESOLVED"; // The following options are only returned in version 2.0.0 onwards
+
   GameEndMethod[GameEndMethod["TIME"] = 1] = "TIME";
   GameEndMethod[GameEndMethod["GAME"] = 2] = "GAME";
   GameEndMethod[GameEndMethod["NO_CONTEST"] = 7] = "NO_CONTEST";
 })(GameEndMethod || (GameEndMethod = {}));
+
 var Frames;
+
 (function (Frames) {
   Frames[Frames["FIRST"] = -123] = "FIRST";
   Frames[Frames["FIRST_PLAYABLE"] = -39] = "FIRST_PLAYABLE";

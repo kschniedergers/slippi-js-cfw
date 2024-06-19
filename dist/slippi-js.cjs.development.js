@@ -71,13 +71,17 @@ function getDeathDirection(actionStateId) {
   if (actionStateId > 0xa) {
     return null;
   }
+
   switch (actionStateId) {
     case 0:
       return "down";
+
     case 1:
       return "left";
+
     case 2:
       return "right";
+
     default:
       return "up";
   }
@@ -354,11 +358,14 @@ const UnknownCharacter = {
   shortName: "Unknown",
   colors: [DEFAULT_COLOR]
 };
+
 function generateCharacterInfo(id, info) {
   var _info$shortName, _info$colors;
+
   if (!info) {
     return UnknownCharacter;
   }
+
   return {
     id,
     name: info.name,
@@ -366,6 +373,7 @@ function generateCharacterInfo(id, info) {
     colors: [DEFAULT_COLOR, ...((_info$colors = info.colors) != null ? _info$colors : [])]
   };
 }
+
 function getAllCharacters() {
   return Object.entries(characters).map(([id, data]) => generateCharacterInfo(parseInt(id, 10), data)).sort((a, b) => a.id - b.id);
 }
@@ -380,14 +388,16 @@ function getCharacterShortName(externalCharacterId) {
 function getCharacterName(externalCharacterId) {
   const character = getCharacterInfo(externalCharacterId);
   return character.name;
-}
-// Return a human-readable color from a characterCode.
+} // Return a human-readable color from a characterCode.
+
 function getCharacterColorName(externalCharacterId, characterColor) {
   const character = getCharacterInfo(externalCharacterId);
   const color = character.colors[characterColor];
+
   if (color) {
     return color;
   }
+
   return DEFAULT_COLOR;
 }
 
@@ -531,9 +541,11 @@ const UnknownMove = {
 };
 function getMoveInfo(moveId) {
   const moveName = moveNames[moveId.toString()];
+
   if (!moveName) {
     return UnknownMove;
   }
+
   return {
     id: moveId,
     name: moveName.name,
@@ -623,9 +635,11 @@ const UnknownStage = {
 };
 function getStageInfo(stageId) {
   const stageName = stageNames[stageId.toString()];
+
   if (!stageName) {
     return UnknownStage;
   }
+
   return {
     id: stageId,
     name: stageName
@@ -644,6 +658,7 @@ var stageUtils = {
 };
 
 exports.Character = void 0;
+
 (function (Character) {
   Character[Character["CAPTAIN_FALCON"] = 0] = "CAPTAIN_FALCON";
   Character[Character["DONKEY_KONG"] = 1] = "DONKEY_KONG";
@@ -679,7 +694,9 @@ exports.Character = void 0;
   Character[Character["SANDBAG"] = 31] = "SANDBAG";
   Character[Character["POPO"] = 32] = "POPO";
 })(exports.Character || (exports.Character = {}));
+
 exports.Stage = void 0;
+
 (function (Stage) {
   Stage[Stage["FOUNTAIN_OF_DREAMS"] = 2] = "FOUNTAIN_OF_DREAMS";
   Stage[Stage["POKEMON_STADIUM"] = 3] = "POKEMON_STADIUM";
@@ -817,6 +834,7 @@ exports.Stage = void 0;
 })(exports.Stage || (exports.Stage = {}));
 
 exports.State = void 0;
+
 (function (State) {
   // Animation ID ranges
   State[State["DAMAGE_START"] = 75] = "DAMAGE_START";
@@ -844,8 +862,8 @@ exports.State = void 0;
   State[State["ATTACK_FTILT_START"] = 51] = "ATTACK_FTILT_START";
   State[State["ATTACK_FTILT_END"] = 55] = "ATTACK_FTILT_END";
   State[State["ATTACK_FSMASH_START"] = 58] = "ATTACK_FSMASH_START";
-  State[State["ATTACK_FSMASH_END"] = 62] = "ATTACK_FSMASH_END";
-  // Animation ID specific
+  State[State["ATTACK_FSMASH_END"] = 62] = "ATTACK_FSMASH_END"; // Animation ID specific
+
   State[State["ROLL_FORWARD"] = 233] = "ROLL_FORWARD";
   State[State["ROLL_BACKWARD"] = 234] = "ROLL_BACKWARD";
   State[State["SPOT_DODGE"] = 235] = "SPOT_DODGE";
@@ -893,27 +911,28 @@ exports.State = void 0;
   State[State["AERIAL_FAIR"] = 66] = "AERIAL_FAIR";
   State[State["AERIAL_BAIR"] = 67] = "AERIAL_BAIR";
   State[State["AERIAL_UAIR"] = 68] = "AERIAL_UAIR";
-  State[State["AERIAL_DAIR"] = 69] = "AERIAL_DAIR";
-  // Weird GnW IDs
+  State[State["AERIAL_DAIR"] = 69] = "AERIAL_DAIR"; // Weird GnW IDs
+
   State[State["GNW_JAB1"] = 341] = "GNW_JAB1";
   State[State["GNW_JABM"] = 342] = "GNW_JABM";
   State[State["GNW_DTILT"] = 345] = "GNW_DTILT";
   State[State["GNW_FSMASH"] = 346] = "GNW_FSMASH";
   State[State["GNW_NAIR"] = 347] = "GNW_NAIR";
   State[State["GNW_BAIR"] = 348] = "GNW_BAIR";
-  State[State["GNW_UAIR"] = 349] = "GNW_UAIR";
-  // Peach FSMASH ID
+  State[State["GNW_UAIR"] = 349] = "GNW_UAIR"; // Peach FSMASH ID
   // FSMASH1 = Golf Club, FSMASH2 = Frying Pan, FSMASH3 = Tennis Racket
+
   State[State["PEACH_FSMASH1"] = 349] = "PEACH_FSMASH1";
   State[State["PEACH_FSMASH2"] = 350] = "PEACH_FSMASH2";
-  State[State["PEACH_FSMASH3"] = 351] = "PEACH_FSMASH3";
-  // Command Grabs
+  State[State["PEACH_FSMASH3"] = 351] = "PEACH_FSMASH3"; // Command Grabs
+
   State[State["BARREL_WAIT"] = 293] = "BARREL_WAIT";
   State[State["COMMAND_GRAB_RANGE1_START"] = 266] = "COMMAND_GRAB_RANGE1_START";
   State[State["COMMAND_GRAB_RANGE1_END"] = 304] = "COMMAND_GRAB_RANGE1_END";
   State[State["COMMAND_GRAB_RANGE2_START"] = 327] = "COMMAND_GRAB_RANGE2_START";
   State[State["COMMAND_GRAB_RANGE2_END"] = 338] = "COMMAND_GRAB_RANGE2_END";
 })(exports.State || (exports.State = {}));
+
 const Timers = {
   PUNISH_RESET_FRAMES: 45,
   RECOVERY_RESET_FRAMES: 45,
@@ -924,6 +943,7 @@ function getSinglesPlayerPermutationsFromSettings(settings) {
     // Only return opponent indices for singles
     return [];
   }
+
   return [{
     playerIndex: settings.players[0].playerIndex,
     opponentIndex: settings.players[1].playerIndex
@@ -936,14 +956,15 @@ function didLoseStock(frame, prevFrame) {
   if (!frame || !prevFrame) {
     return false;
   }
+
   return prevFrame.stocksRemaining - frame.stocksRemaining > 0;
 }
 function isInControl(state) {
   const ground = state >= exports.State.GROUNDED_CONTROL_START && state <= exports.State.GROUNDED_CONTROL_END;
   const squat = state >= exports.State.SQUAT_START && state <= exports.State.SQUAT_END;
   const groundAttack = state > exports.State.GROUND_ATTACK_START && state <= exports.State.GROUND_ATTACK_END;
-  const isGrab = state === exports.State.GRAB;
-  // TODO: Add grounded b moves?
+  const isGrab = state === exports.State.GRAB; // TODO: Add grounded b moves?
+
   return ground || squat || groundAttack || isGrab;
 }
 function isTeching(state) {
@@ -957,8 +978,8 @@ function isDamaged(state) {
 }
 function isGrabbed(state) {
   return state >= exports.State.CAPTURE_START && state <= exports.State.CAPTURE_END;
-}
-// TODO: Find better implementation of 3 seperate ranges
+} // TODO: Find better implementation of 3 seperate ranges
+
 function isCommandGrabbed(state) {
   return (state >= exports.State.COMMAND_GRAB_RANGE1_START && state <= exports.State.COMMAND_GRAB_RANGE1_END || state >= exports.State.COMMAND_GRAB_RANGE2_START && state <= exports.State.COMMAND_GRAB_RANGE2_END) && state !== exports.State.BARREL_WAIT;
 }
@@ -967,18 +988,19 @@ function isDead(state) {
 }
 function calcDamageTaken(frame, prevFrame) {
   var _frame$percent, _prevFrame$percent;
+
   const percent = (_frame$percent = frame.percent) != null ? _frame$percent : 0;
   const prevPercent = (_prevFrame$percent = prevFrame.percent) != null ? _prevFrame$percent : 0;
   return percent - prevPercent;
 }
 
-// Frame pattern that indicates a dash dance turn was executed
 const dashDanceAnimations = [exports.State.DASH, exports.State.TURN, exports.State.DASH];
 class ActionsComputer {
   constructor() {
     this.playerPermutations = new Array();
     this.state = new Map();
   }
+
   setup(settings) {
     this.state = new Map();
     this.playerPermutations = getSinglesPlayerPermutationsFromSettings(settings);
@@ -1044,78 +1066,97 @@ class ActionsComputer {
       this.state.set(indices, playerState);
     });
   }
+
   processFrame(frame) {
     this.playerPermutations.forEach(indices => {
       const state = this.state.get(indices);
+
       if (state) {
         handleActionCompute(state, indices, frame);
       }
     });
   }
+
   fetch() {
     return Array.from(this.state.values()).map(val => val.playerCounts);
   }
+
 }
+
 function isMissGroundTech(animation) {
   return animation === exports.State.TECH_MISS_DOWN || animation === exports.State.TECH_MISS_UP;
 }
+
 function isRolling(animation) {
   return animation === exports.State.ROLL_BACKWARD || animation === exports.State.ROLL_FORWARD;
 }
+
 function isGrabAction(animation) {
   // Includes Grab pull, wait, pummel, and throws
   return animation > exports.State.GRAB && animation <= exports.State.THROW_DOWN && animation !== exports.State.DASH_GRAB;
 }
+
 function isGrabbing(animation) {
   return animation === exports.State.GRAB || animation === exports.State.DASH_GRAB;
 }
+
 function isAerialAttack(animation) {
   return animation >= exports.State.AERIAL_ATTACK_START && animation <= exports.State.AERIAL_ATTACK_END;
 }
+
 function isForwardTilt(animation) {
   return animation >= exports.State.ATTACK_FTILT_START && animation <= exports.State.ATTACK_FTILT_END;
 }
+
 function isForwardSmash(animation) {
   return animation >= exports.State.ATTACK_FSMASH_START && animation <= exports.State.ATTACK_FSMASH_END;
 }
+
 function handleActionCompute(state, indices, frame) {
   const playerFrame = frame.players[indices.playerIndex].post;
   const opponentFrame = frame.players[indices.opponentIndex].post;
+
   const incrementCount = (field, condition) => {
     if (!condition) {
       return;
     }
+
     const current = get__default["default"](state.playerCounts, field, 0);
     set__default["default"](state.playerCounts, field, current + 1);
-  };
-  // Manage animation state
+  }; // Manage animation state
+
+
   const currentAnimation = playerFrame.actionStateId;
   state.animations.push(currentAnimation);
   const currentFrameCounter = playerFrame.actionStateCounter;
-  state.actionFrameCounters.push(currentFrameCounter);
-  // Grab last 3 frames
+  state.actionFrameCounters.push(currentFrameCounter); // Grab last 3 frames
+
   const last3Frames = state.animations.slice(-3);
   const prevAnimation = last3Frames[last3Frames.length - 2];
-  const prevFrameCounter = state.actionFrameCounters[state.actionFrameCounters.length - 2];
-  // New action if new animation or frame counter goes back down (repeated action)
+  const prevFrameCounter = state.actionFrameCounters[state.actionFrameCounters.length - 2]; // New action if new animation or frame counter goes back down (repeated action)
+
   const isNewAction = currentAnimation !== prevAnimation || prevFrameCounter > currentFrameCounter;
+
   if (!isNewAction) {
     return;
-  }
-  // Increment counts based on conditions
+  } // Increment counts based on conditions
+
+
   const didDashDance = isEqual__default["default"](last3Frames, dashDanceAnimations);
   incrementCount("dashDanceCount", didDashDance);
   incrementCount("rollCount", isRolling(currentAnimation));
   incrementCount("spotDodgeCount", currentAnimation === exports.State.SPOT_DODGE);
   incrementCount("airDodgeCount", currentAnimation === exports.State.AIR_DODGE);
-  incrementCount("ledgegrabCount", currentAnimation === exports.State.CLIFF_CATCH);
-  // Grabs
+  incrementCount("ledgegrabCount", currentAnimation === exports.State.CLIFF_CATCH); // Grabs
+
   incrementCount("grabCount.success", isGrabbing(prevAnimation) && isGrabAction(currentAnimation));
   incrementCount("grabCount.fail", isGrabbing(prevAnimation) && !isGrabAction(currentAnimation));
+
   if (currentAnimation === exports.State.DASH_GRAB && prevAnimation === exports.State.ATTACK_DASH) {
     state.playerCounts.attackCount.dash -= 1; // subtract from dash attack if boost grab
-  }
-  // Basic attacks
+  } // Basic attacks
+
+
   incrementCount("attackCount.jab1", currentAnimation === exports.State.ATTACK_JAB1);
   incrementCount("attackCount.jab2", currentAnimation === exports.State.ATTACK_JAB2);
   incrementCount("attackCount.jab3", currentAnimation === exports.State.ATTACK_JAB3);
@@ -1131,8 +1172,8 @@ function handleActionCompute(state, indices, frame) {
   incrementCount("attackCount.fair", currentAnimation === exports.State.AERIAL_FAIR);
   incrementCount("attackCount.bair", currentAnimation === exports.State.AERIAL_BAIR);
   incrementCount("attackCount.uair", currentAnimation === exports.State.AERIAL_UAIR);
-  incrementCount("attackCount.dair", currentAnimation === exports.State.AERIAL_DAIR);
-  // GnW is weird and has unique IDs for some moves
+  incrementCount("attackCount.dair", currentAnimation === exports.State.AERIAL_DAIR); // GnW is weird and has unique IDs for some moves
+
   if (playerFrame.internalCharacterId === 0x18) {
     incrementCount("attackCount.jab1", currentAnimation === exports.State.GNW_JAB1);
     incrementCount("attackCount.jabm", currentAnimation === exports.State.GNW_JABM);
@@ -1141,20 +1182,22 @@ function handleActionCompute(state, indices, frame) {
     incrementCount("attackCount.nair", currentAnimation === exports.State.GNW_NAIR);
     incrementCount("attackCount.bair", currentAnimation === exports.State.GNW_BAIR);
     incrementCount("attackCount.uair", currentAnimation === exports.State.GNW_UAIR);
-  }
-  // Peach is also weird and has a unique ID for her fsmash
+  } // Peach is also weird and has a unique ID for her fsmash
   // FSMASH1 = Golf Club, FSMASH2 = Frying Pan, FSMASH3 = Tennis Racket
+
+
   if (playerFrame.internalCharacterId === 0x09) {
     incrementCount("attackCount.fsmash", currentAnimation === exports.State.PEACH_FSMASH1);
     incrementCount("attackCount.fsmash", currentAnimation === exports.State.PEACH_FSMASH2);
     incrementCount("attackCount.fsmash", currentAnimation === exports.State.PEACH_FSMASH3);
-  }
-  // Throws
+  } // Throws
+
+
   incrementCount("throwCount.up", currentAnimation === exports.State.THROW_UP);
   incrementCount("throwCount.forward", currentAnimation === exports.State.THROW_FORWARD);
   incrementCount("throwCount.down", currentAnimation === exports.State.THROW_DOWN);
-  incrementCount("throwCount.back", currentAnimation === exports.State.THROW_BACK);
-  // Techs
+  incrementCount("throwCount.back", currentAnimation === exports.State.THROW_BACK); // Techs
+
   const opponentDir = playerFrame.positionX > opponentFrame.positionX ? -1 : 1;
   const facingOpponent = playerFrame.facingDirection === opponentDir;
   incrementCount("groundTechCount.fail", isMissGroundTech(currentAnimation));
@@ -1165,37 +1208,45 @@ function handleActionCompute(state, indices, frame) {
   incrementCount("groundTechCount.away", currentAnimation === exports.State.FORWARD_TECH && !facingOpponent);
   incrementCount("wallTechCount.success", currentAnimation === exports.State.WALL_TECH);
   incrementCount("wallTechCount.fail", currentAnimation === exports.State.MISSED_WALL_TECH);
+
   if (isAerialAttack(currentAnimation)) {
     incrementCount("lCancelCount.success", playerFrame.lCancelStatus === 1);
     incrementCount("lCancelCount.fail", playerFrame.lCancelStatus === 2);
-  }
-  // Handles wavedash detection (and waveland)
+  } // Handles wavedash detection (and waveland)
+
+
   handleActionWavedash(state.playerCounts, state.animations);
 }
+
 function handleActionWavedash(counts, animations) {
   const currentAnimation = last__default["default"](animations);
   const prevAnimation = animations[animations.length - 2];
   const isSpecialLanding = currentAnimation === exports.State.LANDING_FALL_SPECIAL;
   const isAcceptablePrevious = isWavedashInitiationAnimation(prevAnimation);
   const isPossibleWavedash = isSpecialLanding && isAcceptablePrevious;
+
   if (!isPossibleWavedash) {
     return;
-  }
-  // Here we special landed, it might be a wavedash, let's check
+  } // Here we special landed, it might be a wavedash, let's check
   // We grab the last 8 frames here because that should be enough time to execute a
   // wavedash. This number could be tweaked if we find false negatives
+
+
   const recentFrames = animations.slice(-8);
   const recentAnimations = keyBy__default["default"](recentFrames, animation => animation);
+
   if (size__default["default"](recentAnimations) === 2 && recentAnimations[exports.State.AIR_DODGE]) {
     // If the only other animation is air dodge, this might be really late to the point
     // where it was actually an air dodge. Air dodge animation is really long
     return;
   }
+
   if (recentAnimations[exports.State.AIR_DODGE]) {
     // If one of the recent animations was an air dodge, let's remove that from the
     // air dodge counter, we don't want to count air dodges used to wavedash/land
     counts.airDodgeCount -= 1;
   }
+
   if (recentAnimations[exports.State.ACTION_KNEE_BEND]) {
     // If a jump was started recently, we will consider this a wavedash
     counts.wavedashCount += 1;
@@ -1204,21 +1255,25 @@ function handleActionWavedash(counts, animations) {
     counts.wavelandCount += 1;
   }
 }
+
 function isWavedashInitiationAnimation(animation) {
   if (animation === exports.State.AIR_DODGE) {
     return true;
   }
+
   const isAboveMin = animation >= exports.State.CONTROLLED_JUMP_START;
   const isBelowMax = animation <= exports.State.CONTROLLED_JUMP_END;
   return isAboveMin && isBelowMax;
 }
 
 var ComboEvent;
+
 (function (ComboEvent) {
   ComboEvent["COMBO_START"] = "COMBO_START";
   ComboEvent["COMBO_EXTEND"] = "COMBO_EXTEND";
   ComboEvent["COMBO_END"] = "COMBO_END";
 })(ComboEvent || (ComboEvent = {}));
+
 class ComboComputer extends events.EventEmitter {
   constructor(...args) {
     super(...args);
@@ -1227,6 +1282,7 @@ class ComboComputer extends events.EventEmitter {
     this.combos = new Array();
     this.settings = null;
   }
+
   setup(settings) {
     // Reset the state
     this.settings = settings;
@@ -1244,12 +1300,14 @@ class ComboComputer extends events.EventEmitter {
       this.state.set(indices, playerState);
     });
   }
+
   processFrame(frame, allFrames) {
     this.playerPermutations.forEach(indices => {
       const state = this.state.get(indices);
+
       if (state) {
-        handleComboCompute(allFrames, state, indices, frame, this.combos);
-        // Emit an event for the new combo
+        handleComboCompute(allFrames, state, indices, frame, this.combos); // Emit an event for the new combo
+
         if (state.event !== null) {
           this.emit(state.event, {
             combo: last__default["default"](this.combos),
@@ -1260,10 +1318,13 @@ class ComboComputer extends events.EventEmitter {
       }
     });
   }
+
   fetch() {
     return this.combos;
   }
+
 }
+
 function handleComboCompute(frames, state, indices, frame, combos) {
   const currentFrameNumber = frame.frame;
   const playerFrame = frame.players[indices.playerIndex].post;
@@ -1271,34 +1332,40 @@ function handleComboCompute(frames, state, indices, frame, combos) {
   const prevFrameNumber = currentFrameNumber - 1;
   let prevPlayerFrame = null;
   let prevOpponentFrame = null;
+
   if (frames[prevFrameNumber]) {
     prevPlayerFrame = frames[prevFrameNumber].players[indices.playerIndex].post;
     prevOpponentFrame = frames[prevFrameNumber].players[indices.opponentIndex].post;
   }
+
   const oppActionStateId = opponentFrame.actionStateId;
   const opntIsDamaged = isDamaged(oppActionStateId);
   const opntIsGrabbed = isGrabbed(oppActionStateId);
   const opntIsCommandGrabbed = isCommandGrabbed(oppActionStateId);
-  const opntDamageTaken = prevOpponentFrame ? calcDamageTaken(opponentFrame, prevOpponentFrame) : 0;
-  // Keep track of whether actionState changes after a hit. Used to compute move count
+  const opntDamageTaken = prevOpponentFrame ? calcDamageTaken(opponentFrame, prevOpponentFrame) : 0; // Keep track of whether actionState changes after a hit. Used to compute move count
   // When purely using action state there was a bug where if you did two of the same
   // move really fast (such as ganon's jab), it would count as one move. Added
   // the actionStateCounter at this point which counts the number of frames since
   // an animation started. Should be more robust, for old files it should always be
   // null and null < null = false
+
   const actionChangedSinceHit = playerFrame.actionStateId !== state.lastHitAnimation;
   const actionCounter = playerFrame.actionStateCounter;
   const prevActionCounter = prevPlayerFrame ? prevPlayerFrame.actionStateCounter : 0;
   const actionFrameCounterReset = actionCounter < prevActionCounter;
+
   if (actionChangedSinceHit || actionFrameCounterReset) {
     state.lastHitAnimation = null;
-  }
-  // If opponent took damage and was put in some kind of stun this frame, either
+  } // If opponent took damage and was put in some kind of stun this frame, either
   // start a combo or count the moves for the existing combo
+
+
   if (opntIsDamaged || opntIsGrabbed || opntIsCommandGrabbed) {
     let comboStarted = false;
+
     if (!state.combo) {
       var _prevOpponentFrame$pe, _opponentFrame$percen;
+
       state.combo = {
         playerIndex: indices.opponentIndex,
         startFrame: currentFrameNumber,
@@ -1310,10 +1377,11 @@ function handleComboCompute(frames, state, indices, frame, combos) {
         didKill: false,
         lastHitBy: indices.playerIndex
       };
-      combos.push(state.combo);
-      // Track whether this is a new combo or not
+      combos.push(state.combo); // Track whether this is a new combo or not
+
       comboStarted = true;
     }
+
     if (opntDamageTaken) {
       // If animation of last hit has been cleared that means this is a new move. This
       // prevents counting multiple hits from the same move such as fox's drill
@@ -1325,57 +1393,68 @@ function handleComboCompute(frames, state, indices, frame, combos) {
           hitCount: 0,
           damage: 0
         };
-        state.combo.moves.push(state.move);
-        // Make sure we don't overwrite the START event
+        state.combo.moves.push(state.move); // Make sure we don't overwrite the START event
+
         if (!comboStarted) {
           state.event = ComboEvent.COMBO_EXTEND;
         }
       }
+
       if (state.move) {
         state.move.hitCount += 1;
         state.move.damage += opntDamageTaken;
-      }
-      // Store previous frame animation to consider the case of a trade, the previous
+      } // Store previous frame animation to consider the case of a trade, the previous
       // frame should always be the move that actually connected... I hope
+
+
       state.lastHitAnimation = prevPlayerFrame ? prevPlayerFrame.actionStateId : null;
     }
+
     if (comboStarted) {
       state.event = ComboEvent.COMBO_START;
     }
   }
+
   if (!state.combo) {
     // The rest of the function handles combo termination logic, so if we don't
     // have a combo started, there is no need to continue
     return;
   }
+
   const opntIsTeching = isTeching(oppActionStateId);
   const opntIsDowned = isDown(oppActionStateId);
   const opntDidLoseStock = prevOpponentFrame && didLoseStock(opponentFrame, prevOpponentFrame);
-  const opntIsDying = isDead(oppActionStateId);
-  // Update percent if opponent didn't lose stock
+  const opntIsDying = isDead(oppActionStateId); // Update percent if opponent didn't lose stock
+
   if (!opntDidLoseStock) {
     var _opponentFrame$percen2;
+
     state.combo.currentPercent = (_opponentFrame$percen2 = opponentFrame.percent) != null ? _opponentFrame$percen2 : 0;
   }
+
   if (opntIsDamaged || opntIsGrabbed || opntIsCommandGrabbed || opntIsTeching || opntIsDowned || opntIsDying) {
     // If opponent got grabbed or damaged, reset the reset counter
     state.resetCounter = 0;
   } else {
     state.resetCounter += 1;
   }
-  let shouldTerminate = false;
-  // Termination condition 1 - player kills opponent
+
+  let shouldTerminate = false; // Termination condition 1 - player kills opponent
+
   if (opntDidLoseStock) {
     state.combo.didKill = true;
     shouldTerminate = true;
-  }
-  // Termination condition 2 - combo resets on time
+  } // Termination condition 2 - combo resets on time
+
+
   if (state.resetCounter > Timers.COMBO_STRING_RESET_FRAMES) {
     shouldTerminate = true;
-  }
-  // If combo should terminate, mark the end states and add it to list
+  } // If combo should terminate, mark the end states and add it to list
+
+
   if (shouldTerminate) {
     var _prevOpponentFrame$pe2;
+
     state.combo.endFrame = playerFrame.frame;
     state.combo.endPercent = prevOpponentFrame ? (_prevOpponentFrame$pe2 = prevOpponentFrame.percent) != null ? _prevOpponentFrame$pe2 : 0 : 0;
     state.event = ComboEvent.COMBO_END;
@@ -1396,6 +1475,7 @@ class ConversionComputer extends events.EventEmitter {
       lastEndFrameByOppIdx: {}
     };
   }
+
   setup(settings) {
     // Reset the state
     this.playerPermutations = getSinglesPlayerPermutationsFromSettings(settings);
@@ -1415,11 +1495,14 @@ class ConversionComputer extends events.EventEmitter {
       this.state.set(indices, playerState);
     });
   }
+
   processFrame(frame, allFrames) {
     this.playerPermutations.forEach(indices => {
       const state = this.state.get(indices);
+
       if (state) {
         const terminated = handleConversionCompute(allFrames, state, indices, frame, this.conversions);
+
         if (terminated) {
           this.emit("CONVERSION", {
             combo: last__default["default"](this.conversions),
@@ -1429,30 +1512,35 @@ class ConversionComputer extends events.EventEmitter {
       }
     });
   }
+
   fetch() {
     this._populateConversionTypes();
+
     return this.conversions;
   }
+
   _populateConversionTypes() {
     // Post-processing step: set the openingTypes
     const conversionsToHandle = filter__default["default"](this.conversions, conversion => {
       return conversion.openingType === "unknown";
-    });
-    // Group new conversions by startTime and sort
+    }); // Group new conversions by startTime and sort
+
     const groupedConversions = groupBy__default["default"](conversionsToHandle, "startFrame");
-    const sortedConversions = orderBy__default["default"](groupedConversions, conversions => get__default["default"](conversions, [0, "startFrame"]));
-    // Set the opening types on the conversions we need to handle
+    const sortedConversions = orderBy__default["default"](groupedConversions, conversions => get__default["default"](conversions, [0, "startFrame"])); // Set the opening types on the conversions we need to handle
+
     sortedConversions.forEach(conversions => {
       const isTrade = conversions.length >= 2;
       conversions.forEach(conversion => {
         // Set end frame for this conversion
         this.metadata.lastEndFrameByOppIdx[conversion.playerIndex] = conversion.endFrame;
+
         if (isTrade) {
           // If trade, just short-circuit
           conversion.openingType = "trade";
           return;
-        }
-        // If not trade, check the opponent endFrame
+        } // If not trade, check the opponent endFrame
+
+
         const lastMove = last__default["default"](conversion.moves);
         const oppEndFrame = this.metadata.lastEndFrameByOppIdx[lastMove ? lastMove.playerIndex : conversion.playerIndex];
         const isCounterAttack = oppEndFrame && oppEndFrame > conversion.startFrame;
@@ -1460,7 +1548,9 @@ class ConversionComputer extends events.EventEmitter {
       });
     });
   }
+
 }
+
 function handleConversionCompute(frames, state, indices, frame, conversions) {
   const currentFrameNumber = frame.frame;
   const playerFrame = frame.players[indices.playerIndex].post;
@@ -1468,33 +1558,38 @@ function handleConversionCompute(frames, state, indices, frame, conversions) {
   const prevFrameNumber = currentFrameNumber - 1;
   let prevPlayerFrame = null;
   let prevOpponentFrame = null;
+
   if (frames[prevFrameNumber]) {
     prevPlayerFrame = frames[prevFrameNumber].players[indices.playerIndex].post;
     prevOpponentFrame = frames[prevFrameNumber].players[indices.opponentIndex].post;
   }
+
   const oppActionStateId = opponentFrame.actionStateId;
   const opntIsDamaged = isDamaged(oppActionStateId);
   const opntIsGrabbed = isGrabbed(oppActionStateId);
   const opntIsCommandGrabbed = isCommandGrabbed(oppActionStateId);
-  const opntDamageTaken = prevOpponentFrame ? calcDamageTaken(opponentFrame, prevOpponentFrame) : 0;
-  // Keep track of whether actionState changes after a hit. Used to compute move count
+  const opntDamageTaken = prevOpponentFrame ? calcDamageTaken(opponentFrame, prevOpponentFrame) : 0; // Keep track of whether actionState changes after a hit. Used to compute move count
   // When purely using action state there was a bug where if you did two of the same
   // move really fast (such as ganon's jab), it would count as one move. Added
   // the actionStateCounter at this point which counts the number of frames since
   // an animation started. Should be more robust, for old files it should always be
   // null and null < null = false
+
   const actionChangedSinceHit = playerFrame.actionStateId !== state.lastHitAnimation;
   const actionCounter = playerFrame.actionStateCounter;
   const prevActionCounter = prevPlayerFrame ? prevPlayerFrame.actionStateCounter : 0;
   const actionFrameCounterReset = actionCounter < prevActionCounter;
+
   if (actionChangedSinceHit || actionFrameCounterReset) {
     state.lastHitAnimation = null;
-  }
-  // If opponent took damage and was put in some kind of stun this frame, either
+  } // If opponent took damage and was put in some kind of stun this frame, either
   // start a conversion or
+
+
   if (opntIsDamaged || opntIsGrabbed || opntIsCommandGrabbed) {
     if (!state.conversion) {
       var _prevOpponentFrame$pe, _opponentFrame$percen;
+
       state.conversion = {
         playerIndex: indices.opponentIndex,
         lastHitBy: indices.playerIndex,
@@ -1506,9 +1601,11 @@ function handleConversionCompute(frames, state, indices, frame, conversions) {
         moves: [],
         didKill: false,
         openingType: "unknown" // Will be updated later
+
       };
       conversions.push(state.conversion);
     }
+
     if (opntDamageTaken) {
       // If animation of last hit has been cleared that means this is a new move. This
       // prevents counting multiple hits from the same move such as fox's drill
@@ -1522,61 +1619,75 @@ function handleConversionCompute(frames, state, indices, frame, conversions) {
         };
         state.conversion.moves.push(state.move);
       }
+
       if (state.move) {
         state.move.hitCount += 1;
         state.move.damage += opntDamageTaken;
-      }
-      // Store previous frame animation to consider the case of a trade, the previous
+      } // Store previous frame animation to consider the case of a trade, the previous
       // frame should always be the move that actually connected... I hope
+
+
       state.lastHitAnimation = prevPlayerFrame ? prevPlayerFrame.actionStateId : null;
     }
   }
+
   if (!state.conversion) {
     // The rest of the function handles conversion termination logic, so if we don't
     // have a conversion started, there is no need to continue
     return false;
   }
+
   const opntInControl = isInControl(oppActionStateId);
-  const opntDidLoseStock = prevOpponentFrame && didLoseStock(opponentFrame, prevOpponentFrame);
-  // Update percent if opponent didn't lose stock
+  const opntDidLoseStock = prevOpponentFrame && didLoseStock(opponentFrame, prevOpponentFrame); // Update percent if opponent didn't lose stock
+
   if (!opntDidLoseStock) {
     var _opponentFrame$percen2;
+
     state.conversion.currentPercent = (_opponentFrame$percen2 = opponentFrame.percent) != null ? _opponentFrame$percen2 : 0;
   }
+
   if (opntIsDamaged || opntIsGrabbed || opntIsCommandGrabbed) {
     // If opponent got grabbed or damaged, reset the reset counter
     state.resetCounter = 0;
   }
+
   const shouldStartResetCounter = state.resetCounter === 0 && opntInControl;
   const shouldContinueResetCounter = state.resetCounter > 0;
+
   if (shouldStartResetCounter || shouldContinueResetCounter) {
     // This will increment the reset timer under the following conditions:
     // 1) if we were punishing opponent but they have now entered an actionable state
     // 2) if counter has already started counting meaning opponent has entered actionable state
     state.resetCounter += 1;
   }
-  let shouldTerminate = false;
-  // Termination condition 1 - player kills opponent
+
+  let shouldTerminate = false; // Termination condition 1 - player kills opponent
+
   if (opntDidLoseStock) {
     state.conversion.didKill = true;
     shouldTerminate = true;
-  }
-  // Termination condition 2 - conversion resets on time
+  } // Termination condition 2 - conversion resets on time
+
+
   if (state.resetCounter > Timers.PUNISH_RESET_FRAMES) {
     shouldTerminate = true;
-  }
-  // If conversion should terminate, mark the end states and add it to list
+  } // If conversion should terminate, mark the end states and add it to list
+
+
   if (shouldTerminate) {
     var _prevOpponentFrame$pe2;
+
     state.conversion.endFrame = playerFrame.frame;
     state.conversion.endPercent = prevOpponentFrame ? (_prevOpponentFrame$pe2 = prevOpponentFrame.percent) != null ? _prevOpponentFrame$pe2 : 0 : 0;
     state.conversion = null;
     state.move = null;
   }
+
   return shouldTerminate;
 }
 
 exports.Command = void 0;
+
 (function (Command) {
   Command[Command["SPLIT_MESSAGE"] = 16] = "SPLIT_MESSAGE";
   Command[Command["MESSAGE_SIZES"] = 53] = "MESSAGE_SIZES";
@@ -1589,25 +1700,33 @@ exports.Command = void 0;
   Command[Command["FRAME_BOOKEND"] = 60] = "FRAME_BOOKEND";
   Command[Command["GECKO_LIST"] = 61] = "GECKO_LIST";
 })(exports.Command || (exports.Command = {}));
+
 exports.GameMode = void 0;
+
 (function (GameMode) {
   GameMode[GameMode["VS"] = 2] = "VS";
   GameMode[GameMode["ONLINE"] = 8] = "ONLINE";
   GameMode[GameMode["TARGET_TEST"] = 15] = "TARGET_TEST";
   GameMode[GameMode["HOME_RUN_CONTEST"] = 32] = "HOME_RUN_CONTEST";
 })(exports.GameMode || (exports.GameMode = {}));
+
 exports.Language = void 0;
+
 (function (Language) {
   Language[Language["JAPANESE"] = 0] = "JAPANESE";
   Language[Language["ENGLISH"] = 1] = "ENGLISH";
 })(exports.Language || (exports.Language = {}));
+
 exports.TimerType = void 0;
+
 (function (TimerType) {
   TimerType[TimerType["NONE"] = 0] = "NONE";
   TimerType[TimerType["DECREASING"] = 2] = "DECREASING";
   TimerType[TimerType["INCREASING"] = 3] = "INCREASING";
 })(exports.TimerType || (exports.TimerType = {}));
+
 exports.ItemSpawnType = void 0;
+
 (function (ItemSpawnType) {
   ItemSpawnType[ItemSpawnType["OFF"] = 255] = "OFF";
   ItemSpawnType[ItemSpawnType["VERY_LOW"] = 0] = "VERY_LOW";
@@ -1616,12 +1735,14 @@ exports.ItemSpawnType = void 0;
   ItemSpawnType[ItemSpawnType["HIGH"] = 3] = "HIGH";
   ItemSpawnType[ItemSpawnType["VERY_HIGH"] = 4] = "VERY_HIGH";
 })(exports.ItemSpawnType || (exports.ItemSpawnType = {}));
+
 exports.EnabledItemType = void 0;
+
 (function (EnabledItemType) {
   EnabledItemType[EnabledItemType["METAL_BOX"] = 1] = "METAL_BOX";
   EnabledItemType[EnabledItemType["CLOAKING_DEVICE"] = 2] = "CLOAKING_DEVICE";
-  EnabledItemType[EnabledItemType["POKEBALL"] = 4] = "POKEBALL";
-  // Bits 4 through 8 of item bitfield 1 are unknown
+  EnabledItemType[EnabledItemType["POKEBALL"] = 4] = "POKEBALL"; // Bits 4 through 8 of item bitfield 1 are unknown
+
   EnabledItemType[EnabledItemType["UNKNOWN_ITEM_BIT_4"] = 8] = "UNKNOWN_ITEM_BIT_4";
   EnabledItemType[EnabledItemType["UNKNOWN_ITEM_BIT_5"] = 16] = "UNKNOWN_ITEM_BIT_5";
   EnabledItemType[EnabledItemType["UNKNOWN_ITEM_BIT_6"] = 32] = "UNKNOWN_ITEM_BIT_6";
@@ -1660,22 +1781,27 @@ exports.EnabledItemType = void 0;
   EnabledItemType[EnabledItemType["BOMB_OMB"] = 274877906944] = "BOMB_OMB";
   EnabledItemType[EnabledItemType["MR_SATURN"] = 549755813888] = "MR_SATURN";
 })(exports.EnabledItemType || (exports.EnabledItemType = {}));
+
 exports.GameEndMethod = void 0;
+
 (function (GameEndMethod) {
   GameEndMethod[GameEndMethod["UNRESOLVED"] = 0] = "UNRESOLVED";
-  GameEndMethod[GameEndMethod["RESOLVED"] = 3] = "RESOLVED";
-  // The following options are only returned in version 2.0.0 onwards
+  GameEndMethod[GameEndMethod["RESOLVED"] = 3] = "RESOLVED"; // The following options are only returned in version 2.0.0 onwards
+
   GameEndMethod[GameEndMethod["TIME"] = 1] = "TIME";
   GameEndMethod[GameEndMethod["GAME"] = 2] = "GAME";
   GameEndMethod[GameEndMethod["NO_CONTEST"] = 7] = "NO_CONTEST";
 })(exports.GameEndMethod || (exports.GameEndMethod = {}));
+
 exports.Frames = void 0;
+
 (function (Frames) {
   Frames[Frames["FIRST"] = -123] = "FIRST";
   Frames[Frames["FIRST_PLAYABLE"] = -39] = "FIRST_PLAYABLE";
 })(exports.Frames || (exports.Frames = {}));
 
 var JoystickRegion;
+
 (function (JoystickRegion) {
   JoystickRegion[JoystickRegion["DZ"] = 0] = "DZ";
   JoystickRegion[JoystickRegion["NE"] = 1] = "NE";
@@ -1687,11 +1813,13 @@ var JoystickRegion;
   JoystickRegion[JoystickRegion["S"] = 7] = "S";
   JoystickRegion[JoystickRegion["W"] = 8] = "W";
 })(JoystickRegion || (JoystickRegion = {}));
+
 class InputComputer {
   constructor() {
     this.state = new Map();
     this.playerPermutations = new Array();
   }
+
   setup(settings) {
     // Reset the state
     this.state = new Map();
@@ -1709,63 +1837,76 @@ class InputComputer {
       this.state.set(indices, playerState);
     });
   }
+
   processFrame(frame, allFrames) {
     this.playerPermutations.forEach(indices => {
       const state = this.state.get(indices);
+
       if (state) {
         handleInputCompute(allFrames, state, indices, frame);
       }
     });
   }
+
   fetch() {
     return Array.from(this.state.values());
   }
+
 }
+
 function handleInputCompute(frames, state, indices, frame) {
   const playerFrame = frame.players[indices.playerIndex].pre;
   const currentFrameNumber = playerFrame.frame;
   const prevFrameNumber = currentFrameNumber - 1;
   const prevPlayerFrame = frames[prevFrameNumber] ? frames[prevFrameNumber].players[indices.playerIndex].pre : null;
+
   if (currentFrameNumber < exports.Frames.FIRST_PLAYABLE || !prevPlayerFrame) {
     // Don't count inputs until the game actually starts
     return;
-  }
-  // First count the number of buttons that go from 0 to 1
+  } // First count the number of buttons that go from 0 to 1
   // Increment action count by amount of button presses
+
+
   const invertedPreviousButtons = ~prevPlayerFrame.physicalButtons;
   const currentButtons = playerFrame.physicalButtons;
   const buttonChanges = invertedPreviousButtons & currentButtons & 0xfff;
   const newInputsPressed = countSetBits(buttonChanges);
   state.inputCount += newInputsPressed;
-  state.buttonInputCount += newInputsPressed;
-  // Increment action count when sticks change from one region to another.
+  state.buttonInputCount += newInputsPressed; // Increment action count when sticks change from one region to another.
   // Don't increment when stick returns to deadzone
+
   const prevAnalogRegion = getJoystickRegion(prevPlayerFrame.joystickX, prevPlayerFrame.joystickY);
   const currentAnalogRegion = getJoystickRegion(playerFrame.joystickX, playerFrame.joystickY);
+
   if (prevAnalogRegion !== currentAnalogRegion && currentAnalogRegion !== JoystickRegion.DZ) {
     state.inputCount += 1;
     state.joystickInputCount += 1;
-  }
-  // Do the same for c-stick
+  } // Do the same for c-stick
+
+
   const prevCstickRegion = getJoystickRegion(prevPlayerFrame.cStickX, prevPlayerFrame.cStickY);
   const currentCstickRegion = getJoystickRegion(playerFrame.cStickX, playerFrame.cStickY);
+
   if (prevCstickRegion !== currentCstickRegion && currentCstickRegion !== JoystickRegion.DZ) {
     state.inputCount += 1;
     state.cstickInputCount += 1;
-  }
-  // Increment action on analog trigger... I'm not sure when. This needs revision
+  } // Increment action on analog trigger... I'm not sure when. This needs revision
   // Currently will update input count when the button gets pressed past 0.3
   // Changes from hard shield to light shield should probably count as inputs but
   // are not counted here
+
+
   if (prevPlayerFrame.physicalLTrigger < 0.3 && playerFrame.physicalLTrigger >= 0.3) {
     state.inputCount += 1;
     state.triggerInputCount += 1;
   }
+
   if (prevPlayerFrame.physicalRTrigger < 0.3 && playerFrame.physicalRTrigger >= 0.3) {
     state.inputCount += 1;
     state.triggerInputCount += 1;
   }
 }
+
 function countSetBits(x) {
   // This function solves the Hamming Weight problem. Effectively it counts the number of
   // bits in the input that are set to 1
@@ -1773,13 +1914,17 @@ function countSetBits(x) {
   // Found: https://en.wikipedia.org/wiki/Hamming_weight#Efficient_implementation
   let bits = x;
   let count;
+
   for (count = 0; bits; count += 1) {
     bits &= bits - 1;
   }
+
   return count;
 }
+
 function getJoystickRegion(x, y) {
   let region = JoystickRegion.DZ;
+
   if (x >= 0.2875 && y >= 0.2875) {
     region = JoystickRegion.NE;
   } else if (x >= 0.2875 && y <= -0.2875) {
@@ -1797,6 +1942,7 @@ function getJoystickRegion(x, y) {
   } else if (x <= -0.2875) {
     region = JoystickRegion.W;
   }
+
   return region;
 }
 
@@ -1810,6 +1956,7 @@ function generateOverallStats({
   const originalConversions = conversions;
   const conversionsByPlayer = groupBy__default["default"](conversions, conv => {
     var _conv$moves$;
+
     return (_conv$moves$ = conv.moves[0]) == null ? void 0 : _conv$moves$.playerIndex;
   });
   const conversionsByPlayerByOpening = mapValues__default["default"](conversionsByPlayer, conversions => groupBy__default["default"](conversions, "openingType"));
@@ -1823,33 +1970,35 @@ function generateOverallStats({
       cstick: get__default["default"](playerInputs, "cstickInputCount"),
       joystick: get__default["default"](playerInputs, "joystickInputCount"),
       total: get__default["default"](playerInputs, "inputCount")
-    };
-    // const conversions = get(conversionsByPlayer, playerIndex) || [];
+    }; // const conversions = get(conversionsByPlayer, playerIndex) || [];
     // const successfulConversions = conversions.filter((conversion) => conversion.moves.length > 1);
+
     let conversionCount = 0;
     let successfulConversionCount = 0;
     const opponentIndices = settings.players.filter(opp => {
       // We want players which aren't ourselves
       if (opp.playerIndex === playerIndex) {
         return false;
-      }
-      // Make sure they're not on our team either
+      } // Make sure they're not on our team either
+
+
       return !settings.isTeams || opp.teamId !== player.teamId;
     }).map(opp => opp.playerIndex);
     let totalDamage = 0;
-    let killCount = 0;
-    // These are the conversions that we did on our opponents
-    originalConversions
-    // Filter down to conversions of our opponent
+    let killCount = 0; // These are the conversions that we did on our opponents
+
+    originalConversions // Filter down to conversions of our opponent
     .filter(conversion => conversion.playerIndex !== playerIndex).forEach(conversion => {
-      conversionCount++;
-      // We killed the opponent
+      conversionCount++; // We killed the opponent
+
       if (conversion.didKill && conversion.lastHitBy === playerIndex) {
         killCount += 1;
       }
+
       if (conversion.moves.length > 1 && conversion.moves[0].playerIndex === playerIndex) {
         successfulConversionCount++;
       }
+
       conversion.moves.forEach(move => {
         if (move.playerIndex === playerIndex) {
           totalDamage += move.damage;
@@ -1874,6 +2023,7 @@ function generateOverallStats({
   });
   return overall;
 }
+
 function getRatio(count, total) {
   return {
     count: count,
@@ -1881,23 +2031,27 @@ function getRatio(count, total) {
     ratio: total ? count / total : null
   };
 }
+
 function getOpeningRatio(conversionsByPlayerByOpening, playerIndex, opponentIndices, type) {
   const openings = get__default["default"](conversionsByPlayerByOpening, [playerIndex, type]) || [];
   const opponentOpenings = flatten__default["default"](opponentIndices.map(opponentIndex => get__default["default"](conversionsByPlayerByOpening, [opponentIndex, type]) || []));
   return getRatio(openings.length, openings.length + opponentOpenings.length);
 }
+
 function getBeneficialTradeRatio(conversionsByPlayerByOpening, playerIndex, opponentIndices) {
   const playerTrades = get__default["default"](conversionsByPlayerByOpening, [playerIndex, "trade"]) || [];
   const opponentTrades = flatten__default["default"](opponentIndices.map(opponentIndex => get__default["default"](conversionsByPlayerByOpening, [opponentIndex, "trade"]) || []));
-  const benefitsPlayer = [];
-  // Figure out which punishes benefited this player
+  const benefitsPlayer = []; // Figure out which punishes benefited this player
+
   const zippedTrades = zip__default["default"](playerTrades, opponentTrades);
   zippedTrades.forEach(conversionPair => {
     const playerConversion = first__default["default"](conversionPair);
     const opponentConversion = last__default["default"](conversionPair);
+
     if (playerConversion && opponentConversion) {
       const playerDamage = playerConversion.currentPercent - playerConversion.startPercent;
       const opponentDamage = opponentConversion.currentPercent - opponentConversion.startPercent;
+
       if (playerConversion.didKill && !opponentConversion.didKill) {
         benefitsPlayer.push(playerConversion);
       } else if (playerDamage > opponentDamage) {
@@ -1923,53 +2077,67 @@ class Stats {
   /**
    * Should reset the frames to their default values.
    */
+
+
   setup(settings) {
     // Reset the frames since it's a new game
     this.frames = {};
-    this.players = settings.players.map(v => v.playerIndex);
-    // Forward the settings on to the individual stat computer
+    this.players = settings.players.map(v => v.playerIndex); // Forward the settings on to the individual stat computer
+
     this.allComputers.forEach(comp => comp.setup(settings));
   }
+
   register(...computer) {
     this.allComputers.push(...computer);
   }
+
   process() {
     if (this.players.length === 0) {
       return;
     }
+
     let i = this.lastProcessedFrame !== null ? this.lastProcessedFrame + 1 : exports.Frames.FIRST;
+
     while (this.frames[i]) {
-      const frame = this.frames[i];
-      // Don't attempt to compute stats on frames that have not been fully received
+      const frame = this.frames[i]; // Don't attempt to compute stats on frames that have not been fully received
+
       if (!isCompletedFrame(this.players, frame)) {
         return;
       }
+
       this.allComputers.forEach(comp => comp.processFrame(frame, this.frames));
       this.lastProcessedFrame = i;
       i++;
     }
   }
+
   addFrame(frame) {
     this.frames[frame.frame] = frame;
+
     if (this.options.processOnTheFly) {
       this.process();
     }
   }
+
 }
+
 function isCompletedFrame(players, frame) {
   if (!frame) {
     return false;
-  }
-  // This function checks whether we have successfully received an entire frame.
+  } // This function checks whether we have successfully received an entire frame.
   // It is not perfect because it does not wait for follower frames. Fortunately,
   // follower frames are not used for any stat calculations so this doesn't matter
   // for our purposes.
+
+
   for (const player of players) {
     const playerPostFrame = get__default["default"](frame, ["players", player, "post"]);
+
     if (!playerPostFrame) {
       return false;
     }
   }
+
   return true;
 }
 
@@ -1979,6 +2147,7 @@ class StockComputer {
     this.playerPermutations = new Array();
     this.stocks = new Array();
   }
+
   setup(settings) {
     // Reset state
     this.state = new Map();
@@ -1991,30 +2160,37 @@ class StockComputer {
       this.state.set(indices, playerState);
     });
   }
+
   processFrame(frame, allFrames) {
     this.playerPermutations.forEach(indices => {
       const state = this.state.get(indices);
+
       if (state) {
         handleStockCompute(allFrames, state, indices, frame, this.stocks);
       }
     });
   }
+
   fetch() {
     return this.stocks;
   }
+
 }
+
 function handleStockCompute(frames, state, indices, frame, stocks) {
   const playerFrame = frame.players[indices.playerIndex].post;
   const currentFrameNumber = playerFrame.frame;
   const prevFrameNumber = currentFrameNumber - 1;
-  const prevPlayerFrame = frames[prevFrameNumber] ? frames[prevFrameNumber].players[indices.playerIndex].post : null;
-  // If there is currently no active stock, wait until the player is no longer spawning.
+  const prevPlayerFrame = frames[prevFrameNumber] ? frames[prevFrameNumber].players[indices.playerIndex].post : null; // If there is currently no active stock, wait until the player is no longer spawning.
   // Once the player is no longer spawning, start the stock
+
   if (!state.stock) {
     const isPlayerDead = isDead(playerFrame.actionStateId);
+
     if (isPlayerDead) {
       return;
     }
+
     state.stock = {
       playerIndex: indices.playerIndex,
       startFrame: currentFrameNumber,
@@ -2028,12 +2204,14 @@ function handleStockCompute(frames, state, indices, frame, stocks) {
     stocks.push(state.stock);
   } else if (prevPlayerFrame && didLoseStock(playerFrame, prevPlayerFrame)) {
     var _prevPlayerFrame$perc;
+
     state.stock.endFrame = playerFrame.frame;
     state.stock.endPercent = (_prevPlayerFrame$perc = prevPlayerFrame.percent) != null ? _prevPlayerFrame$perc : 0;
     state.stock.deathAnimation = playerFrame.actionStateId;
     state.stock = null;
   } else {
     var _playerFrame$percent;
+
     state.stock.currentPercent = (_playerFrame$percent = playerFrame.percent) != null ? _playerFrame$percent : 0;
   }
 }
@@ -2045,36 +2223,43 @@ function exists(value) {
   return value != null;
 }
 
-// The Target item's in-game ID
 const TARGET_ITEM_TYPE_ID = 209;
 class TargetBreakComputer {
   constructor() {
     this.targetBreaks = new Array();
     this.isTargetTestGame = false;
   }
+
   setup(settings) {
     // Reset the state
     this.targetBreaks = [];
     this.isTargetTestGame = settings.gameMode === exports.GameMode.TARGET_TEST;
   }
+
   processFrame(frame, allFrames) {
     if (!this.isTargetTestGame) {
       return;
     }
+
     handleTargetBreak(allFrames, frame, this.targetBreaks);
   }
+
   fetch() {
     return this.targetBreaks;
   }
+
 }
+
 function handleTargetBreak(frames, frame, targetBreaks) {
-  var _frames$currentFrameN, _frames$currentFrameN2, _frames$prevFrameNumb, _frames$prevFrameNumb2;
+  var _frames$currentFrameN, _frames$currentFrameN2, _frames$currentFrameN3, _frames$prevFrameNumb, _frames$prevFrameNumb2, _frames$prevFrameNumb3;
+
   const currentFrameNumber = frame.frame;
-  const prevFrameNumber = currentFrameNumber - 1;
-  // Add all targets on the first frame
+  const prevFrameNumber = currentFrameNumber - 1; // Add all targets on the first frame
+
   if (currentFrameNumber === exports.Frames.FIRST) {
-    var _frames$Frames$FIRST$, _frames$Frames$FIRST;
-    const targets = (_frames$Frames$FIRST$ = (_frames$Frames$FIRST = frames[exports.Frames.FIRST]) == null || (_frames$Frames$FIRST = _frames$Frames$FIRST.items) == null ? void 0 : _frames$Frames$FIRST.filter(item => item.typeId === TARGET_ITEM_TYPE_ID)) != null ? _frames$Frames$FIRST$ : [];
+    var _frames$Frames$FIRST$, _frames$Frames$FIRST, _frames$Frames$FIRST$2;
+
+    const targets = (_frames$Frames$FIRST$ = (_frames$Frames$FIRST = frames[exports.Frames.FIRST]) == null ? void 0 : (_frames$Frames$FIRST$2 = _frames$Frames$FIRST.items) == null ? void 0 : _frames$Frames$FIRST$2.filter(item => item.typeId === TARGET_ITEM_TYPE_ID)) != null ? _frames$Frames$FIRST$ : [];
     targets.forEach(target => {
       targetBreaks.push({
         spawnId: target.spawnId,
@@ -2084,15 +2269,17 @@ function handleTargetBreak(frames, frame, targetBreaks) {
       });
     });
   }
-  const currentTargets = (_frames$currentFrameN = (_frames$currentFrameN2 = frames[currentFrameNumber]) == null || (_frames$currentFrameN2 = _frames$currentFrameN2.items) == null ? void 0 : _frames$currentFrameN2.filter(item => item.typeId === TARGET_ITEM_TYPE_ID)) != null ? _frames$currentFrameN : [];
-  const previousTargets = (_frames$prevFrameNumb = (_frames$prevFrameNumb2 = frames[prevFrameNumber]) == null || (_frames$prevFrameNumb2 = _frames$prevFrameNumb2.items) == null ? void 0 : _frames$prevFrameNumb2.filter(item => item.typeId === TARGET_ITEM_TYPE_ID)) != null ? _frames$prevFrameNumb : [];
+
+  const currentTargets = (_frames$currentFrameN = (_frames$currentFrameN2 = frames[currentFrameNumber]) == null ? void 0 : (_frames$currentFrameN3 = _frames$currentFrameN2.items) == null ? void 0 : _frames$currentFrameN3.filter(item => item.typeId === TARGET_ITEM_TYPE_ID)) != null ? _frames$currentFrameN : [];
+  const previousTargets = (_frames$prevFrameNumb = (_frames$prevFrameNumb2 = frames[prevFrameNumber]) == null ? void 0 : (_frames$prevFrameNumb3 = _frames$prevFrameNumb2.items) == null ? void 0 : _frames$prevFrameNumb3.filter(item => item.typeId === TARGET_ITEM_TYPE_ID)) != null ? _frames$prevFrameNumb : [];
   const currentTargetIds = currentTargets.map(item => item.spawnId).filter(exists);
-  const previousTargetIds = previousTargets.map(item => item.spawnId).filter(exists);
-  // Check if any targets were destroyed
+  const previousTargetIds = previousTargets.map(item => item.spawnId).filter(exists); // Check if any targets were destroyed
+
   const brokenTargetIds = previousTargetIds.filter(id => !currentTargetIds.includes(id));
   brokenTargetIds.forEach(id => {
     // Update the target break
     const targetBreak = targetBreaks.find(targetBreak => targetBreak.spawnId === id);
+
     if (targetBreak) {
       targetBreak.frameDestroyed = currentFrameNumber;
     }
@@ -2104,59 +2291,72 @@ function frameToGameTimer(frame, options) {
     timerType,
     startingTimerSeconds
   } = options;
+
   if (timerType === exports.TimerType.DECREASING) {
     if (!exists(startingTimerSeconds)) {
       return "Unknown";
     }
+
     const centiseconds = Math.ceil((60 - frame % 60) % 60 * 99 / 59);
     const date = new Date(0, 0, 0, 0, 0, startingTimerSeconds - frame / 60, centiseconds * 10);
     return dateFns.format(date, "mm:ss.SS");
   }
+
   if (timerType === exports.TimerType.INCREASING) {
     const centiseconds = Math.floor(frame % 60 * 99 / 59);
     const date = new Date(0, 0, 0, 0, 0, frame / 60, centiseconds * 10);
     return dateFns.format(date, "mm:ss.SS");
   }
+
   return "Infinite";
 }
 
 exports.CommunicationType = void 0;
+
 (function (CommunicationType) {
   CommunicationType[CommunicationType["HANDSHAKE"] = 1] = "HANDSHAKE";
   CommunicationType[CommunicationType["REPLAY"] = 2] = "REPLAY";
   CommunicationType[CommunicationType["KEEP_ALIVE"] = 3] = "KEEP_ALIVE";
-})(exports.CommunicationType || (exports.CommunicationType = {}));
-// This class is responsible for handling the communication protocol between the Wii and the
+})(exports.CommunicationType || (exports.CommunicationType = {})); // This class is responsible for handling the communication protocol between the Wii and the
 // desktop app
+
+
 class ConsoleCommunication {
   constructor() {
     this.receiveBuf = Buffer.from([]);
     this.messages = new Array();
   }
+
   receive(data) {
     this.receiveBuf = Buffer.concat([this.receiveBuf, data]);
+
     while (this.receiveBuf.length >= 4) {
       // First get the size of the message we are expecting
       const msgSize = this.receiveBuf.readUInt32BE(0);
+
       if (this.receiveBuf.length < msgSize + 4) {
         // If we haven't received all the data yet, let's wait for more
         return;
-      }
-      // Here we have received all the data, so let's decode it
+      } // Here we have received all the data, so let's decode it
+
+
       const ubjsonData = this.receiveBuf.slice(4, msgSize + 4);
-      this.messages.push(ubjson.decode(ubjsonData));
-      // Remove the processed data from receiveBuf
+      this.messages.push(ubjson.decode(ubjsonData)); // Remove the processed data from receiveBuf
+
       this.receiveBuf = this.receiveBuf.slice(msgSize + 4);
     }
   }
+
   getReceiveBuffer() {
     return this.receiveBuf;
   }
+
   getMessages() {
     const toReturn = this.messages;
     this.messages = [];
     return toReturn;
   }
+
   genHandshakeOut(cursor, clientToken, isRealtime = false) {
     const clientTokenBuf = Buffer.from([0, 0, 0, 0]);
     clientTokenBuf.writeUInt32BE(clientToken, 0);
@@ -2175,9 +2375,11 @@ class ConsoleCommunication {
     msg.writeUInt32BE(buf.byteLength, 0);
     return msg;
   }
+
 }
 
 exports.ConnectionEvent = void 0;
+
 (function (ConnectionEvent) {
   ConnectionEvent["CONNECT"] = "connect";
   ConnectionEvent["MESSAGE"] = "message";
@@ -2186,14 +2388,18 @@ exports.ConnectionEvent = void 0;
   ConnectionEvent["DATA"] = "data";
   ConnectionEvent["ERROR"] = "error";
 })(exports.ConnectionEvent || (exports.ConnectionEvent = {}));
+
 exports.ConnectionStatus = void 0;
+
 (function (ConnectionStatus) {
   ConnectionStatus[ConnectionStatus["DISCONNECTED"] = 0] = "DISCONNECTED";
   ConnectionStatus[ConnectionStatus["CONNECTING"] = 1] = "CONNECTING";
   ConnectionStatus[ConnectionStatus["CONNECTED"] = 2] = "CONNECTED";
   ConnectionStatus[ConnectionStatus["RECONNECT_WAIT"] = 3] = "RECONNECT_WAIT";
 })(exports.ConnectionStatus || (exports.ConnectionStatus = {}));
+
 exports.Ports = void 0;
+
 (function (Ports) {
   Ports[Ports["DEFAULT"] = 51441] = "DEFAULT";
   Ports[Ports["LEGACY"] = 666] = "LEGACY";
@@ -2203,11 +2409,13 @@ exports.Ports = void 0;
 const NETWORK_MESSAGE = "HELO\0";
 const DEFAULT_CONNECTION_TIMEOUT_MS = 20000;
 var CommunicationState;
+
 (function (CommunicationState) {
   CommunicationState["INITIAL"] = "initial";
   CommunicationState["LEGACY"] = "legacy";
   CommunicationState["NORMAL"] = "normal";
 })(CommunicationState || (CommunicationState = {}));
+
 const defaultConnectionDetails = {
   consoleNick: "unknown",
   gameDataCursor: /*#__PURE__*/Uint8Array.from([0, 0, 0, 0, 0, 0, 0, 0]),
@@ -2239,6 +2447,7 @@ const consoleConnectionOptions = {
  * });
  * ```
  */
+
 class ConsoleConnection extends events.EventEmitter {
   constructor(options) {
     super();
@@ -2246,8 +2455,7 @@ class ConsoleConnection extends events.EventEmitter {
     this.port = void 0;
     this.isRealtime = void 0;
     this.connectionStatus = exports.ConnectionStatus.DISCONNECTED;
-    this.connDetails = {
-      ...defaultConnectionDetails
+    this.connDetails = { ...defaultConnectionDetails
     };
     this.client = null;
     this.connection = null;
@@ -2261,12 +2469,16 @@ class ConsoleConnection extends events.EventEmitter {
   /**
    * @returns The current connection status.
    */
+
+
   getStatus() {
     return this.connectionStatus;
   }
   /**
    * @returns The IP address and port of the current connection.
    */
+
+
   getSettings() {
     return {
       ipAddress: this.ipAddress,
@@ -2276,9 +2488,10 @@ class ConsoleConnection extends events.EventEmitter {
   /**
    * @returns The specific details about the connected console.
    */
+
+
   getDetails() {
-    return {
-      ...this.connDetails
+    return { ...this.connDetails
     };
   }
   /**
@@ -2289,21 +2502,26 @@ class ConsoleConnection extends events.EventEmitter {
    * @param timeout Optional. The timeout in milliseconds when attempting to connect
    *                to the Wii or relay.
    */
+
+
   connect(ip, port, isRealtime = false, timeout = DEFAULT_CONNECTION_TIMEOUT_MS) {
     this.ipAddress = ip;
     this.port = port;
     this.isRealtime = isRealtime;
+
     this._connectOnPort(ip, port, timeout);
   }
+
   _connectOnPort(ip, port, timeout) {
     // set up reconnect
-    const reconnect = inject__default["default"](() => {});
-    // Indicate we are connecting
-    this._setStatus(exports.ConnectionStatus.CONNECTING);
-    // Prepare console communication obj for talking UBJSON
-    const consoleComms = new ConsoleCommunication();
-    // TODO: reconnect on failed reconnect, not sure how
+    const reconnect = inject__default["default"](() => {}); // Indicate we are connecting
+
+    this._setStatus(exports.ConnectionStatus.CONNECTING); // Prepare console communication obj for talking UBJSON
+
+
+    const consoleComms = new ConsoleCommunication(); // TODO: reconnect on failed reconnect, not sure how
     // TODO: to do this
+
     const connection = reconnect({
       initialDelay: 2000,
       maxDelay: 10000,
@@ -2311,11 +2529,11 @@ class ConsoleConnection extends events.EventEmitter {
       failAfter: Infinity
     }, client => {
       var _this$connDetails$cli;
-      this.emit(exports.ConnectionEvent.CONNECT);
-      // We successfully connected so turn on auto-reconnect
+
+      this.emit(exports.ConnectionEvent.CONNECT); // We successfully connected so turn on auto-reconnect
+
       this.shouldReconnect = this.options.autoReconnect;
       this.client = client;
-      // client.on("data", (data) => {
       //   if (commState === CommunicationState.INITIAL) {
       //     commState = this._getInitialCommState(data);
       //     console.log(`Connected to ${ip}:${port} with type: ${commState}`);
@@ -2365,27 +2583,32 @@ class ConsoleConnection extends events.EventEmitter {
       // client.on("close", () => {
       //   console.log("connection was closed");
       // });
-      consoleComms.genHandshakeOut(this.connDetails.gameDataCursor, (_this$connDetails$cli = this.connDetails.clientToken) != null ? _this$connDetails$cli : 0, this.isRealtime);
-      // client.write(handshakeMsgOut);
+
+      consoleComms.genHandshakeOut(this.connDetails.gameDataCursor, (_this$connDetails$cli = this.connDetails.clientToken) != null ? _this$connDetails$cli : 0, this.isRealtime); // client.write(handshakeMsgOut);
     });
+
     const setConnectingStatus = () => {
       // Indicate we are connecting
       this._setStatus(this.shouldReconnect ? exports.ConnectionStatus.RECONNECT_WAIT : exports.ConnectionStatus.CONNECTING);
     };
+
     connection.on("connect", setConnectingStatus);
     connection.on("reconnect", setConnectingStatus);
     connection.on("disconnect", () => {
       if (!this.shouldReconnect) {
         connection.reconnect = false;
         connection.disconnect();
+
         this._setStatus(exports.ConnectionStatus.DISCONNECTED);
-      }
-      // TODO: Figure out how to set RECONNECT_WAIT state here. Currently it will stay on
+      } // TODO: Figure out how to set RECONNECT_WAIT state here. Currently it will stay on
       // TODO: Connecting... forever
+
     });
     connection.on("error", err => {
       console.warn(`Connection on port ${port} encountered an error.`, err);
+
       this._setStatus(exports.ConnectionStatus.DISCONNECTED);
+
       this.emit(exports.ConnectionEvent.ERROR, `Connection on port ${port} encountered an error.\n${err}`);
     });
     this.connection = connection;
@@ -2394,6 +2617,8 @@ class ConsoleConnection extends events.EventEmitter {
   /**
    * Terminate the current connection.
    */
+
+
   disconnect() {
     // Prevent reconnections and disconnect
     if (this.connection) {
@@ -2401,20 +2626,25 @@ class ConsoleConnection extends events.EventEmitter {
       this.connection.disconnect();
       this.connection = null;
     }
+
     if (this.client) {
       this.client.destroy();
     }
   }
+
   _getInitialCommState(data) {
     if (data.length < 13) {
       return CommunicationState.LEGACY;
     }
+
     const openingBytes = Buffer.from([0x7b, 0x69, 0x04, 0x74, 0x79, 0x70, 0x65, 0x55, 0x01]);
     const dataStart = data.slice(4, 13);
     return dataStart.equals(openingBytes) ? CommunicationState.NORMAL : CommunicationState.LEGACY;
   }
+
   _processMessage(message) {
     this.emit(exports.ConnectionEvent.MESSAGE, message);
+
     switch (message.type) {
       case exports.CommunicationType.KEEP_ALIVE:
         // console.log("Keep alive message received");
@@ -2423,43 +2653,58 @@ class ConsoleConnection extends events.EventEmitter {
         // TODO: Need to figure out a better solution for this. There should be no need to have an
         // TODO: active Wii connection for the relay connection to keep itself alive
         const fakeKeepAlive = Buffer.from(NETWORK_MESSAGE);
+
         this._handleReplayData(fakeKeepAlive);
+
         break;
+
       case exports.CommunicationType.REPLAY:
         const readPos = Uint8Array.from(message.payload.pos);
         const cmp = Buffer.compare(this.connDetails.gameDataCursor, readPos);
+
         if (!message.payload.forcePos && cmp !== 0) {
           // The readPos is not the one we are waiting on, throw error
           throw new Error(`Position of received data is incorrect. Expected: ${this.connDetails.gameDataCursor.toString()}, Received: ${readPos.toString()}`);
         }
+
         if (message.payload.forcePos) {
           console.warn("Overflow occured in Nintendont, data has likely been skipped and replay corrupted. " + "Expected, Received:", this.connDetails.gameDataCursor, readPos);
         }
+
         this.connDetails.gameDataCursor = Uint8Array.from(message.payload.nextPos);
         const data = Uint8Array.from(message.payload.data);
+
         this._handleReplayData(data);
+
         break;
+
       case exports.CommunicationType.HANDSHAKE:
         const {
           nick,
           nintendontVersion
         } = message.payload;
+
         if (nick) {
           this.connDetails.consoleNick = nick;
         }
+
         const tokenBuf = Buffer.from(message.payload.clientToken);
         this.connDetails.clientToken = tokenBuf.readUInt32BE(0);
+
         if (nintendontVersion) {
           this.connDetails.version = nintendontVersion;
         }
+
         this.connDetails.gameDataCursor = Uint8Array.from(message.payload.pos);
         this.emit(exports.ConnectionEvent.HANDSHAKE, this.connDetails);
         break;
     }
   }
+
   _handleReplayData(data) {
     this.emit(exports.ConnectionEvent.DATA, data);
   }
+
   _setStatus(status) {
     // Don't fire the event if the status hasn't actually changed
     if (this.connectionStatus !== status) {
@@ -2467,16 +2712,19 @@ class ConsoleConnection extends events.EventEmitter {
       this.emit(exports.ConnectionEvent.STATUS_CHANGE, this.connectionStatus);
     }
   }
+
 }
 
 const MAX_PEERS = 32;
 exports.DolphinMessageType = void 0;
+
 (function (DolphinMessageType) {
   DolphinMessageType["CONNECT_REPLY"] = "connect_reply";
   DolphinMessageType["GAME_EVENT"] = "game_event";
   DolphinMessageType["START_GAME"] = "start_game";
   DolphinMessageType["END_GAME"] = "end_game";
 })(exports.DolphinMessageType || (exports.DolphinMessageType = {}));
+
 class DolphinConnection extends events.EventEmitter {
   constructor() {
     super();
@@ -2493,18 +2741,23 @@ class DolphinConnection extends events.EventEmitter {
   /**
    * @returns The current connection status.
    */
+
+
   getStatus() {
     return this.connectionStatus;
   }
   /**
    * @returns The IP address and port of the current connection.
    */
+
+
   getSettings() {
     return {
       ipAddress: this.ipAddress,
       port: this.port
     };
   }
+
   getDetails() {
     return {
       consoleNick: this.nickname,
@@ -2512,12 +2765,13 @@ class DolphinConnection extends events.EventEmitter {
       version: this.version
     };
   }
+
   async connect(ip, port) {
     console.log(`Connecting to: ${ip}:${port}`);
     this.ipAddress = ip;
     this.port = port;
-    const enet = await Promise.resolve().then(function () { return /*#__PURE__*/_interopNamespace(require('enet')); });
-    // Create the enet client
+    const enet = await Promise.resolve().then(function () { return /*#__PURE__*/_interopNamespace(require('enet')); }); // Create the enet client
+
     const client = enet.createClient({
       peers: MAX_PEERS,
       channels: 3,
@@ -2532,15 +2786,16 @@ class DolphinConnection extends events.EventEmitter {
     this.peer = client.connect({
       address: this.ipAddress,
       port: this.port
-    }, 3, 1337,
-    // Data to send, not sure what this is or what this represents
+    }, 3, 1337, // Data to send, not sure what this is or what this represents
     (err, newPeer) => {
       if (err) {
         console.error(err);
         return;
       }
+
       newPeer.ping();
       this.emit(exports.ConnectionEvent.CONNECT);
+
       this._setStatus(exports.ConnectionStatus.CONNECTED);
     });
     this.peer.on("connect", () => {
@@ -2556,20 +2811,25 @@ class DolphinConnection extends events.EventEmitter {
     });
     this.peer.on("message", packet => {
       const data = packet.data();
+
       if (data.length === 0) {
         return;
       }
+
       const dataString = data.toString("ascii");
       const message = JSON.parse(dataString);
       const {
         dolphin_closed
       } = message;
+
       if (dolphin_closed) {
         // We got a disconnection request
         this.disconnect();
         return;
       }
+
       this.emit(exports.ConnectionEvent.MESSAGE, message);
+
       switch (message.type) {
         case exports.DolphinMessageType.CONNECT_REPLY:
           this.connectionStatus = exports.ConnectionStatus.CONNECTED;
@@ -2578,30 +2838,39 @@ class DolphinConnection extends events.EventEmitter {
           this.version = message.version;
           this.emit(exports.ConnectionEvent.HANDSHAKE, this.getDetails());
           break;
+
         case exports.DolphinMessageType.GAME_EVENT:
           {
             const {
               payload
-            } = message;
-            //TODO: remove after game start and end messages have been in stable Ishii for a bit
+            } = message; //TODO: remove after game start and end messages have been in stable Ishii for a bit
+
             if (!payload) {
               // We got a disconnection request
               this.disconnect();
               return;
             }
+
             this._updateCursor(message, dataString);
+
             const gameData = Buffer.from(payload, "base64");
+
             this._handleReplayData(gameData);
+
             break;
           }
+
         case exports.DolphinMessageType.START_GAME:
           {
             this._updateCursor(message, dataString);
+
             break;
           }
+
         case exports.DolphinMessageType.END_GAME:
           {
             this._updateCursor(message, dataString);
+
             break;
           }
       }
@@ -2609,18 +2878,23 @@ class DolphinConnection extends events.EventEmitter {
     this.peer.on("disconnect", () => {
       this.disconnect();
     });
+
     this._setStatus(exports.ConnectionStatus.CONNECTING);
   }
+
   disconnect() {
     if (this.peer) {
       this.peer.disconnect();
       this.peer = null;
     }
+
     this._setStatus(exports.ConnectionStatus.DISCONNECTED);
   }
+
   _handleReplayData(data) {
     this.emit(exports.ConnectionEvent.DATA, data);
   }
+
   _setStatus(status) {
     // Don't fire the event if the status hasn't actually changed
     if (this.connectionStatus !== status) {
@@ -2628,18 +2902,22 @@ class DolphinConnection extends events.EventEmitter {
       this.emit(exports.ConnectionEvent.STATUS_CHANGE, this.connectionStatus);
     }
   }
+
   _updateCursor(message, dataString) {
     const {
       cursor,
       next_cursor
     } = message;
+
     if (this.gameCursor !== cursor) {
       const err = new Error(`Unexpected game data cursor. Expected: ${this.gameCursor} but got: ${cursor}. Payload: ${dataString}`);
       console.warn(err);
       this.emit(exports.ConnectionEvent.ERROR, err);
     }
+
     this.gameCursor = next_cursor;
   }
+
 }
 
 function toHalfwidth(str) {
@@ -2651,8 +2929,9 @@ function toHalfwidth(str) {
      */
     if (charCode > 0xff00 && charCode < 0xff5f) {
       return 0x0020 + (charCode - 0xff00);
-    }
-    // space:
+    } // space:
+
+
     if (charCode === 0x3000) {
       return 0x0020;
     }
@@ -2660,24 +2939,31 @@ function toHalfwidth(str) {
      * Exceptions found in Melee/Japanese keyboards
      */
     // single quote: '
+
+
     if (charCode === 0x2019) {
       return 0x0027;
-    }
-    // double quote: "
+    } // double quote: "
+
+
     if (charCode === 0x201d) {
       return 0x0022;
     }
+
     return charCode;
   };
+
   const ret = map__default["default"](str, char => convertChar(char.charCodeAt(0)));
   return String.fromCharCode(...ret);
 }
 
 exports.SlpInputSource = void 0;
+
 (function (SlpInputSource) {
   SlpInputSource["BUFFER"] = "buffer";
   SlpInputSource["FILE"] = "file";
 })(exports.SlpInputSource || (exports.SlpInputSource = {}));
+
 function getRef(input) {
   switch (input.source) {
     case exports.SlpInputSource.BUFFER:
@@ -2685,31 +2971,39 @@ function getRef(input) {
         source: input.source,
         buffer: input.buffer
       };
+
     default:
       throw new Error("Source type not supported");
   }
 }
+
 function readRef(ref, buffer, offset, length, position) {
   switch (ref.source) {
     case exports.SlpInputSource.FILE:
       console.error("deleted this for cloudflare worker support :)");
       throw new Error("cfw support");
+
     case exports.SlpInputSource.BUFFER:
       if (position >= ref.buffer.length) {
         return 0;
       }
+
       return ref.buffer.copy(buffer, offset, position, position + length);
+
     default:
       throw new Error("Source type not supported");
   }
 }
+
 function getLenRef(ref) {
   switch (ref.source) {
     case exports.SlpInputSource.FILE:
       console.error("deleted this for cloudflare worker support :)");
       throw new Error("cfw support");
+
     case exports.SlpInputSource.BUFFER:
       return ref.buffer.length;
+
     default:
       throw new Error("Source type not supported");
   }
@@ -2717,11 +3011,14 @@ function getLenRef(ref) {
 /**
  * Opens a file at path
  */
+
+
 function openSlpFile(input) {
   const ref = getRef(input);
   const rawDataPosition = getRawDataPosition(ref);
   const rawDataLength = getRawDataLength(ref, rawDataPosition);
   const metadataPosition = rawDataPosition + rawDataLength + 10; // remove metadata string
+
   const metadataLength = getMetadataLength(ref, metadataPosition);
   const messageSizes = getMessageSizes(ref, rawDataPosition);
   return {
@@ -2734,43 +3031,53 @@ function openSlpFile(input) {
   };
 }
 function closeSlpFile(file) {
-}
-// This function gets the position where the raw data starts
+} // This function gets the position where the raw data starts
+
 function getRawDataPosition(ref) {
   const buffer = new Uint8Array(1);
   readRef(ref, buffer, 0, buffer.length, 0);
+
   if (buffer[0] === 0x36) {
     return 0;
   }
+
   if (buffer[0] !== "{".charCodeAt(0)) {
     return 0; // return error?
   }
+
   return 15;
 }
+
 function getRawDataLength(ref, position) {
   const fileSize = getLenRef(ref);
+
   if (position === 0) {
     return fileSize;
   }
+
   const buffer = new Uint8Array(4);
   readRef(ref, buffer, 0, buffer.length, position - 4);
   const rawDataLen = buffer[0] << 24 | buffer[1] << 16 | buffer[2] << 8 | buffer[3];
+
   if (rawDataLen > 0) {
     // If this method manages to read a number, it's probably trustworthy
     return rawDataLen;
-  }
-  // If the above does not return a valid data length,
+  } // If the above does not return a valid data length,
   // return a file size based on file length. This enables
   // some support for severed files
+
+
   return fileSize - position;
 }
+
 function getMetadataLength(ref, position) {
   const len = getLenRef(ref);
   return len - position - 1;
 }
+
 function getMessageSizes(ref, position) {
-  const messageSizes = {};
-  // Support old file format
+  const messageSizes = {}; // Support old file format
+
   if (position === 0) {
     messageSizes[0x36] = 0x140;
     messageSizes[0x37] = 0x6;
@@ -2778,22 +3085,28 @@ function getMessageSizes(ref, position) {
     messageSizes[0x39] = 0x1;
     return messageSizes;
   }
+
   const buffer = new Uint8Array(2);
   readRef(ref, buffer, 0, buffer.length, position);
+
   if (buffer[0] !== exports.Command.MESSAGE_SIZES) {
     return {};
   }
+
   const payloadLength = buffer[1];
   messageSizes[0x35] = payloadLength;
   const messageSizesBuffer = new Uint8Array(payloadLength - 1);
   readRef(ref, messageSizesBuffer, 0, messageSizesBuffer.length, position + 2);
+
   for (let i = 0; i < payloadLength - 1; i += 3) {
-    const command = messageSizesBuffer[i];
-    // Get size of command
+    const command = messageSizesBuffer[i]; // Get size of command
+
     messageSizes[command] = messageSizesBuffer[i + 1] << 8 | messageSizesBuffer[i + 2];
   }
+
   return messageSizes;
 }
+
 function getEnabledItems(view) {
   const offsets = [0x1, 0x100, 0x10000, 0x1000000, 0x100000000];
   const enabledItems = offsets.reduce((acc, byteOffset, index) => {
@@ -2802,6 +3115,7 @@ function getEnabledItems(view) {
   }, 0);
   return enabledItems;
 }
+
 function getGameInfoBlock(view) {
   const offset = 0x5;
   return {
@@ -2822,67 +3136,84 @@ function getGameInfoBlock(view) {
 /**
  * Iterates through slp events and parses payloads
  */
+
+
 function iterateEvents(slpFile, callback, startPos = null) {
   const ref = slpFile.ref;
   let readPosition = startPos !== null && startPos > 0 ? startPos : slpFile.rawDataPosition;
-  const stopReadingAt = slpFile.rawDataPosition + slpFile.rawDataLength;
-  // Generate read buffers for each
+  const stopReadingAt = slpFile.rawDataPosition + slpFile.rawDataLength; // Generate read buffers for each
+
   const commandPayloadBuffers = mapValues__default["default"](slpFile.messageSizes, size => new Uint8Array(size + 1));
   let splitMessageBuffer = new Uint8Array(0);
   const commandByteBuffer = new Uint8Array(1);
+
   while (readPosition < stopReadingAt) {
     var _commandByteBuffer$;
+
     readRef(ref, commandByteBuffer, 0, 1, readPosition);
     let commandByte = (_commandByteBuffer$ = commandByteBuffer[0]) != null ? _commandByteBuffer$ : 0;
     let buffer = commandPayloadBuffers[commandByte];
+
     if (buffer === undefined) {
       // If we don't have an entry for this command, return false to indicate failed read
       return readPosition;
     }
+
     if (buffer.length > stopReadingAt - readPosition) {
       return readPosition;
     }
+
     const advanceAmount = buffer.length;
     readRef(ref, buffer, 0, buffer.length, readPosition);
+
     if (commandByte === exports.Command.SPLIT_MESSAGE) {
       var _readUint, _readUint2;
+
       // Here we have a split message, we will collect data from them until the last
       // message of the list is received
       const view = new DataView(buffer.buffer);
       const size = (_readUint = readUint16(view, 0x201)) != null ? _readUint : 512;
       const isLastMessage = readBool(view, 0x204);
-      const internalCommand = (_readUint2 = readUint8(view, 0x203)) != null ? _readUint2 : 0;
-      // If this is the first message, initialize the splitMessageBuffer
+      const internalCommand = (_readUint2 = readUint8(view, 0x203)) != null ? _readUint2 : 0; // If this is the first message, initialize the splitMessageBuffer
       // with the internal command byte because our parseMessage function
       // seems to expect a command byte at the start
+
       if (splitMessageBuffer.length === 0) {
         splitMessageBuffer = new Uint8Array(1);
         splitMessageBuffer[0] = internalCommand;
-      }
-      // Collect new data into splitMessageBuffer
+      } // Collect new data into splitMessageBuffer
+
+
       const appendBuf = buffer.slice(0x1, 0x1 + size);
       const mergedBuf = new Uint8Array(splitMessageBuffer.length + appendBuf.length);
       mergedBuf.set(splitMessageBuffer);
       mergedBuf.set(appendBuf, splitMessageBuffer.length);
       splitMessageBuffer = mergedBuf;
+
       if (isLastMessage) {
         var _splitMessageBuffer$;
+
         commandByte = (_splitMessageBuffer$ = splitMessageBuffer[0]) != null ? _splitMessageBuffer$ : 0;
         buffer = splitMessageBuffer;
         splitMessageBuffer = new Uint8Array(0);
       }
     }
+
     const parsedPayload = parseMessage(commandByte, buffer);
     const shouldStop = callback(commandByte, parsedPayload, buffer);
+
     if (shouldStop) {
       break;
     }
+
     readPosition += advanceAmount;
   }
+
   return readPosition;
 }
 function parseMessage(command, payload) {
   const view = new DataView(payload.buffer);
+
   switch (command) {
     case exports.Command.GAME_START:
       const getPlayerObject = playerIndex => {
@@ -2891,28 +3222,30 @@ function parseMessage(command, payload) {
         const dashback = readUint32(view, 0x141 + cfOffset);
         const shieldDrop = readUint32(view, 0x145 + cfOffset);
         let controllerFix = "None";
+
         if (dashback !== shieldDrop) {
           controllerFix = "Mixed";
         } else if (dashback === 1) {
           controllerFix = "UCF";
         } else if (dashback === 2) {
           controllerFix = "Dween";
-        }
-        // Nametag stuff
+        } // Nametag stuff
+
+
         const nametagLength = 0x10;
         const nametagOffset = playerIndex * nametagLength;
         const nametagStart = 0x161 + nametagOffset;
         const nametagBuf = payload.slice(nametagStart, nametagStart + nametagLength);
         const nameTagString = iconv__default["default"].decode(nametagBuf, "Shift_JIS").split("\0").shift();
-        const nametag = nameTagString ? toHalfwidth(nameTagString) : "";
-        // Display name
+        const nametag = nameTagString ? toHalfwidth(nameTagString) : ""; // Display name
+
         const displayNameLength = 0x1f;
         const displayNameOffset = playerIndex * displayNameLength;
         const displayNameStart = 0x1a5 + displayNameOffset;
         const displayNameBuf = payload.slice(displayNameStart, displayNameStart + displayNameLength);
         const displayNameString = iconv__default["default"].decode(displayNameBuf, "Shift_JIS").split("\0").shift();
-        const displayName = displayNameString ? toHalfwidth(displayNameString) : "";
-        // Connect code
+        const displayName = displayNameString ? toHalfwidth(displayNameString) : ""; // Connect code
+
         const connectCodeLength = 0xa;
         const connectCodeOffset = playerIndex * connectCodeLength;
         const connectCodeStart = 0x221 + connectCodeOffset;
@@ -2956,6 +3289,7 @@ function parseMessage(command, payload) {
         };
         return playerInfo;
       };
+
       const matchIdLength = 51;
       const matchIdStart = 0x2be;
       const matchIdBuf = payload.slice(matchIdStart, matchIdStart + matchIdLength);
@@ -2986,12 +3320,14 @@ function parseMessage(command, payload) {
         }
       };
       return gameSettings;
+
     case exports.Command.FRAME_START:
       return {
         frame: readInt32(view, 0x1),
         seed: readUint32(view, 0x5),
         sceneFrameCounter: readUint32(view, 0x9)
       };
+
     case exports.Command.PRE_FRAME_UPDATE:
       return {
         frame: readInt32(view, 0x1),
@@ -3014,6 +3350,7 @@ function parseMessage(command, payload) {
         rawJoystickX: readInt8(view, 0x3b),
         percent: readFloat(view, 0x3c)
       };
+
     case exports.Command.POST_FRAME_UPDATE:
       const selfInducedSpeeds = {
         airX: readFloat(view, 0x35),
@@ -3050,6 +3387,7 @@ function parseMessage(command, payload) {
         instanceHitBy: readUint16(view, 0x51),
         instanceId: readUint16(view, 0x53)
       };
+
     case exports.Command.ITEM_UPDATE:
       return {
         frame: readInt32(view, 0x1),
@@ -3070,11 +3408,13 @@ function parseMessage(command, payload) {
         owner: readInt8(view, 0x2a),
         instanceId: readUint16(view, 0x2b)
       };
+
     case exports.Command.FRAME_BOOKEND:
       return {
         frame: readInt32(view, 0x1),
         latestFinalizedFrame: readInt32(view, 0x5)
       };
+
     case exports.Command.GAME_END:
       const placements = [0, 1, 2, 3].map(playerIndex => {
         const position = readInt8(view, 0x3 + playerIndex);
@@ -3088,26 +3428,33 @@ function parseMessage(command, payload) {
         lrasInitiatorIndex: readInt8(view, 0x2),
         placements
       };
+
     case exports.Command.GECKO_LIST:
       const codes = [];
       let pos = 1;
+
       while (pos < payload.length) {
         var _readUint3;
+
         const word1 = (_readUint3 = readUint32(view, pos)) != null ? _readUint3 : 0;
         const codetype = word1 >> 24 & 0xfe;
         const address = (word1 & 0x01ffffff) + 0x80000000;
         let offset = 8; // Default code length, most codes are this length
+
         if (codetype === 0xc0 || codetype === 0xc2) {
           var _readUint4;
+
           const lineCount = (_readUint4 = readUint32(view, pos + 4)) != null ? _readUint4 : 0;
           offset = 8 + lineCount * 8;
         } else if (codetype === 0x06) {
           var _readUint5;
+
           const byteLen = (_readUint5 = readUint32(view, pos + 4)) != null ? _readUint5 : 0;
           offset = 8 + (byteLen + 7 & 0xfffffff8);
         } else if (codetype === 0x08) {
           offset = 16;
         }
+
         codes.push({
           type: codetype,
           address: address,
@@ -3115,76 +3462,96 @@ function parseMessage(command, payload) {
         });
         pos += offset;
       }
+
       return {
         contents: payload.slice(1),
         codes: codes
       };
+
     default:
       return null;
   }
 }
+
 function canReadFromView(view, offset, length) {
   const viewLength = view.byteLength;
   return offset + length <= viewLength;
 }
+
 function readFloat(view, offset) {
   if (!canReadFromView(view, offset, 4)) {
     return null;
   }
+
   return view.getFloat32(offset);
 }
+
 function readInt32(view, offset) {
   if (!canReadFromView(view, offset, 4)) {
     return null;
   }
+
   return view.getInt32(offset);
 }
+
 function readInt8(view, offset) {
   if (!canReadFromView(view, offset, 1)) {
     return null;
   }
+
   return view.getInt8(offset);
 }
+
 function readUint32(view, offset) {
   if (!canReadFromView(view, offset, 4)) {
     return null;
   }
+
   return view.getUint32(offset);
 }
+
 function readUint16(view, offset) {
   if (!canReadFromView(view, offset, 2)) {
     return null;
   }
+
   return view.getUint16(offset);
 }
+
 function readUint8(view, offset, bitmask = 0xff) {
   if (!canReadFromView(view, offset, 1)) {
     return null;
   }
+
   return view.getUint8(offset) & bitmask;
 }
+
 function readBool(view, offset) {
   if (!canReadFromView(view, offset, 1)) {
     return null;
   }
+
   return !!view.getUint8(offset);
 }
+
 function getMetadata(slpFile) {
   if (slpFile.metadataLength <= 0) {
     // This will happen on a severed incomplete file
     // $FlowFixMe
     return null;
   }
+
   const buffer = new Uint8Array(slpFile.metadataLength);
   readRef(slpFile.ref, buffer, 0, buffer.length, slpFile.metadataPosition);
   let metadata = null;
+
   try {
     metadata = ubjson.decode(buffer);
-  } catch (ex) {
-    // Do nothing
+  } catch (ex) {// Do nothing
     // console.log(ex);
-  }
-  // $FlowFixMe
+  } // $FlowFixMe
+
+
   return metadata;
 }
 function getGameEnd(slpFile) {
@@ -3195,22 +3562,28 @@ function getGameEnd(slpFile) {
     messageSizes
   } = slpFile;
   const gameEndPayloadSize = messageSizes[exports.Command.GAME_END];
+
   if (!exists(gameEndPayloadSize) || gameEndPayloadSize <= 0) {
     return null;
-  }
-  // Add one to account for command byte
+  } // Add one to account for command byte
+
+
   const gameEndSize = gameEndPayloadSize + 1;
   const gameEndPosition = rawDataPosition + rawDataLength - gameEndSize;
   const buffer = new Uint8Array(gameEndSize);
   readRef(ref, buffer, 0, buffer.length, gameEndPosition);
+
   if (buffer[0] !== exports.Command.GAME_END) {
     // This isn't even a game end payload
     return null;
   }
+
   const gameEndMessage = parseMessage(exports.Command.GAME_END, buffer);
+
   if (!gameEndMessage) {
     return null;
   }
+
   return gameEndMessage;
 }
 function extractFinalPostFrameUpdates(slpFile) {
@@ -3219,53 +3592,64 @@ function extractFinalPostFrameUpdates(slpFile) {
     rawDataPosition,
     rawDataLength,
     messageSizes
-  } = slpFile;
-  // The following should exist on all replay versions
+  } = slpFile; // The following should exist on all replay versions
+
   const postFramePayloadSize = messageSizes[exports.Command.POST_FRAME_UPDATE];
   const gameEndPayloadSize = messageSizes[exports.Command.GAME_END];
-  const frameBookendPayloadSize = messageSizes[exports.Command.FRAME_BOOKEND];
-  // Technically this should not be possible
+  const frameBookendPayloadSize = messageSizes[exports.Command.FRAME_BOOKEND]; // Technically this should not be possible
+
   if (!exists(postFramePayloadSize)) {
     return [];
   }
+
   const gameEndSize = gameEndPayloadSize ? gameEndPayloadSize + 1 : 0;
   const postFrameSize = postFramePayloadSize + 1;
   const frameBookendSize = frameBookendPayloadSize ? frameBookendPayloadSize + 1 : 0;
   let frameNum = null;
   let postFramePosition = rawDataPosition + rawDataLength - gameEndSize - frameBookendSize - postFrameSize;
   const postFrameUpdates = [];
+
   do {
     const buffer = new Uint8Array(postFrameSize);
     readRef(ref, buffer, 0, buffer.length, postFramePosition);
+
     if (buffer[0] !== exports.Command.POST_FRAME_UPDATE) {
       break;
     }
+
     const postFrameMessage = parseMessage(exports.Command.POST_FRAME_UPDATE, buffer);
+
     if (!postFrameMessage) {
       break;
     }
+
     if (frameNum === null) {
       frameNum = postFrameMessage.frame;
     } else if (frameNum !== postFrameMessage.frame) {
       // If post frame message is found but the frame doesn't match, it's not part of the final frame
       break;
     }
+
     postFrameUpdates.unshift(postFrameMessage);
     postFramePosition -= postFrameSize;
   } while (postFramePosition >= rawDataPosition);
+
   return postFrameUpdates;
 }
 
 exports.SlpStreamMode = void 0;
+
 (function (SlpStreamMode) {
   SlpStreamMode["AUTO"] = "AUTO";
   SlpStreamMode["MANUAL"] = "MANUAL";
 })(exports.SlpStreamMode || (exports.SlpStreamMode = {}));
+
 const defaultSettings$1 = {
   suppressErrors: false,
   mode: exports.SlpStreamMode.AUTO
 };
 exports.SlpStreamEvent = void 0;
+
 (function (SlpStreamEvent) {
   SlpStreamEvent["RAW"] = "slp-raw";
   SlpStreamEvent["COMMAND"] = "slp-command";
@@ -3281,7 +3665,11 @@ exports.SlpStreamEvent = void 0;
  * @class SlpStream
  * @extends {Writable}
  */
+
+
 class SlpStream extends stream.Writable {
+  // True only if in manual mode and the game has completed
+
   /**
    *Creates an instance of SlpStream.
    * @param {Partial<SlpStreamSettings>} [slpOptions]
@@ -3291,57 +3679,68 @@ class SlpStream extends stream.Writable {
   constructor(slpOptions, opts) {
     super(opts);
     this.gameEnded = false;
-    // True only if in manual mode and the game has completed
     this.settings = void 0;
     this.payloadSizes = null;
     this.previousBuffer = Buffer.from([]);
     this.settings = Object.assign({}, defaultSettings$1, slpOptions);
   }
+
   restart() {
     this.gameEnded = false;
     this.payloadSizes = null;
-  }
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
+
   _write(newData, encoding, callback) {
     if (encoding !== "buffer") {
       throw new Error(`Unsupported stream encoding. Expected 'buffer' got '${encoding}'.`);
-    }
-    // Join the current data with the old data
-    const data = Uint8Array.from(Buffer.concat([this.previousBuffer, newData]));
-    // Clear previous data
+    } // Join the current data with the old data
+
+
+    const data = Uint8Array.from(Buffer.concat([this.previousBuffer, newData])); // Clear previous data
+
     this.previousBuffer = Buffer.from([]);
-    const dataView = new DataView(data.buffer);
-    // Iterate through the data
+    const dataView = new DataView(data.buffer); // Iterate through the data
+
     let index = 0;
+
     while (index < data.length) {
       // We want to filter out the network messages
       if (Buffer.from(data.slice(index, index + 5)).toString() === NETWORK_MESSAGE) {
         index += 5;
         continue;
-      }
-      // Make sure we have enough data to read a full payload
+      } // Make sure we have enough data to read a full payload
+
+
       const command = dataView.getUint8(index);
       let payloadSize = 0;
+
       if (this.payloadSizes) {
         var _this$payloadSizes$ge;
+
         payloadSize = (_this$payloadSizes$ge = this.payloadSizes.get(command)) != null ? _this$payloadSizes$ge : 0;
       }
+
       const remainingLen = data.length - index;
+
       if (remainingLen < payloadSize + 1) {
         // If remaining length is not long enough for full payload, save the remaining
         // data until we receive more data. The data has been split up.
         this.previousBuffer = data.slice(index);
         break;
-      }
-      // Only process if the game is still going
+      } // Only process if the game is still going
+
+
       if (this.settings.mode === exports.SlpStreamMode.MANUAL && this.gameEnded) {
         break;
-      }
-      // Increment by one for the command byte
+      } // Increment by one for the command byte
+
+
       index += 1;
       const payloadPtr = data.slice(index);
       const payloadDataView = new DataView(data.buffer, index);
       let payloadLen = 0;
+
       try {
         payloadLen = this._processCommand(command, payloadPtr, payloadDataView);
       } catch (err) {
@@ -3349,16 +3748,20 @@ class SlpStream extends stream.Writable {
         if (!this.settings.suppressErrors) {
           throw err;
         }
+
         payloadLen = 0;
       }
+
       index += payloadLen;
     }
+
     callback();
   }
+
   _writeCommand(command, entirePayload, payloadSize) {
     const payloadBuf = entirePayload.slice(0, payloadSize);
-    const bufToWrite = Buffer.concat([Buffer.from([command]), payloadBuf]);
-    // Forward the raw buffer onwards
+    const bufToWrite = Buffer.concat([Buffer.from([command]), payloadBuf]); // Forward the raw buffer onwards
+
     const event = {
       command: command,
       payload: bufToWrite
@@ -3366,14 +3769,16 @@ class SlpStream extends stream.Writable {
     this.emit(exports.SlpStreamEvent.RAW, event);
     return new Uint8Array(bufToWrite);
   }
+
   _processCommand(command, entirePayload, dataView) {
     // Handle the message size command
     if (command === exports.Command.MESSAGE_SIZES) {
-      const payloadSize = dataView.getUint8(0);
-      // Set the payload sizes
-      this.payloadSizes = processReceiveCommands(dataView);
-      // Emit the raw command event
+      const payloadSize = dataView.getUint8(0); // Set the payload sizes
+
+      this.payloadSizes = processReceiveCommands(dataView); // Emit the raw command event
+
       this._writeCommand(command, entirePayload, payloadSize);
+
       const eventPayload = {
         command: command,
         payload: this.payloadSizes
@@ -3381,29 +3786,38 @@ class SlpStream extends stream.Writable {
       this.emit(exports.SlpStreamEvent.COMMAND, eventPayload);
       return payloadSize;
     }
+
     let payloadSize = 0;
+
     if (this.payloadSizes) {
       var _this$payloadSizes$ge2;
+
       payloadSize = (_this$payloadSizes$ge2 = this.payloadSizes.get(command)) != null ? _this$payloadSizes$ge2 : 0;
-    }
-    // Fetch the payload and parse it
+    } // Fetch the payload and parse it
+
+
     let payload;
     let parsedPayload = null;
+
     if (payloadSize > 0) {
       payload = this._writeCommand(command, entirePayload, payloadSize);
       parsedPayload = parseMessage(command, payload);
     }
+
     if (!parsedPayload) {
       return payloadSize;
     }
+
     switch (command) {
       case exports.Command.GAME_END:
         // Stop parsing data until we manually restart the stream
         if (this.settings.mode === exports.SlpStreamMode.MANUAL) {
           this.gameEnded = true;
         }
+
         break;
     }
+
     const eventPayload = {
       command: command,
       payload: parsedPayload
@@ -3411,15 +3825,19 @@ class SlpStream extends stream.Writable {
     this.emit(exports.SlpStreamEvent.COMMAND, eventPayload);
     return payloadSize;
   }
+
 }
+
 const processReceiveCommands = dataView => {
   const payloadSizes = new Map();
   const payloadLen = dataView.getUint8(0);
+
   for (let i = 1; i < payloadLen; i += 3) {
     const commandByte = dataView.getUint8(i);
     const payloadSize = dataView.getUint16(i + 1);
     payloadSizes.set(commandByte, payloadSize);
   }
+
   return payloadSizes;
 };
 
@@ -3431,6 +3849,7 @@ const DEFAULT_NICKNAME = "unknown";
  * @class SlpFile
  * @extends {Writable}
  */
+
 class SlpFile extends stream.Writable {
   /**
    * Creates an instance of SlpFile.
@@ -3453,13 +3872,15 @@ class SlpFile extends stream.Writable {
       lastFrame: -124,
       players: {}
     };
-    this.usesExternalStream = Boolean(slpStream);
-    // Create a new SlpStream if one wasn't already provided
+    this.usesExternalStream = Boolean(slpStream); // Create a new SlpStream if one wasn't already provided
     // This SLP stream represents a single game not multiple, so use manual mode
+
     this.slpStream = slpStream ? slpStream : new SlpStream({
       mode: exports.SlpStreamMode.MANUAL
     });
+
     this._setupListeners();
+
     this._initializeNewGame(this.filePath);
   }
   /**
@@ -3468,6 +3889,8 @@ class SlpFile extends stream.Writable {
    * @returns {string} The location of the current file path
    * @memberof SlpFile
    */
+
+
   path() {
     return this.filePath;
   }
@@ -3475,22 +3898,28 @@ class SlpFile extends stream.Writable {
    * Sets the metadata of the Slippi file, such as consoleNickname, lastFrame, and players.
    * @param metadata The metadata to be written
    */
+
+
   setMetadata(metadata) {
     this.metadata = Object.assign({}, this.metadata, metadata);
   }
+
   _write(chunk, encoding, callback) {
     if (encoding !== "buffer") {
       throw new Error(`Unsupported stream encoding. Expected 'buffer' got '${encoding}'.`);
-    }
-    // Write it to the file
+    } // Write it to the file
+
+
     if (this.fileStream) {
       this.fileStream.write(chunk);
-    }
-    // Parse the data manually if it's an internal stream
+    } // Parse the data manually if it's an internal stream
+
+
     if (!this.usesExternalStream) {
       this.slpStream.write(chunk);
-    }
-    // Keep track of the bytes we've written
+    } // Keep track of the bytes we've written
+
+
     this.rawDataLength += chunk.length;
     callback();
   }
@@ -3501,11 +3930,14 @@ class SlpFile extends stream.Writable {
    *
    * @param data The parsed data from a SlpStream
    */
+
+
   _onCommand(data) {
     const {
       command,
       payload
     } = data;
+
     switch (command) {
       case exports.Command.GAME_START:
         const {
@@ -3515,6 +3947,7 @@ class SlpFile extends stream.Writable {
           if (player.type === 3) {
             return;
           }
+
           this.metadata.players[player.playerIndex] = {
             characterUsage: {},
             names: {
@@ -3524,6 +3957,7 @@ class SlpFile extends stream.Writable {
           };
         });
         break;
+
       case exports.Command.POST_FRAME_UPDATE:
         // Here we need to update some metadata fields
         const {
@@ -3532,20 +3966,20 @@ class SlpFile extends stream.Writable {
           isFollower,
           internalCharacterId
         } = payload;
+
         if (isFollower) {
           // No need to do this for follower
           break;
-        }
-        // Update frame index
-        this.metadata.lastFrame = frame;
-        // Update character usage
+        } // Update frame index
+
+
+        this.metadata.lastFrame = frame; // Update character usage
+
         const prevPlayer = this.metadata.players[playerIndex];
         const characterUsage = prevPlayer.characterUsage;
         const curCharFrames = characterUsage[internalCharacterId] || 0;
-        const player = {
-          ...prevPlayer,
-          characterUsage: {
-            ...characterUsage,
+        const player = { ...prevPlayer,
+          characterUsage: { ...characterUsage,
             [internalCharacterId]: curCharFrames + 1
           }
         };
@@ -3553,78 +3987,85 @@ class SlpFile extends stream.Writable {
         break;
     }
   }
+
   _setupListeners() {
     const streamListener = data => {
       this._onCommand(data);
     };
+
     this.slpStream.on(exports.SlpStreamEvent.COMMAND, streamListener);
     this.on("finish", () => {
       // Update file with bytes written
-      console.error("removed stuff here for cloudflare worker support");
-      // Unsubscribe from the stream
-      this.slpStream.removeListener(exports.SlpStreamEvent.COMMAND, streamListener);
-      // Terminate the internal stream
+      console.error("removed stuff here for cloudflare worker support"); // Unsubscribe from the stream
+
+      this.slpStream.removeListener(exports.SlpStreamEvent.COMMAND, streamListener); // Terminate the internal stream
+
       if (!this.usesExternalStream) {
         this.slpStream.end();
       }
     });
   }
+
   _initializeNewGame(filePath) {
     console.error("removed stuff here for cloudflare worker support");
   }
+
   _final(callback) {
-    let footer = Buffer.concat([Buffer.from("U"), Buffer.from([8]), Buffer.from("metadata{")]);
-    // Write game start time
+    let footer = Buffer.concat([Buffer.from("U"), Buffer.from([8]), Buffer.from("metadata{")]); // Write game start time
+
     const startTimeStr = this.metadata.startTime.toISOString();
-    footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([7]), Buffer.from("startAtSU"), Buffer.from([startTimeStr.length]), Buffer.from(startTimeStr)]);
-    // Write last frame index
+    footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([7]), Buffer.from("startAtSU"), Buffer.from([startTimeStr.length]), Buffer.from(startTimeStr)]); // Write last frame index
     // TODO: Get last frame
+
     const lastFrame = this.metadata.lastFrame;
-    footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([9]), Buffer.from("lastFramel"), createInt32Buffer(lastFrame)]);
-    // write the Console Nickname
+    footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([9]), Buffer.from("lastFramel"), createInt32Buffer(lastFrame)]); // write the Console Nickname
+
     const consoleNick = this.metadata.consoleNickname || DEFAULT_NICKNAME;
-    footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([11]), Buffer.from("consoleNickSU"), Buffer.from([consoleNick.length]), Buffer.from(consoleNick)]);
-    // Start writting player specific data
+    footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([11]), Buffer.from("consoleNickSU"), Buffer.from([consoleNick.length]), Buffer.from(consoleNick)]); // Start writting player specific data
+
     footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([7]), Buffer.from("players{")]);
     const players = this.metadata.players;
     forEach__default["default"](players, (player, index) => {
       // Start player obj with index being the player index
-      footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([index.length]), Buffer.from(`${index}{`)]);
-      // Start characters key for this player
-      footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([10]), Buffer.from("characters{")]);
-      // Write character usage
+      footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([index.length]), Buffer.from(`${index}{`)]); // Start characters key for this player
+
+      footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([10]), Buffer.from("characters{")]); // Write character usage
+
       forEach__default["default"](player.characterUsage, (usage, internalId) => {
         // Write this character
         footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([internalId.length]), Buffer.from(`${internalId}l`), createUInt32Buffer(usage)]);
-      });
-      // Close characters
-      footer = Buffer.concat([footer, Buffer.from("}")]);
-      // Start names key for this player
-      footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([5]), Buffer.from("names{")]);
-      // Write display name
-      footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([7]), Buffer.from("netplaySU"), Buffer.from([player.names.netplay.length]), Buffer.from(`${player.names.netplay}`)]);
-      // Write connect code
-      footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([4]), Buffer.from("codeSU"), Buffer.from([player.names.code.length]), Buffer.from(`${player.names.code}`)]);
-      // Close names and player
+      }); // Close characters
+
+      footer = Buffer.concat([footer, Buffer.from("}")]); // Start names key for this player
+
+      footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([5]), Buffer.from("names{")]); // Write display name
+
+      footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([7]), Buffer.from("netplaySU"), Buffer.from([player.names.netplay.length]), Buffer.from(`${player.names.netplay}`)]); // Write connect code
+
+      footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([4]), Buffer.from("codeSU"), Buffer.from([player.names.code.length]), Buffer.from(`${player.names.code}`)]); // Close names and player
+
       footer = Buffer.concat([footer, Buffer.from("}}")]);
-    });
-    // Close players
-    footer = Buffer.concat([footer, Buffer.from("}")]);
-    // Write played on
-    footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([8]), Buffer.from("playedOnSU"), Buffer.from([7]), Buffer.from("network")]);
-    // Close metadata and file
-    footer = Buffer.concat([footer, Buffer.from("}}")]);
-    // End the stream
+    }); // Close players
+
+    footer = Buffer.concat([footer, Buffer.from("}")]); // Write played on
+
+    footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([8]), Buffer.from("playedOnSU"), Buffer.from([7]), Buffer.from("network")]); // Close metadata and file
+
+    footer = Buffer.concat([footer, Buffer.from("}}")]); // End the stream
+
     if (this.fileStream) {
       this.fileStream.write(footer, callback);
     }
   }
+
 }
+
 const createInt32Buffer = number => {
   const buf = Buffer.alloc(4);
   buf.writeInt32BE(number, 0);
   return buf;
 };
+
 const createUInt32Buffer = number => {
   const buf = Buffer.alloc(4);
   buf.writeUInt32BE(number, 0);
@@ -3634,9 +4075,11 @@ const createUInt32Buffer = number => {
 /**
  * The default function to use for generating new SLP files.
  */
+
 function getNewFilePath(folder, date) {
   return path__default["default"].join(folder, `Game_${dateFns.format(date, "yyyyMMdd")}T${dateFns.format(date, "HHmmss")}.slp`);
 }
+
 const defaultSettings = {
   outputFiles: true,
   folderPath: ".",
@@ -3644,6 +4087,7 @@ const defaultSettings = {
   newFilename: getNewFilePath
 };
 exports.SlpFileWriterEvent = void 0;
+
 (function (SlpFileWriterEvent) {
   SlpFileWriterEvent["NEW_FILE"] = "new-file";
   SlpFileWriterEvent["FILE_COMPLETE"] = "file-complete";
@@ -3658,6 +4102,8 @@ exports.SlpFileWriterEvent = void 0;
  * @class SlpFileWriter
  * @extends {SlpStream}
  */
+
+
 class SlpFileWriter extends SlpStream {
   /**
    * Creates an instance of SlpFileWriter.
@@ -3667,33 +4113,44 @@ class SlpFileWriter extends SlpStream {
     this.currentFile = null;
     this.options = void 0;
     this.options = Object.assign({}, defaultSettings, options);
+
     this._setupListeners();
   }
+
   _writePayload(payload) {
     // Write data to the current file
     if (this.currentFile) {
       this.currentFile.write(payload);
     }
   }
+
   _setupListeners() {
     this.on(exports.SlpStreamEvent.RAW, data => {
       const {
         command,
         payload
       } = data;
+
       switch (command) {
         case exports.Command.MESSAGE_SIZES:
           // Create the new game first before writing the payload
           this._handleNewGame();
+
           this._writePayload(payload);
+
           break;
+
         case exports.Command.GAME_END:
           // Write payload first before ending the game
           this._writePayload(payload);
+
           this._handleEndGame();
+
           break;
+
         default:
           this._writePayload(payload);
+
           break;
       }
     });
@@ -3705,10 +4162,13 @@ class SlpFileWriter extends SlpStream {
    * @returns {(string | null)}
    * @memberof SlpFileWriter
    */
+
+
   getCurrentFilename() {
     if (this.currentFile !== null) {
       return path__default["default"].resolve(this.currentFile.path());
     }
+
     return null;
   }
   /**
@@ -3717,6 +4177,8 @@ class SlpFileWriter extends SlpStream {
    * @returns {(string | null)}
    * @memberof SlpFileWriter
    */
+
+
   endCurrentFile() {
     this._handleEndGame();
   }
@@ -3726,18 +4188,22 @@ class SlpFileWriter extends SlpStream {
    * @param {Partial<SlpFileWriterOptions>} settings
    * @memberof SlpFileWriter
    */
+
+
   updateSettings(settings) {
     this.options = Object.assign({}, this.options, settings);
   }
+
   _handleNewGame() {
     // Only create a new file if we're outputting files
     if (this.options.outputFiles) {
       const filePath = this.options.newFilename(this.options.folderPath, new Date());
-      this.currentFile = new SlpFile(filePath, this);
-      // console.log(`Creating new file at: ${filePath}`);
+      this.currentFile = new SlpFile(filePath, this); // console.log(`Creating new file at: ${filePath}`);
+
       this.emit(exports.SlpFileWriterEvent.NEW_FILE, filePath);
     }
   }
+
   _handleEndGame() {
     // End the stream
     if (this.currentFile) {
@@ -3745,13 +4211,14 @@ class SlpFileWriter extends SlpStream {
       this.currentFile.setMetadata({
         consoleNickname: this.options.consoleNickname
       });
-      this.currentFile.end();
-      // console.log(`Finished writing file: ${this.currentFile.path()}`);
-      this.emit(exports.SlpFileWriterEvent.FILE_COMPLETE, this.currentFile.path());
-      // Clear current file
+      this.currentFile.end(); // console.log(`Finished writing file: ${this.currentFile.path()}`);
+
+      this.emit(exports.SlpFileWriterEvent.FILE_COMPLETE, this.currentFile.path()); // Clear current file
+
       this.currentFile = null;
     }
   }
+
 }
 
 class RollbackCounter {
@@ -3759,11 +4226,11 @@ class RollbackCounter {
     this.rollbackFrames = {};
     this.rollbackFrameCount = 0;
     this.rollbackPlayerIdx = null;
-    // for keeping track of rollbacks by following a single player
     this.lastFrameWasRollback = false;
     this.currentRollbackLength = 0;
     this.rollbackLengths = [];
   }
+
   checkIfRollbackFrame(currentFrame, playerIdx) {
     if (this.rollbackPlayerIdx === null) {
       // we only want to follow a single player to avoid double counting. So we use whoever is on first.
@@ -3771,6 +4238,7 @@ class RollbackCounter {
     } else if (this.rollbackPlayerIdx !== playerIdx) {
       return;
     }
+
     if (currentFrame && currentFrame.players) {
       // frame already exists for currentFrameNumber so we must be rolling back
       // Note: We detect during PreFrameUpdate, but new versions have a
@@ -3781,6 +4249,7 @@ class RollbackCounter {
       } else {
         this.rollbackFrames[currentFrame.frame] = [currentFrame];
       }
+
       this.rollbackFrameCount++;
       this.currentRollbackLength++;
       this.lastFrameWasRollback = true;
@@ -3789,34 +4258,40 @@ class RollbackCounter {
       this.currentRollbackLength = 0;
       this.lastFrameWasRollback = false;
     }
+
     return this.lastFrameWasRollback;
   }
+
   getFrames() {
     return this.rollbackFrames;
   }
+
   getCount() {
     return this.rollbackFrameCount;
   }
+
   getLengths() {
     return this.rollbackLengths;
   }
+
 }
 
-// There are 5 bytes of item bitfields that can be enabled
 const ITEM_SETTINGS_BIT_COUNT = 40;
 const MAX_ROLLBACK_FRAMES = 7;
 exports.SlpParserEvent = void 0;
+
 (function (SlpParserEvent) {
   SlpParserEvent["SETTINGS"] = "settings";
   SlpParserEvent["END"] = "end";
   SlpParserEvent["FRAME"] = "frame";
   SlpParserEvent["FINALIZED_FRAME"] = "finalized-frame";
   SlpParserEvent["ROLLBACK_FRAME"] = "rollback-frame";
-})(exports.SlpParserEvent || (exports.SlpParserEvent = {}));
-// If strict mode is on, we will do strict validation checking
+})(exports.SlpParserEvent || (exports.SlpParserEvent = {})); // If strict mode is on, we will do strict validation checking
 // which could throw errors on invalid data.
 // Default to false though since probably only real time applications
 // would care about valid data.
+
+
 const defaultSlpParserOptions = {
   strict: false
 };
@@ -3833,42 +4308,61 @@ class SlpParser extends events.EventEmitter {
     this.options = void 0;
     this.geckoList = null;
     this.options = Object.assign({}, defaultSlpParserOptions, options);
-  }
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
+
   handleCommand(command, payload) {
     switch (command) {
       case exports.Command.GAME_START:
         this._handleGameStart(payload);
+
         break;
+
       case exports.Command.FRAME_START:
         this._handleFrameStart(payload);
+
         break;
+
       case exports.Command.POST_FRAME_UPDATE:
         // We need to handle the post frame update first since that
         // will finalize the settings object, before we fire the frame update
         this._handlePostFrameUpdate(payload);
+
         this._handleFrameUpdate(command, payload);
+
         break;
+
       case exports.Command.PRE_FRAME_UPDATE:
         this._handleFrameUpdate(command, payload);
+
         break;
+
       case exports.Command.ITEM_UPDATE:
         this._handleItemUpdate(payload);
+
         break;
+
       case exports.Command.FRAME_BOOKEND:
         this._handleFrameBookend(payload);
+
         break;
+
       case exports.Command.GAME_END:
         this._handleGameEnd(payload);
+
         break;
+
       case exports.Command.GECKO_LIST:
         this._handleGeckoList(payload);
+
         break;
     }
   }
   /**
    * Resets the parser state to their default values.
    */
+
+
   reset() {
     this.frames = {};
     this.settings = null;
@@ -3877,16 +4371,21 @@ class SlpParser extends events.EventEmitter {
     this.settingsComplete = false;
     this.lastFinalizedFrame = exports.Frames.FIRST - 1;
   }
+
   getLatestFrameNumber() {
     var _this$latestFrameInde;
+
     return (_this$latestFrameInde = this.latestFrameIndex) != null ? _this$latestFrameInde : exports.Frames.FIRST - 1;
   }
+
   getPlayableFrameCount() {
     if (this.latestFrameIndex === null) {
       return 0;
     }
+
     return this.latestFrameIndex < exports.Frames.FIRST_PLAYABLE ? 0 : this.latestFrameIndex - exports.Frames.FIRST_PLAYABLE;
   }
+
   getLatestFrame() {
     // return this.playerFrames[this.latestFrameIndex];
     // TODO: Modify this to check if we actually have all the latest frame data and return that
@@ -3896,34 +4395,44 @@ class SlpParser extends events.EventEmitter {
     const indexToUse = this.gameEnd ? frameIndex : frameIndex - 1;
     return get__default["default"](allFrames, indexToUse) || null;
   }
+
   getSettings() {
     return this.settingsComplete ? this.settings : null;
   }
+
   getItems() {
     var _this$settings, _this$settings2;
+
     if (((_this$settings = this.settings) == null ? void 0 : _this$settings.itemSpawnBehavior) === exports.ItemSpawnType.OFF) {
       return null;
     }
+
     const itemBitfield = (_this$settings2 = this.settings) == null ? void 0 : _this$settings2.enabledItems;
+
     if (!exists(itemBitfield)) {
       return null;
     }
-    const enabledItems = [];
-    // Ideally we would be able to do this with bitshifting instead, but javascript
+
+    const enabledItems = []; // Ideally we would be able to do this with bitshifting instead, but javascript
     // truncates numbers after 32 bits when doing bitwise operations
+
     for (let i = 0; i < ITEM_SETTINGS_BIT_COUNT; i++) {
       if (Math.floor(itemBitfield / 2 ** i) & 1) {
         enabledItems.push(2 ** i);
       }
     }
+
     return enabledItems;
   }
+
   getGameEnd() {
     return this.gameEnd;
   }
+
   getFrames() {
     return this.frames;
   }
+
   getRollbackFrames() {
     return {
       frames: this.rollbackCounter.getFrames(),
@@ -3931,105 +4440,129 @@ class SlpParser extends events.EventEmitter {
       lengths: this.rollbackCounter.getLengths()
     };
   }
+
   getFrame(num) {
     return this.frames[num] || null;
   }
+
   getGeckoList() {
     return this.geckoList;
   }
+
   _handleGeckoList(payload) {
     this.geckoList = payload;
   }
+
   _handleGameEnd(payload) {
     // Finalize remaining frames if necessary
     if (this.latestFrameIndex !== null && this.latestFrameIndex !== this.lastFinalizedFrame) {
       this._finalizeFrames(this.latestFrameIndex);
     }
+
     this.gameEnd = payload;
     this.emit(exports.SlpParserEvent.END, this.gameEnd);
   }
+
   _handleGameStart(payload) {
     this.settings = payload;
     const players = payload.players;
-    this.settings.players = players.filter(player => player.type !== 3);
-    // Check to see if the file was created after the sheik fix so we know
+    this.settings.players = players.filter(player => player.type !== 3); // Check to see if the file was created after the sheik fix so we know
     // we don't have to process the first frame of the game for the full settings
+
     if (payload.slpVersion && semver__default["default"].gte(payload.slpVersion, "1.6.0")) {
       this._completeSettings();
     }
   }
+
   _handleFrameStart(payload) {
     const currentFrameNumber = payload.frame;
     set__default["default"](this.frames, [currentFrameNumber, "start"], payload);
   }
+
   _handlePostFrameUpdate(payload) {
     if (this.settingsComplete) {
       return;
-    }
-    // Finish calculating settings
+    } // Finish calculating settings
+
+
     if (payload.frame <= exports.Frames.FIRST) {
       const playerIndex = payload.playerIndex;
       const playersByIndex = keyBy__default["default"](this.settings.players, "playerIndex");
+
       switch (payload.internalCharacterId) {
         case 0x7:
           playersByIndex[playerIndex].characterId = 0x13; // Sheik
+
           break;
+
         case 0x13:
           playersByIndex[playerIndex].characterId = 0x12; // Zelda
+
           break;
       }
     }
+
     if (payload.frame > exports.Frames.FIRST) {
       this._completeSettings();
     }
   }
+
   _handleFrameUpdate(command, payload) {
     const location = command === exports.Command.PRE_FRAME_UPDATE ? "pre" : "post";
     const field = payload.isFollower ? "followers" : "players";
     const currentFrameNumber = payload.frame;
     this.latestFrameIndex = currentFrameNumber;
+
     if (location === "pre" && !payload.isFollower) {
       const currentFrame = this.frames[currentFrameNumber];
       const wasRolledback = this.rollbackCounter.checkIfRollbackFrame(currentFrame, payload.playerIndex);
+
       if (wasRolledback) {
         // frame is about to be overwritten
         this.emit(exports.SlpParserEvent.ROLLBACK_FRAME, currentFrame);
       }
     }
+
     set__default["default"](this.frames, [currentFrameNumber, field, payload.playerIndex, location], payload);
-    set__default["default"](this.frames, [currentFrameNumber, "frame"], currentFrameNumber);
-    // If file is from before frame bookending, add frame to stats computer here. Does a little
+    set__default["default"](this.frames, [currentFrameNumber, "frame"], currentFrameNumber); // If file is from before frame bookending, add frame to stats computer here. Does a little
     // more processing than necessary, but it works
+
     const settings = this.getSettings();
+
     if (settings && (!settings.slpVersion || semver__default["default"].lte(settings.slpVersion, "2.2.0"))) {
-      this.emit(exports.SlpParserEvent.FRAME, this.frames[currentFrameNumber]);
-      // Finalize the previous frame since no bookending exists
+      this.emit(exports.SlpParserEvent.FRAME, this.frames[currentFrameNumber]); // Finalize the previous frame since no bookending exists
+
       this._finalizeFrames(currentFrameNumber - 1);
     } else {
       set__default["default"](this.frames, [currentFrameNumber, "isTransferComplete"], false);
     }
   }
+
   _handleItemUpdate(payload) {
     var _this$frames$currentF, _this$frames$currentF2;
+
     const currentFrameNumber = payload.frame;
     const items = (_this$frames$currentF = (_this$frames$currentF2 = this.frames[currentFrameNumber]) == null ? void 0 : _this$frames$currentF2.items) != null ? _this$frames$currentF : [];
-    items.push(payload);
-    // Set items with newest
+    items.push(payload); // Set items with newest
+
     set__default["default"](this.frames, [currentFrameNumber, "items"], items);
   }
+
   _handleFrameBookend(payload) {
     const latestFinalizedFrame = payload.latestFinalizedFrame;
     const currentFrameNumber = payload.frame;
-    set__default["default"](this.frames, [currentFrameNumber, "isTransferComplete"], true);
-    // Fire off a normal frame event
-    this.emit(exports.SlpParserEvent.FRAME, this.frames[currentFrameNumber]);
-    // Finalize frames if necessary
+    set__default["default"](this.frames, [currentFrameNumber, "isTransferComplete"], true); // Fire off a normal frame event
+
+    this.emit(exports.SlpParserEvent.FRAME, this.frames[currentFrameNumber]); // Finalize frames if necessary
+
     const validLatestFrame = this.settings.gameMode === exports.GameMode.ONLINE;
+
     if (validLatestFrame && latestFinalizedFrame >= exports.Frames.FIRST) {
       // Ensure valid latestFinalizedFrame
       if (this.options.strict && latestFinalizedFrame < currentFrameNumber - MAX_ROLLBACK_FRAMES) {
         throw new Error(`latestFinalizedFrame should be within ${MAX_ROLLBACK_FRAMES} frames of ${currentFrameNumber}`);
       }
+
       this._finalizeFrames(latestFinalizedFrame);
     } else {
       // Since we don't have a valid finalized frame, just finalize the frame based on MAX_ROLLBACK_FRAMES
@@ -4040,44 +4573,52 @@ class SlpParser extends events.EventEmitter {
    * Fires off the FINALIZED_FRAME event for frames up until a certain number
    * @param num The frame to finalize until
    */
+
+
   _finalizeFrames(num) {
     while (this.lastFinalizedFrame < num) {
       const frameToFinalize = this.lastFinalizedFrame + 1;
-      const frame = this.getFrame(frameToFinalize);
-      // Check that we have all the pre and post frame data for all players if we're in strict mode
+      const frame = this.getFrame(frameToFinalize); // Check that we have all the pre and post frame data for all players if we're in strict mode
+
       if (this.options.strict) {
         for (const player of this.settings.players) {
-          const playerFrameInfo = frame.players[player.playerIndex];
-          // Allow player frame info to be empty in non 1v1 games since
+          const playerFrameInfo = frame.players[player.playerIndex]; // Allow player frame info to be empty in non 1v1 games since
           // players which have been defeated will have no frame info.
+
           if (this.settings.players.length > 2 && !playerFrameInfo) {
             continue;
           }
+
           const {
             pre,
             post
           } = playerFrameInfo;
+
           if (!pre || !post) {
             const preOrPost = pre ? "pre" : "post";
             throw new Error(`Could not finalize frame ${frameToFinalize} of ${num}: missing ${preOrPost}-frame update for player ${player.playerIndex}`);
           }
         }
-      }
-      // Our frame is complete so finalize the frame
+      } // Our frame is complete so finalize the frame
+
+
       this.emit(exports.SlpParserEvent.FINALIZED_FRAME, frame);
       this.lastFinalizedFrame = frameToFinalize;
     }
   }
+
   _completeSettings() {
     if (!this.settingsComplete) {
       this.settingsComplete = true;
       this.emit(exports.SlpParserEvent.SETTINGS, this.settings);
     }
   }
+
 }
 
 function getWinners(gameEnd, settings, finalPostFrameUpdates) {
   var _players$find$teamId, _players$find2;
+
   const {
     placements,
     gameEndMethod,
@@ -4087,13 +4628,16 @@ function getWinners(gameEnd, settings, finalPostFrameUpdates) {
     players,
     isTeams
   } = settings;
+
   if (gameEndMethod === exports.GameEndMethod.NO_CONTEST || gameEndMethod === exports.GameEndMethod.UNRESOLVED) {
     // The winner is the person who didn't LRAS
     if (exists(lrasInitiatorIndex) && players.length === 2) {
       var _players$find;
+
       const winnerIndex = (_players$find = players.find(({
         playerIndex
       }) => playerIndex !== lrasInitiatorIndex)) == null ? void 0 : _players$find.playerIndex;
+
       if (exists(winnerIndex)) {
         return [{
           playerIndex: winnerIndex,
@@ -4101,15 +4645,20 @@ function getWinners(gameEnd, settings, finalPostFrameUpdates) {
         }];
       }
     }
+
     return [];
   }
+
   if (gameEndMethod === exports.GameEndMethod.TIME && players.length === 2) {
     const nonFollowerUpdates = finalPostFrameUpdates.filter(pfu => !pfu.isFollower);
+
     if (nonFollowerUpdates.length !== players.length) {
       return [];
     }
+
     const p1 = nonFollowerUpdates[0];
     const p2 = nonFollowerUpdates[1];
+
     if (p1.stocksRemaining > p2.stocksRemaining) {
       return [{
         playerIndex: p1.playerIndex,
@@ -4121,8 +4670,10 @@ function getWinners(gameEnd, settings, finalPostFrameUpdates) {
         position: 0
       }];
     }
+
     const p1Health = Math.trunc(p1.percent);
     const p2Health = Math.trunc(p2.percent);
+
     if (p1Health < p2Health) {
       return [{
         playerIndex: p1.playerIndex,
@@ -4133,26 +4684,33 @@ function getWinners(gameEnd, settings, finalPostFrameUpdates) {
         playerIndex: p2.playerIndex,
         position: 0
       }];
-    }
-    // If stocks and percents were tied, no winner
+    } // If stocks and percents were tied, no winner
+
+
     return [];
   }
+
   const firstPosition = placements.find(placement => placement.position === 0);
+
   if (!firstPosition) {
     return [];
   }
+
   const winningTeam = (_players$find$teamId = (_players$find2 = players.find(({
     playerIndex
   }) => playerIndex === firstPosition.playerIndex)) == null ? void 0 : _players$find2.teamId) != null ? _players$find$teamId : null;
+
   if (isTeams && exists(winningTeam)) {
     return placements.filter(placement => {
       var _players$find$teamId2, _players$find3;
+
       const teamId = (_players$find$teamId2 = (_players$find3 = players.find(({
         playerIndex
       }) => playerIndex === placement.playerIndex)) == null ? void 0 : _players$find3.teamId) != null ? _players$find$teamId2 : null;
       return teamId === winningTeam;
     });
   }
+
   return [firstPosition];
 }
 
@@ -4161,35 +4719,42 @@ const FEET_CONVERSION_FACTOR = 0.952462;
 const METERS_CONVERSION_FACTOR = 1.04167;
 function positionToHomeRunDistance(distance, units = "feet") {
   let score = 0;
+
   switch (units) {
     case "feet":
-      score = 10 * Math.floor(distance - 70 * FEET_CONVERSION_FACTOR);
-      // convert to float32
+      score = 10 * Math.floor(distance - 70 * FEET_CONVERSION_FACTOR); // convert to float32
+
       score = Math.fround(score);
       score = Math.floor(score / 30.4788 * 10) / 10;
       break;
+
     case "meters":
-      score = 10 * Math.floor(distance - 70 * METERS_CONVERSION_FACTOR);
-      // convert to float32
+      score = 10 * Math.floor(distance - 70 * METERS_CONVERSION_FACTOR); // convert to float32
+
       score = Math.fround(score);
       score = Math.floor(score / 100 * 10) / 10;
       break;
+
     default:
       throw new Error(`Unsupported units: ${units}`);
-  }
-  // round to 1 decimal
+  } // round to 1 decimal
+
+
   score = Math.round(score * 10) / 10;
   return Math.max(0, score);
 }
 function extractDistanceInfoFromFrame(settings, lastFrame) {
   var _sandbagLastFrame$pos;
+
   const sandbagLastFrame = Object.values(lastFrame.players).filter(exists).find(playerFrame => playerFrame.post.internalCharacterId === SANDBAG_INTERNAL_ID);
+
   if (!sandbagLastFrame) {
     return null;
-  }
-  // Only return the distance in meters if it's a Japanese replay.
+  } // Only return the distance in meters if it's a Japanese replay.
   // Technically we should check if the replay is PAL but we don't yet support
   // stadium replays in PAL.
+
+
   const units = settings.language === exports.Language.JAPANESE ? "meters" : "feet";
   const distance = positionToHomeRunDistance((_sandbagLastFrame$pos = sandbagLastFrame.post.positionX) != null ? _sandbagLastFrame$pos : 0, units);
   return {
@@ -4201,6 +4766,7 @@ function extractDistanceInfoFromFrame(settings, lastFrame) {
 /**
  * Slippi Game class that wraps a file
  */
+
 class SlippiGame {
   constructor(input, opts) {
     this.input = void 0;
@@ -4215,6 +4781,7 @@ class SlippiGame {
     this.inputComputer = new InputComputer();
     this.targetBreakComputer = new TargetBreakComputer();
     this.statsComputer = void 0;
+
     if (typeof input === "string") {
       this.input = {
         source: exports.SlpInputSource.FILE,
@@ -4232,31 +4799,35 @@ class SlippiGame {
       };
     } else {
       throw new Error("Cannot create SlippiGame with input of that type");
-    }
-    // Set up stats calculation
+    } // Set up stats calculation
+
+
     this.statsComputer = new Stats(opts);
     this.statsComputer.register(this.actionsComputer, this.comboComputer, this.conversionComputer, this.inputComputer, this.stockComputer, this.targetBreakComputer);
     this.parser = new SlpParser();
     this.parser.on(exports.SlpParserEvent.SETTINGS, settings => {
       this.statsComputer.setup(settings);
-    });
-    // Use finalized frames for stats computation
+    }); // Use finalized frames for stats computation
+
     this.parser.on(exports.SlpParserEvent.FINALIZED_FRAME, frame => {
       this.statsComputer.addFrame(frame);
     });
   }
+
   _process(shouldStop = () => false, file) {
     if (this.parser.getGameEnd() !== null) {
       return;
     }
-    const slpfile = file != null ? file : openSlpFile(this.input);
-    // Generate settings from iterating through file
+
+    const slpfile = file != null ? file : openSlpFile(this.input); // Generate settings from iterating through file
+
     this.readPosition = iterateEvents(slpfile, (command, payload) => {
       if (!payload) {
         // If payload is falsy, keep iterating. The parser probably just doesn't know
         // about this command yet
         return false;
       }
+
       this.parser.handleCommand(command, payload);
       return shouldStop(command, payload);
     }, this.readPosition);
@@ -4265,19 +4836,27 @@ class SlippiGame {
    * Gets the game settings, these are the settings that describe the starting state of
    * the game such as characters, stage, etc.
    */
+
+
   getSettings() {
     // Settings is only complete after post-frame update
     this._process(() => this.parser.getSettings() !== null);
+
     return this.parser.getSettings();
   }
+
   getItems() {
     this._process();
+
     return this.parser.getItems();
   }
+
   getLatestFrame() {
     this._process();
+
     return this.parser.getLatestFrame();
   }
+
   getGameEnd(options = {}) {
     if (options != null && options.skipProcessing) {
       // Read game end block directly
@@ -4285,31 +4864,44 @@ class SlippiGame {
       const gameEnd = getGameEnd(slpfile);
       return gameEnd;
     }
+
     this._process();
+
     return this.parser.getGameEnd();
   }
+
   getFrames() {
     this._process();
+
     return this.parser.getFrames();
   }
+
   getRollbackFrames() {
     this._process();
+
     return this.parser.getRollbackFrames();
   }
+
   getGeckoList() {
     this._process(() => this.parser.getGeckoList() !== null);
+
     return this.parser.getGeckoList();
   }
+
   getStats() {
     if (this.finalStats) {
       return this.finalStats;
     }
+
     this._process();
+
     const settings = this.parser.getSettings();
+
     if (!settings) {
       return null;
-    }
-    // Finish processing if we're not up to date
+    } // Finish processing if we're not up to date
+
+
     this.statsComputer.process();
     const inputs = this.inputComputer.fetch();
     const stocks = this.stockComputer.fetch();
@@ -4333,6 +4925,7 @@ class SlippiGame {
       overall: overall,
       gameComplete
     };
+
     if (gameComplete) {
       // If the game is complete, store a cached version of stats because it should not
       // change anymore. Ideally the statsCompuer.process and fetch functions would simply do no
@@ -4340,71 +4933,95 @@ class SlippiGame {
       // generateOverallStats, and maybe more are doing work on every call.
       this.finalStats = stats;
     }
+
     return stats;
   }
+
   getStadiumStats() {
     this._process();
+
     const settings = this.parser.getSettings();
+
     if (!settings) {
       return null;
     }
+
     const latestFrame = this.parser.getLatestFrame();
     const players = latestFrame == null ? void 0 : latestFrame.players;
+
     if (!players) {
       return null;
     }
+
     this.statsComputer.process();
+
     switch (settings.gameMode) {
       case exports.GameMode.TARGET_TEST:
         return {
           type: "target-test",
           targetBreaks: this.targetBreakComputer.fetch()
         };
+
       case exports.GameMode.HOME_RUN_CONTEST:
         const distanceInfo = extractDistanceInfoFromFrame(settings, latestFrame);
+
         if (!distanceInfo) {
           return null;
         }
+
         return {
           type: "home-run-contest",
           distance: distanceInfo.distance,
           units: distanceInfo.units
         };
+
       default:
         return null;
     }
   }
+
   getMetadata() {
     if (this.metadata) {
       return this.metadata;
     }
+
     const slpfile = openSlpFile(this.input);
     this.metadata = getMetadata(slpfile);
     return this.metadata;
   }
+
   getFilePath() {
     var _this$input$filePath;
+
     if (this.input.source !== exports.SlpInputSource.FILE) {
       return null;
     }
+
     return (_this$input$filePath = this.input.filePath) != null ? _this$input$filePath : null;
   }
+
   getWinners() {
     // Read game end block directly
     const slpfile = openSlpFile(this.input);
     const gameEnd = getGameEnd(slpfile);
+
     this._process(() => this.parser.getSettings() !== null, slpfile);
+
     const settings = this.parser.getSettings();
+
     if (!gameEnd || !settings) {
       return [];
-    }
-    // If we went to time, let's fetch the post frame updates to compute the winner
+    } // If we went to time, let's fetch the post frame updates to compute the winner
+
+
     let finalPostFrameUpdates = [];
+
     if (gameEnd.gameEndMethod === exports.GameEndMethod.TIME) {
       finalPostFrameUpdates = extractFinalPostFrameUpdates(slpfile);
     }
     return getWinners(gameEnd, settings, finalPostFrameUpdates);
   }
+
 }
 
 exports.ActionsComputer = ActionsComputer;

@@ -5,17 +5,17 @@ export declare enum SlpInputSource {
     BUFFER = "buffer",
     FILE = "file"
 }
-type SlpFileReadInput = {
+declare type SlpFileReadInput = {
     source: SlpInputSource.FILE;
     filePath: string;
 };
-type SlpBufferReadInput = {
+declare type SlpBufferReadInput = {
     source: SlpInputSource.BUFFER;
     buffer: Buffer;
 };
-export type SlpReadInput = SlpFileReadInput | SlpBufferReadInput;
-export type SlpRefType = SlpFileSourceRef | SlpBufferSourceRef;
-export type SlpFileType = {
+export declare type SlpReadInput = SlpFileReadInput | SlpBufferReadInput;
+export declare type SlpRefType = SlpFileSourceRef | SlpBufferSourceRef;
+export declare type SlpFileType = {
     ref: SlpRefType;
     rawDataPosition: number;
     rawDataLength: number;
@@ -25,11 +25,11 @@ export type SlpFileType = {
         [command: number]: number;
     };
 };
-export type SlpFileSourceRef = {
+export declare type SlpFileSourceRef = {
     source: SlpInputSource.FILE;
     fileDescriptor: number;
 };
-export type SlpBufferSourceRef = {
+export declare type SlpBufferSourceRef = {
     source: SlpInputSource.BUFFER;
     buffer: Buffer;
 };

@@ -1,5 +1,4 @@
 /// <reference types="node" />
-/// <reference types="node" />
 import type { WritableOptions } from "stream";
 import { Writable } from "stream";
 import type { EventPayloadTypes } from "../types";
@@ -12,13 +11,13 @@ declare const defaultSettings: {
     suppressErrors: boolean;
     mode: SlpStreamMode;
 };
-export type SlpStreamSettings = typeof defaultSettings;
-export type MessageSizes = Map<Command, number>;
-export type SlpCommandEventPayload = {
+export declare type SlpStreamSettings = typeof defaultSettings;
+export declare type MessageSizes = Map<Command, number>;
+export declare type SlpCommandEventPayload = {
     command: Command;
     payload: EventPayloadTypes | MessageSizes;
 };
-export type SlpRawEventPayload = {
+export declare type SlpRawEventPayload = {
     command: Command;
     payload: Buffer;
 };

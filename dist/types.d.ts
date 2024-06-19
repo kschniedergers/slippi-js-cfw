@@ -10,7 +10,7 @@ export declare enum Command {
     FRAME_BOOKEND = 60,
     GECKO_LIST = 61
 }
-export type PlayerType = {
+export declare type PlayerType = {
     playerIndex: number;
     port: number;
     characterId: number | null;
@@ -48,7 +48,7 @@ export declare enum Language {
     JAPANESE = 0,
     ENGLISH = 1
 }
-export type GameStartType = {
+export declare type GameStartType = {
     slpVersion: string | null;
     timerType: TimerType | null;
     inGameMode: number | null;
@@ -68,17 +68,17 @@ export type GameStartType = {
     isFrozenPS: boolean | null;
     matchInfo: MatchInfo | null;
 };
-type MatchInfo = {
+declare type MatchInfo = {
     matchId: string | null;
     gameNumber: number | null;
     tiebreakerNumber: number | null;
 };
-export type FrameStartType = {
+export declare type FrameStartType = {
     frame: number | null;
     seed: number | null;
     sceneFrameCounter: number | null;
 };
-export type GameInfoType = {
+export declare type GameInfoType = {
     gameBitfield1: number | null;
     gameBitfield2: number | null;
     gameBitfield3: number | null;
@@ -147,7 +147,7 @@ export declare enum EnabledItemType {
     BOMB_OMB = 274877906944,
     MR_SATURN = 549755813888
 }
-export type PreFrameUpdateType = {
+export declare type PreFrameUpdateType = {
     frame: number | null;
     playerIndex: number | null;
     isFollower: boolean | null;
@@ -168,7 +168,7 @@ export type PreFrameUpdateType = {
     rawJoystickX: number | null;
     percent: number | null;
 };
-export type PostFrameUpdateType = {
+export declare type PostFrameUpdateType = {
     frame: number | null;
     playerIndex: number | null;
     isFollower: boolean | null;
@@ -196,14 +196,14 @@ export type PostFrameUpdateType = {
     instanceHitBy: number | null;
     instanceId: number | null;
 };
-export type SelfInducedSpeedsType = {
+export declare type SelfInducedSpeedsType = {
     airX: number | null;
     y: number | null;
     attackX: number | null;
     attackY: number | null;
     groundX: number | null;
 };
-export type ItemUpdateType = {
+export declare type ItemUpdateType = {
     frame: number | null;
     typeId: number | null;
     state: number | null;
@@ -222,7 +222,7 @@ export type ItemUpdateType = {
     owner: number | null;
     instanceId: number | null;
 };
-export type FrameBookendType = {
+export declare type FrameBookendType = {
     frame: number | null;
     latestFinalizedFrame: number | null;
 };
@@ -233,25 +233,25 @@ export declare enum GameEndMethod {
     GAME = 2,
     NO_CONTEST = 7
 }
-export type GameEndType = {
+export declare type GameEndType = {
     gameEndMethod: GameEndMethod | null;
     lrasInitiatorIndex: number | null;
     placements: PlacementType[];
 };
-export type PlacementType = {
+export declare type PlacementType = {
     playerIndex: number;
     position: number | null;
 };
-export type GeckoListType = {
+export declare type GeckoListType = {
     codes: GeckoCodeType[];
     contents: Uint8Array;
 };
-export type GeckoCodeType = {
+export declare type GeckoCodeType = {
     type: number | null;
     address: number | null;
     contents: Uint8Array;
 };
-export type MetadataType = {
+export declare type MetadataType = {
     startAt?: string | null;
     playedOn?: string | null;
     lastFrame?: number | null;
@@ -268,9 +268,9 @@ export type MetadataType = {
     } | null;
     consoleNick?: string | null;
 };
-export type EventPayloadTypes = GameStartType | FrameStartType | PreFrameUpdateType | PostFrameUpdateType | ItemUpdateType | FrameBookendType | GameEndType | GeckoListType;
-export type EventCallbackFunc = (command: Command, payload?: EventPayloadTypes | null, buffer?: Uint8Array | null) => boolean;
-export type FrameEntryType = {
+export declare type EventPayloadTypes = GameStartType | FrameStartType | PreFrameUpdateType | PostFrameUpdateType | ItemUpdateType | FrameBookendType | GameEndType | GeckoListType;
+export declare type EventCallbackFunc = (command: Command, payload?: EventPayloadTypes | null, buffer?: Uint8Array | null) => boolean;
+export declare type FrameEntryType = {
     frame: number;
     start?: FrameStartType;
     players: {
@@ -291,13 +291,13 @@ export declare enum Frames {
     FIRST = -123,
     FIRST_PLAYABLE = -39
 }
-export type FramesType = {
+export declare type FramesType = {
     [frameIndex: number]: FrameEntryType;
 };
-export type RollbackFramesType = {
+export declare type RollbackFramesType = {
     [frameIndex: number]: FrameEntryType[];
 };
-export type RollbackFrames = {
+export declare type RollbackFrames = {
     frames: RollbackFramesType;
     count: number;
     lengths: number[];

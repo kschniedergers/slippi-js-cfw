@@ -1,5 +1,5 @@
-export type CharacterColor = string;
-export type CharacterInfo = {
+export declare type CharacterColor = string;
+export declare type CharacterInfo = {
     id: number;
     name: string;
     shortName: string;

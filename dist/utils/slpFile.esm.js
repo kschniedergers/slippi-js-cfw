@@ -11,6 +11,7 @@ const DEFAULT_NICKNAME = "unknown";
  * @class SlpFile
  * @extends {Writable}
  */
+
 class SlpFile extends Writable {
   /**
    * Creates an instance of SlpFile.
@@ -33,13 +34,15 @@ class SlpFile extends Writable {
       lastFrame: -124,
       players: {}
     };
-    this.usesExternalStream = Boolean(slpStream);
-    // Create a new SlpStream if one wasn't already provided
+    this.usesExternalStream = Boolean(slpStream); // Create a new SlpStream if one wasn't already provided
     // This SLP stream represents a single game not multiple, so use manual mode
+
     this.slpStream = slpStream ? slpStream : new SlpStream({
       mode: SlpStreamMode.MANUAL
     });
+
     this._setupListeners();
+
     this._initializeNewGame(this.filePath);
   }
   /**
@@ -48,6 +51,8 @@ class SlpFile extends Writable {
    * @returns {string} The location of the current file path
    * @memberof SlpFile
    */
+
+
   path() {
     return this.filePath;
   }
@@ -55,22 +60,28 @@ class SlpFile extends Writable {
    * Sets the metadata of the Slippi file, such as consoleNickname, lastFrame, and players.
    * @param metadata The metadata to be written
    */
+
+
   setMetadata(metadata) {
     this.metadata = Object.assign({}, this.metadata, metadata);
   }
+
   _write(chunk, encoding, callback) {
     if (encoding !== "buffer") {
       throw new Error(`Unsupported stream encoding. Expected 'buffer' got '${encoding}'.`);
-    }
-    // Write it to the file
+    } // Write it to the file
+
+
     if (this.fileStream) {
       this.fileStream.write(chunk);
-    }
-    // Parse the data manually if it's an internal stream
+    } // Parse the data manually if it's an internal stream
+
+
     if (!this.usesExternalStream) {
       this.slpStream.write(chunk);
-    }
-    // Keep track of the bytes we've written
+    } // Keep track of the bytes we've written
+
+
     this.rawDataLength += chunk.length;
     callback();
   }
@@ -81,11 +92,14 @@ class SlpFile extends Writable {
    *
    * @param data The parsed data from a SlpStream
    */
+
+
   _onCommand(data) {
     const {
       command,
       payload
     } = data;
+
     switch (command) {
       case Command.GAME_START:
         const {
@@ -95,6 +109,7 @@ class SlpFile extends Writable {
           if (player.type === 3) {
             return;
           }
+
           this.metadata.players[player.playerIndex] = {
             characterUsage: {},
             names: {
@@ -104,6 +119,7 @@ class SlpFile extends Writable {
           };
         });
         break;
+
       case Command.POST_FRAME_UPDATE:
         // Here we need to update some metadata fields
         const {
@@ -112,20 +128,20 @@ class SlpFile extends Writable {
           isFollower,
           internalCharacterId
         } = payload;
+
         if (isFollower) {
           // No need to do this for follower
           break;
-        }
-        // Update frame index
-        this.metadata.lastFrame = frame;
-        // Update character usage
+        } // Update frame index
+
+
+        this.metadata.lastFrame = frame; // Update character usage
+
         const prevPlayer = this.metadata.players[playerIndex];
         const characterUsage = prevPlayer.characterUsage;
         const curCharFrames = characterUsage[internalCharacterId] || 0;
-        const player = {
-          ...prevPlayer,
-          characterUsage: {
-            ...characterUsage,
+        const player = { ...prevPlayer,
+          characterUsage: { ...characterUsage,
             [internalCharacterId]: curCharFrames + 1
           }
         };
@@ -133,78 +149,85 @@ class SlpFile extends Writable {
         break;
     }
   }
+
   _setupListeners() {
     const streamListener = data => {
       this._onCommand(data);
     };
+
     this.slpStream.on(SlpStreamEvent.COMMAND, streamListener);
     this.on("finish", () => {
       // Update file with bytes written
-      console.error("removed stuff here for cloudflare worker support");
-      // Unsubscribe from the stream
-      this.slpStream.removeListener(SlpStreamEvent.COMMAND, streamListener);
-      // Terminate the internal stream
+      console.error("removed stuff here for cloudflare worker support"); // Unsubscribe from the stream
+
+      this.slpStream.removeListener(SlpStreamEvent.COMMAND, streamListener); // Terminate the internal stream
+
       if (!this.usesExternalStream) {
         this.slpStream.end();
       }
     });
   }
+
   _initializeNewGame(filePath) {
     console.error("removed stuff here for cloudflare worker support");
   }
+
   _final(callback) {
-    let footer = Buffer.concat([Buffer.from("U"), Buffer.from([8]), Buffer.from("metadata{")]);
-    // Write game start time
+    let footer = Buffer.concat([Buffer.from("U"), Buffer.from([8]), Buffer.from("metadata{")]); // Write game start time
+
     const startTimeStr = this.metadata.startTime.toISOString();
-    footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([7]), Buffer.from("startAtSU"), Buffer.from([startTimeStr.length]), Buffer.from(startTimeStr)]);
-    // Write last frame index
+    footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([7]), Buffer.from("startAtSU"), Buffer.from([startTimeStr.length]), Buffer.from(startTimeStr)]); // Write last frame index
     // TODO: Get last frame
+
     const lastFrame = this.metadata.lastFrame;
-    footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([9]), Buffer.from("lastFramel"), createInt32Buffer(lastFrame)]);
-    // write the Console Nickname
+    footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([9]), Buffer.from("lastFramel"), createInt32Buffer(lastFrame)]); // write the Console Nickname
+
     const consoleNick = this.metadata.consoleNickname || DEFAULT_NICKNAME;
-    footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([11]), Buffer.from("consoleNickSU"), Buffer.from([consoleNick.length]), Buffer.from(consoleNick)]);
-    // Start writting player specific data
+    footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([11]), Buffer.from("consoleNickSU"), Buffer.from([consoleNick.length]), Buffer.from(consoleNick)]); // Start writting player specific data
+
     footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([7]), Buffer.from("players{")]);
     const players = this.metadata.players;
     forEach(players, (player, index) => {
       // Start player obj with index being the player index
-      footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([index.length]), Buffer.from(`${index}{`)]);
-      // Start characters key for this player
-      footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([10]), Buffer.from("characters{")]);
-      // Write character usage
+      footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([index.length]), Buffer.from(`${index}{`)]); // Start characters key for this player
+
+      footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([10]), Buffer.from("characters{")]); // Write character usage
+
       forEach(player.characterUsage, (usage, internalId) => {
         // Write this character
         footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([internalId.length]), Buffer.from(`${internalId}l`), createUInt32Buffer(usage)]);
-      });
-      // Close characters
-      footer = Buffer.concat([footer, Buffer.from("}")]);
-      // Start names key for this player
-      footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([5]), Buffer.from("names{")]);
-      // Write display name
-      footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([7]), Buffer.from("netplaySU"), Buffer.from([player.names.netplay.length]), Buffer.from(`${player.names.netplay}`)]);
-      // Write connect code
-      footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([4]), Buffer.from("codeSU"), Buffer.from([player.names.code.length]), Buffer.from(`${player.names.code}`)]);
-      // Close names and player
+      }); // Close characters
+
+      footer = Buffer.concat([footer, Buffer.from("}")]); // Start names key for this player
+
+      footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([5]), Buffer.from("names{")]); // Write display name
+
+      footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([7]), Buffer.from("netplaySU"), Buffer.from([player.names.netplay.length]), Buffer.from(`${player.names.netplay}`)]); // Write connect code
+
+      footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([4]), Buffer.from("codeSU"), Buffer.from([player.names.code.length]), Buffer.from(`${player.names.code}`)]); // Close names and player
+
       footer = Buffer.concat([footer, Buffer.from("}}")]);
-    });
-    // Close players
-    footer = Buffer.concat([footer, Buffer.from("}")]);
-    // Write played on
-    footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([8]), Buffer.from("playedOnSU"), Buffer.from([7]), Buffer.from("network")]);
-    // Close metadata and file
-    footer = Buffer.concat([footer, Buffer.from("}}")]);
-    // End the stream
+    }); // Close players
+
+    footer = Buffer.concat([footer, Buffer.from("}")]); // Write played on
+
+    footer = Buffer.concat([footer, Buffer.from("U"), Buffer.from([8]), Buffer.from("playedOnSU"), Buffer.from([7]), Buffer.from("network")]); // Close metadata and file
+
+    footer = Buffer.concat([footer, Buffer.from("}}")]); // End the stream
+
     if (this.fileStream) {
       this.fileStream.write(footer, callback);
     }
   }
+
 }
+
 const createInt32Buffer = number => {
   const buf = Buffer.alloc(4);
   buf.writeInt32BE(number, 0);
   return buf;
 };
+
 const createUInt32Buffer = number => {
   const buf = Buffer.alloc(4);
   buf.writeUInt32BE(number, 0);

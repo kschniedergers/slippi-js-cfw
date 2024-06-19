@@ -19,13 +19,13 @@ export declare enum Ports {
     LEGACY = 666,
     RELAY_START = 53741
 }
-export type ConnectionDetails = {
+export declare type ConnectionDetails = {
     consoleNick: string;
     gameDataCursor: number | Uint8Array;
     version: string;
     clientToken?: number;
 };
-export type ConnectionSettings = {
+export declare type ConnectionSettings = {
     ipAddress: string;
     port: number;
 };

@@ -7,11 +7,14 @@ const UnknownCharacter = {
   shortName: "Unknown",
   colors: [DEFAULT_COLOR]
 };
+
 function generateCharacterInfo(id, info) {
   var _info$shortName, _info$colors;
+
   if (!info) {
     return UnknownCharacter;
   }
+
   return {
     id,
     name: info.name,
@@ -19,6 +22,7 @@ function generateCharacterInfo(id, info) {
     colors: [DEFAULT_COLOR, ...((_info$colors = info.colors) != null ? _info$colors : [])]
   };
 }
+
 function getAllCharacters() {
   return Object.entries(characters).map(([id, data]) => generateCharacterInfo(parseInt(id, 10), data)).sort((a, b) => a.id - b.id);
 }
@@ -33,14 +37,16 @@ function getCharacterShortName(externalCharacterId) {
 function getCharacterName(externalCharacterId) {
   const character = getCharacterInfo(externalCharacterId);
   return character.name;
-}
-// Return a human-readable color from a characterCode.
+} // Return a human-readable color from a characterCode.
+
 function getCharacterColorName(externalCharacterId, characterColor) {
   const character = getCharacterInfo(externalCharacterId);
   const color = character.colors[characterColor];
+
   if (color) {
     return color;
   }
+
   return DEFAULT_COLOR;
 }
 

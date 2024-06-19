@@ -1,4 +1,4 @@
-export type Move = {
+export declare type Move = {
     id: number;
     name: string;
     shortName: string;

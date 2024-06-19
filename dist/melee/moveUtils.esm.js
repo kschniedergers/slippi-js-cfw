@@ -7,9 +7,11 @@ const UnknownMove = {
 };
 function getMoveInfo(moveId) {
   const moveName = moveNames[moveId.toString()];
+
   if (!moveName) {
     return UnknownMove;
   }
+
   return {
     id: moveId,
     name: moveName.name,

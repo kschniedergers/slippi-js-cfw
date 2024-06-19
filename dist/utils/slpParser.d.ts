@@ -13,7 +13,7 @@ export declare enum SlpParserEvent {
 declare const defaultSlpParserOptions: {
     strict: boolean;
 };
-export type SlpParserOptions = typeof defaultSlpParserOptions;
+export declare type SlpParserOptions = typeof defaultSlpParserOptions;
 export declare class SlpParser extends EventEmitter {
     private frames;
     private rollbackCounter;

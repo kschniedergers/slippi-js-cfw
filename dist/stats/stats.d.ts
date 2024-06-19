@@ -4,7 +4,7 @@ export interface StatComputer<T> {
     processFrame(newFrame: FrameEntryType, allFrames: FramesType): void;
     fetch(): T;
 }
-export type StatOptions = {
+export declare type StatOptions = {
     processOnTheFly: boolean;
 };
 export declare class Stats {

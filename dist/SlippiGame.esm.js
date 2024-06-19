@@ -16,6 +16,7 @@ import { SlpInputSource, openSlpFile, iterateEvents, getGameEnd, getMetadata, ex
 /**
  * Slippi Game class that wraps a file
  */
+
 class SlippiGame {
   constructor(input, opts) {
     this.input = void 0;
@@ -30,6 +31,7 @@ class SlippiGame {
     this.inputComputer = new InputComputer();
     this.targetBreakComputer = new TargetBreakComputer();
     this.statsComputer = void 0;
+
     if (typeof input === "string") {
       this.input = {
         source: SlpInputSource.FILE,
@@ -47,31 +49,35 @@ class SlippiGame {
       };
     } else {
       throw new Error("Cannot create SlippiGame with input of that type");
-    }
-    // Set up stats calculation
+    } // Set up stats calculation
+
+
     this.statsComputer = new Stats(opts);
     this.statsComputer.register(this.actionsComputer, this.comboComputer, this.conversionComputer, this.inputComputer, this.stockComputer, this.targetBreakComputer);
     this.parser = new SlpParser();
     this.parser.on(SlpParserEvent.SETTINGS, settings => {
       this.statsComputer.setup(settings);
-    });
-    // Use finalized frames for stats computation
+    }); // Use finalized frames for stats computation
+
     this.parser.on(SlpParserEvent.FINALIZED_FRAME, frame => {
       this.statsComputer.addFrame(frame);
     });
   }
+
   _process(shouldStop = () => false, file) {
     if (this.parser.getGameEnd() !== null) {
       return;
     }
-    const slpfile = file != null ? file : openSlpFile(this.input);
-    // Generate settings from iterating through file
+
+    const slpfile = file != null ? file : openSlpFile(this.input); // Generate settings from iterating through file
+
     this.readPosition = iterateEvents(slpfile, (command, payload) => {
       if (!payload) {
         // If payload is falsy, keep iterating. The parser probably just doesn't know
         // about this command yet
         return false;
       }
+
       this.parser.handleCommand(command, payload);
       return shouldStop(command, payload);
     }, this.readPosition);
@@ -80,19 +86,27 @@ class SlippiGame {
    * Gets the game settings, these are the settings that describe the starting state of
    * the game such as characters, stage, etc.
    */
+
+
   getSettings() {
     // Settings is only complete after post-frame update
     this._process(() => this.parser.getSettings() !== null);
+
     return this.parser.getSettings();
   }
+
   getItems() {
     this._process();
+
     return this.parser.getItems();
   }
+
   getLatestFrame() {
     this._process();
+
     return this.parser.getLatestFrame();
   }
+
   getGameEnd(options = {}) {
     if (options != null && options.skipProcessing) {
       // Read game end block directly
@@ -100,31 +114,44 @@ class SlippiGame {
       const gameEnd = getGameEnd(slpfile);
       return gameEnd;
     }
+
     this._process();
+
     return this.parser.getGameEnd();
   }
+
   getFrames() {
     this._process();
+
     return this.parser.getFrames();
   }
+
   getRollbackFrames() {
     this._process();
+
     return this.parser.getRollbackFrames();
   }
+
   getGeckoList() {
     this._process(() => this.parser.getGeckoList() !== null);
+
     return this.parser.getGeckoList();
   }
+
   getStats() {
     if (this.finalStats) {
       return this.finalStats;
     }
+
     this._process();
+
     const settings = this.parser.getSettings();
+
     if (!settings) {
       return null;
-    }
-    // Finish processing if we're not up to date
+    } // Finish processing if we're not up to date
+
+
     this.statsComputer.process();
     const inputs = this.inputComputer.fetch();
     const stocks = this.stockComputer.fetch();
@@ -148,6 +175,7 @@ class SlippiGame {
       overall: overall,
       gameComplete
     };
+
     if (gameComplete) {
       // If the game is complete, store a cached version of stats because it should not
       // change anymore. Ideally the statsCompuer.process and fetch functions would simply do no
@@ -155,71 +183,95 @@ class SlippiGame {
       // generateOverallStats, and maybe more are doing work on every call.
       this.finalStats = stats;
     }
+
     return stats;
   }
+
   getStadiumStats() {
     this._process();
+
     const settings = this.parser.getSettings();
+
     if (!settings) {
       return null;
     }
+
     const latestFrame = this.parser.getLatestFrame();
     const players = latestFrame == null ? void 0 : latestFrame.players;
+
     if (!players) {
       return null;
     }
+
     this.statsComputer.process();
+
     switch (settings.gameMode) {
       case GameMode.TARGET_TEST:
         return {
           type: "target-test",
           targetBreaks: this.targetBreakComputer.fetch()
         };
+
       case GameMode.HOME_RUN_CONTEST:
         const distanceInfo = extractDistanceInfoFromFrame(settings, latestFrame);
+
         if (!distanceInfo) {
           return null;
         }
+
         return {
           type: "home-run-contest",
           distance: distanceInfo.distance,
           units: distanceInfo.units
         };
+
       default:
         return null;
     }
   }
+
   getMetadata() {
     if (this.metadata) {
       return this.metadata;
     }
+
     const slpfile = openSlpFile(this.input);
     this.metadata = getMetadata(slpfile);
     return this.metadata;
   }
+
   getFilePath() {
     var _this$input$filePath;
+
     if (this.input.source !== SlpInputSource.FILE) {
       return null;
     }
+
     return (_this$input$filePath = this.input.filePath) != null ? _this$input$filePath : null;
   }
+
   getWinners() {
     // Read game end block directly
     const slpfile = openSlpFile(this.input);
     const gameEnd = getGameEnd(slpfile);
+
     this._process(() => this.parser.getSettings() !== null, slpfile);
+
     const settings = this.parser.getSettings();
+
     if (!gameEnd || !settings) {
       return [];
-    }
-    // If we went to time, let's fetch the post frame updates to compute the winner
+    } // If we went to time, let's fetch the post frame updates to compute the winner
+
+
     let finalPostFrameUpdates = [];
+
     if (gameEnd.gameEndMethod === GameEndMethod.TIME) {
       finalPostFrameUpdates = extractFinalPostFrameUpdates(slpfile);
     }
     return getWinners(gameEnd, settings, finalPostFrameUpdates);
   }
+
 }
 
 export { SlippiGame };

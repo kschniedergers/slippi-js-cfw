@@ -7,9 +7,11 @@ import { SlpStream, SlpStreamEvent } from './slpStream.esm.js';
 /**
  * The default function to use for generating new SLP files.
  */
+
 function getNewFilePath(folder, date) {
   return path.join(folder, `Game_${format(date, "yyyyMMdd")}T${format(date, "HHmmss")}.slp`);
 }
+
 const defaultSettings = {
   outputFiles: true,
   folderPath: ".",
@@ -17,6 +19,7 @@ const defaultSettings = {
   newFilename: getNewFilePath
 };
 var SlpFileWriterEvent;
+
 (function (SlpFileWriterEvent) {
   SlpFileWriterEvent["NEW_FILE"] = "new-file";
   SlpFileWriterEvent["FILE_COMPLETE"] = "file-complete";
@@ -31,6 +34,8 @@ var SlpFileWriterEvent;
  * @class SlpFileWriter
  * @extends {SlpStream}
  */
+
+
 class SlpFileWriter extends SlpStream {
   /**
    * Creates an instance of SlpFileWriter.
@@ -40,33 +45,44 @@ class SlpFileWriter extends SlpStream {
     this.currentFile = null;
     this.options = void 0;
     this.options = Object.assign({}, defaultSettings, options);
+
     this._setupListeners();
   }
+
   _writePayload(payload) {
     // Write data to the current file
     if (this.currentFile) {
       this.currentFile.write(payload);
     }
   }
+
   _setupListeners() {
     this.on(SlpStreamEvent.RAW, data => {
       const {
         command,
         payload
       } = data;
+
       switch (command) {
         case Command.MESSAGE_SIZES:
           // Create the new game first before writing the payload
           this._handleNewGame();
+
           this._writePayload(payload);
+
           break;
+
         case Command.GAME_END:
           // Write payload first before ending the game
           this._writePayload(payload);
+
           this._handleEndGame();
+
           break;
+
         default:
           this._writePayload(payload);
+
           break;
       }
     });
@@ -78,10 +94,13 @@ class SlpFileWriter extends SlpStream {
    * @returns {(string | null)}
    * @memberof SlpFileWriter
    */
+
+
   getCurrentFilename() {
     if (this.currentFile !== null) {
       return path.resolve(this.currentFile.path());
     }
+
     return null;
   }
   /**
@@ -90,6 +109,8 @@ class SlpFileWriter extends SlpStream {
    * @returns {(string | null)}
    * @memberof SlpFileWriter
    */
+
+
   endCurrentFile() {
     this._handleEndGame();
   }
@@ -99,18 +120,22 @@ class SlpFileWriter extends SlpStream {
    * @param {Partial<SlpFileWriterOptions>} settings
    * @memberof SlpFileWriter
    */
+
+
   updateSettings(settings) {
     this.options = Object.assign({}, this.options, settings);
   }
+
   _handleNewGame() {
     // Only create a new file if we're outputting files
     if (this.options.outputFiles) {
       const filePath = this.options.newFilename(this.options.folderPath, new Date());
-      this.currentFile = new SlpFile(filePath, this);
-      // console.log(`Creating new file at: ${filePath}`);
+      this.currentFile = new SlpFile(filePath, this); // console.log(`Creating new file at: ${filePath}`);
+
       this.emit(SlpFileWriterEvent.NEW_FILE, filePath);
     }
   }
+
   _handleEndGame() {
     // End the stream
     if (this.currentFile) {
@@ -118,13 +143,14 @@ class SlpFileWriter extends SlpStream {
       this.currentFile.setMetadata({
         consoleNickname: this.options.consoleNickname
       });
-      this.currentFile.end();
-      // console.log(`Finished writing file: ${this.currentFile.path()}`);
-      this.emit(SlpFileWriterEvent.FILE_COMPLETE, this.currentFile.path());
-      // Clear current file
+      this.currentFile.end(); // console.log(`Finished writing file: ${this.currentFile.path()}`);
+
+      this.emit(SlpFileWriterEvent.FILE_COMPLETE, this.currentFile.path()); // Clear current file
+
       this.currentFile = null;
     }
   }
+
 }
 
 export { SlpFileWriter, SlpFileWriterEvent };

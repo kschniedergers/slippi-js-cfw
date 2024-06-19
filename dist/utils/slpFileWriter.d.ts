@@ -2,7 +2,7 @@
 import type { WritableOptions } from "stream";
 import type { SlpStreamSettings } from "./slpStream";
 import { SlpStream } from "./slpStream";
-export type SlpFileWriterOptions = Partial<SlpStreamSettings> & {
+export declare type SlpFileWriterOptions = Partial<SlpStreamSettings> & {
     outputFiles: boolean;
     folderPath: string;
     consoleNickname: string;

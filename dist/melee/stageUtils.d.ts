@@ -1,4 +1,4 @@
-export type StageInfo = {
+export declare type StageInfo = {
     id: number;
     name: string;
 };

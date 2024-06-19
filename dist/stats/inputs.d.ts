@@ -1,6 +1,6 @@
 import type { FrameEntryType, FramesType, GameStartType } from "../types";
 import type { StatComputer } from "./stats";
-export type PlayerInput = {
+export declare type PlayerInput = {
     playerIndex: number;
     opponentIndex: number;
     inputCount: number;

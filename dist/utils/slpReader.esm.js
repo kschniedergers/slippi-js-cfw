@@ -6,10 +6,12 @@ import { exists } from './exists.esm.js';
 import { toHalfwidth } from './fullwidth.esm.js';
 
 var SlpInputSource;
+
 (function (SlpInputSource) {
   SlpInputSource["BUFFER"] = "buffer";
   SlpInputSource["FILE"] = "file";
 })(SlpInputSource || (SlpInputSource = {}));
+
 function getRef(input) {
   switch (input.source) {
     case SlpInputSource.BUFFER:
@@ -17,31 +19,39 @@ function getRef(input) {
         source: input.source,
         buffer: input.buffer
       };
+
     default:
       throw new Error("Source type not supported");
   }
 }
+
 function readRef(ref, buffer, offset, length, position) {
   switch (ref.source) {
     case SlpInputSource.FILE:
       console.error("deleted this for cloudflare worker support :)");
       throw new Error("cfw support");
+
     case SlpInputSource.BUFFER:
       if (position >= ref.buffer.length) {
         return 0;
       }
+
       return ref.buffer.copy(buffer, offset, position, position + length);
+
     default:
       throw new Error("Source type not supported");
   }
 }
+
 function getLenRef(ref) {
   switch (ref.source) {
     case SlpInputSource.FILE:
       console.error("deleted this for cloudflare worker support :)");
       throw new Error("cfw support");
+
     case SlpInputSource.BUFFER:
       return ref.buffer.length;
+
     default:
       throw new Error("Source type not supported");
   }
@@ -49,11 +59,14 @@ function getLenRef(ref) {
 /**
  * Opens a file at path
  */
+
+
 function openSlpFile(input) {
   const ref = getRef(input);
   const rawDataPosition = getRawDataPosition(ref);
   const rawDataLength = getRawDataLength(ref, rawDataPosition);
   const metadataPosition = rawDataPosition + rawDataLength + 10; // remove metadata string
+
   const metadataLength = getMetadataLength(ref, metadataPosition);
   const messageSizes = getMessageSizes(ref, rawDataPosition);
   return {
@@ -66,43 +79,53 @@ function openSlpFile(input) {
   };
 }
 function closeSlpFile(file) {
-}
-// This function gets the position where the raw data starts
+} // This function gets the position where the raw data starts
+
 function getRawDataPosition(ref) {
   const buffer = new Uint8Array(1);
   readRef(ref, buffer, 0, buffer.length, 0);
+
   if (buffer[0] === 0x36) {
     return 0;
   }
+
   if (buffer[0] !== "{".charCodeAt(0)) {
     return 0; // return error?
   }
+
   return 15;
 }
+
 function getRawDataLength(ref, position) {
   const fileSize = getLenRef(ref);
+
   if (position === 0) {
     return fileSize;
   }
+
   const buffer = new Uint8Array(4);
   readRef(ref, buffer, 0, buffer.length, position - 4);
   const rawDataLen = buffer[0] << 24 | buffer[1] << 16 | buffer[2] << 8 | buffer[3];
+
   if (rawDataLen > 0) {
     // If this method manages to read a number, it's probably trustworthy
     return rawDataLen;
-  }
-  // If the above does not return a valid data length,
+  } // If the above does not return a valid data length,
   // return a file size based on file length. This enables
   // some support for severed files
+
+
   return fileSize - position;
 }
+
 function getMetadataLength(ref, position) {
   const len = getLenRef(ref);
   return len - position - 1;
 }
+
 function getMessageSizes(ref, position) {
-  const messageSizes = {};
-  // Support old file format
+  const messageSizes = {}; // Support old file format
+
   if (position === 0) {
     messageSizes[0x36] = 0x140;
     messageSizes[0x37] = 0x6;
@@ -110,22 +133,28 @@ function getMessageSizes(ref, position) {
     messageSizes[0x39] = 0x1;
     return messageSizes;
   }
+
   const buffer = new Uint8Array(2);
   readRef(ref, buffer, 0, buffer.length, position);
+
   if (buffer[0] !== Command.MESSAGE_SIZES) {
     return {};
   }
+
   const payloadLength = buffer[1];
   messageSizes[0x35] = payloadLength;
   const messageSizesBuffer = new Uint8Array(payloadLength - 1);
   readRef(ref, messageSizesBuffer, 0, messageSizesBuffer.length, position + 2);
+
   for (let i = 0; i < payloadLength - 1; i += 3) {
-    const command = messageSizesBuffer[i];
-    // Get size of command
+    const command = messageSizesBuffer[i]; // Get size of command
+
     messageSizes[command] = messageSizesBuffer[i + 1] << 8 | messageSizesBuffer[i + 2];
   }
+
   return messageSizes;
 }
+
 function getEnabledItems(view) {
   const offsets = [0x1, 0x100, 0x10000, 0x1000000, 0x100000000];
   const enabledItems = offsets.reduce((acc, byteOffset, index) => {
@@ -134,6 +163,7 @@ function getEnabledItems(view) {
   }, 0);
   return enabledItems;
 }
+
 function getGameInfoBlock(view) {
   const offset = 0x5;
   return {
@@ -154,67 +184,84 @@ function getGameInfoBlock(view) {
 /**
  * Iterates through slp events and parses payloads
  */
+
+
 function iterateEvents(slpFile, callback, startPos = null) {
   const ref = slpFile.ref;
   let readPosition = startPos !== null && startPos > 0 ? startPos : slpFile.rawDataPosition;
-  const stopReadingAt = slpFile.rawDataPosition + slpFile.rawDataLength;
-  // Generate read buffers for each
+  const stopReadingAt = slpFile.rawDataPosition + slpFile.rawDataLength; // Generate read buffers for each
+
   const commandPayloadBuffers = mapValues(slpFile.messageSizes, size => new Uint8Array(size + 1));
   let splitMessageBuffer = new Uint8Array(0);
   const commandByteBuffer = new Uint8Array(1);
+
   while (readPosition < stopReadingAt) {
     var _commandByteBuffer$;
+
     readRef(ref, commandByteBuffer, 0, 1, readPosition);
     let commandByte = (_commandByteBuffer$ = commandByteBuffer[0]) != null ? _commandByteBuffer$ : 0;
     let buffer = commandPayloadBuffers[commandByte];
+
     if (buffer === undefined) {
       // If we don't have an entry for this command, return false to indicate failed read
       return readPosition;
     }
+
     if (buffer.length > stopReadingAt - readPosition) {
       return readPosition;
     }
+
     const advanceAmount = buffer.length;
     readRef(ref, buffer, 0, buffer.length, readPosition);
+
     if (commandByte === Command.SPLIT_MESSAGE) {
       var _readUint, _readUint2;
+
       // Here we have a split message, we will collect data from them until the last
       // message of the list is received
       const view = new DataView(buffer.buffer);
       const size = (_readUint = readUint16(view, 0x201)) != null ? _readUint : 512;
       const isLastMessage = readBool(view, 0x204);
-      const internalCommand = (_readUint2 = readUint8(view, 0x203)) != null ? _readUint2 : 0;
-      // If this is the first message, initialize the splitMessageBuffer
+      const internalCommand = (_readUint2 = readUint8(view, 0x203)) != null ? _readUint2 : 0; // If this is the first message, initialize the splitMessageBuffer
       // with the internal command byte because our parseMessage function
       // seems to expect a command byte at the start
+
       if (splitMessageBuffer.length === 0) {
         splitMessageBuffer = new Uint8Array(1);
         splitMessageBuffer[0] = internalCommand;
-      }
-      // Collect new data into splitMessageBuffer
+      } // Collect new data into splitMessageBuffer
+
+
       const appendBuf = buffer.slice(0x1, 0x1 + size);
       const mergedBuf = new Uint8Array(splitMessageBuffer.length + appendBuf.length);
       mergedBuf.set(splitMessageBuffer);
       mergedBuf.set(appendBuf, splitMessageBuffer.length);
       splitMessageBuffer = mergedBuf;
+
       if (isLastMessage) {
         var _splitMessageBuffer$;
+
         commandByte = (_splitMessageBuffer$ = splitMessageBuffer[0]) != null ? _splitMessageBuffer$ : 0;
         buffer = splitMessageBuffer;
         splitMessageBuffer = new Uint8Array(0);
       }
     }
+
     const parsedPayload = parseMessage(commandByte, buffer);
     const shouldStop = callback(commandByte, parsedPayload, buffer);
+
     if (shouldStop) {
       break;
     }
+
     readPosition += advanceAmount;
   }
+
   return readPosition;
 }
 function parseMessage(command, payload) {
   const view = new DataView(payload.buffer);
+
   switch (command) {
     case Command.GAME_START:
       const getPlayerObject = playerIndex => {
@@ -223,28 +270,30 @@ function parseMessage(command, payload) {
         const dashback = readUint32(view, 0x141 + cfOffset);
         const shieldDrop = readUint32(view, 0x145 + cfOffset);
         let controllerFix = "None";
+
         if (dashback !== shieldDrop) {
           controllerFix = "Mixed";
         } else if (dashback === 1) {
           controllerFix = "UCF";
         } else if (dashback === 2) {
           controllerFix = "Dween";
-        }
-        // Nametag stuff
+        } // Nametag stuff
+
+
         const nametagLength = 0x10;
         const nametagOffset = playerIndex * nametagLength;
         const nametagStart = 0x161 + nametagOffset;
         const nametagBuf = payload.slice(nametagStart, nametagStart + nametagLength);
         const nameTagString = iconv.decode(nametagBuf, "Shift_JIS").split("\0").shift();
-        const nametag = nameTagString ? toHalfwidth(nameTagString) : "";
-        // Display name
+        const nametag = nameTagString ? toHalfwidth(nameTagString) : ""; // Display name
+
         const displayNameLength = 0x1f;
         const displayNameOffset = playerIndex * displayNameLength;
         const displayNameStart = 0x1a5 + displayNameOffset;
         const displayNameBuf = payload.slice(displayNameStart, displayNameStart + displayNameLength);
         const displayNameString = iconv.decode(displayNameBuf, "Shift_JIS").split("\0").shift();
-        const displayName = displayNameString ? toHalfwidth(displayNameString) : "";
-        // Connect code
+        const displayName = displayNameString ? toHalfwidth(displayNameString) : ""; // Connect code
+
         const connectCodeLength = 0xa;
         const connectCodeOffset = playerIndex * connectCodeLength;
         const connectCodeStart = 0x221 + connectCodeOffset;
@@ -288,6 +337,7 @@ function parseMessage(command, payload) {
         };
         return playerInfo;
       };
+
       const matchIdLength = 51;
       const matchIdStart = 0x2be;
       const matchIdBuf = payload.slice(matchIdStart, matchIdStart + matchIdLength);
@@ -318,12 +368,14 @@ function parseMessage(command, payload) {
         }
       };
       return gameSettings;
+
     case Command.FRAME_START:
       return {
         frame: readInt32(view, 0x1),
         seed: readUint32(view, 0x5),
         sceneFrameCounter: readUint32(view, 0x9)
       };
+
     case Command.PRE_FRAME_UPDATE:
       return {
         frame: readInt32(view, 0x1),
@@ -346,6 +398,7 @@ function parseMessage(command, payload) {
         rawJoystickX: readInt8(view, 0x3b),
         percent: readFloat(view, 0x3c)
       };
+
     case Command.POST_FRAME_UPDATE:
       const selfInducedSpeeds = {
         airX: readFloat(view, 0x35),
@@ -382,6 +435,7 @@ function parseMessage(command, payload) {
         instanceHitBy: readUint16(view, 0x51),
         instanceId: readUint16(view, 0x53)
       };
+
     case Command.ITEM_UPDATE:
       return {
         frame: readInt32(view, 0x1),
@@ -402,11 +456,13 @@ function parseMessage(command, payload) {
         owner: readInt8(view, 0x2a),
         instanceId: readUint16(view, 0x2b)
       };
+
     case Command.FRAME_BOOKEND:
       return {
         frame: readInt32(view, 0x1),
         latestFinalizedFrame: readInt32(view, 0x5)
       };
+
     case Command.GAME_END:
       const placements = [0, 1, 2, 3].map(playerIndex => {
         const position = readInt8(view, 0x3 + playerIndex);
@@ -420,26 +476,33 @@ function parseMessage(command, payload) {
         lrasInitiatorIndex: readInt8(view, 0x2),
         placements
       };
+
     case Command.GECKO_LIST:
       const codes = [];
       let pos = 1;
+
       while (pos < payload.length) {
         var _readUint3;
+
         const word1 = (_readUint3 = readUint32(view, pos)) != null ? _readUint3 : 0;
         const codetype = word1 >> 24 & 0xfe;
         const address = (word1 & 0x01ffffff) + 0x80000000;
         let offset = 8; // Default code length, most codes are this length
+
         if (codetype === 0xc0 || codetype === 0xc2) {
           var _readUint4;
+
           const lineCount = (_readUint4 = readUint32(view, pos + 4)) != null ? _readUint4 : 0;
           offset = 8 + lineCount * 8;
         } else if (codetype === 0x06) {
           var _readUint5;
+
           const byteLen = (_readUint5 = readUint32(view, pos + 4)) != null ? _readUint5 : 0;
           offset = 8 + (byteLen + 7 & 0xfffffff8);
         } else if (codetype === 0x08) {
           offset = 16;
         }
+
         codes.push({
           type: codetype,
           address: address,
@@ -447,76 +510,96 @@ function parseMessage(command, payload) {
         });
         pos += offset;
       }
+
       return {
         contents: payload.slice(1),
         codes: codes
       };
+
     default:
       return null;
   }
 }
+
 function canReadFromView(view, offset, length) {
   const viewLength = view.byteLength;
   return offset + length <= viewLength;
 }
+
 function readFloat(view, offset) {
   if (!canReadFromView(view, offset, 4)) {
     return null;
   }
+
   return view.getFloat32(offset);
 }
+
 function readInt32(view, offset) {
   if (!canReadFromView(view, offset, 4)) {
     return null;
   }
+
   return view.getInt32(offset);
 }
+
 function readInt8(view, offset) {
   if (!canReadFromView(view, offset, 1)) {
     return null;
   }
+
   return view.getInt8(offset);
 }
+
 function readUint32(view, offset) {
   if (!canReadFromView(view, offset, 4)) {
     return null;
   }
+
   return view.getUint32(offset);
 }
+
 function readUint16(view, offset) {
   if (!canReadFromView(view, offset, 2)) {
     return null;
   }
+
   return view.getUint16(offset);
 }
+
 function readUint8(view, offset, bitmask = 0xff) {
   if (!canReadFromView(view, offset, 1)) {
     return null;
   }
+
   return view.getUint8(offset) & bitmask;
 }
+
 function readBool(view, offset) {
   if (!canReadFromView(view, offset, 1)) {
     return null;
   }
+
   return !!view.getUint8(offset);
 }
+
 function getMetadata(slpFile) {
   if (slpFile.metadataLength <= 0) {
     // This will happen on a severed incomplete file
     // $FlowFixMe
     return null;
   }
+
   const buffer = new Uint8Array(slpFile.metadataLength);
   readRef(slpFile.ref, buffer, 0, buffer.length, slpFile.metadataPosition);
   let metadata = null;
+
   try {
     metadata = decode(buffer);
-  } catch (ex) {
-    // Do nothing
+  } catch (ex) {// Do nothing
     // console.log(ex);
-  }
-  // $FlowFixMe
+  } // $FlowFixMe
+
+
   return metadata;
 }
 function getGameEnd(slpFile) {
@@ -527,22 +610,28 @@ function getGameEnd(slpFile) {
     messageSizes
   } = slpFile;
   const gameEndPayloadSize = messageSizes[Command.GAME_END];
+
   if (!exists(gameEndPayloadSize) || gameEndPayloadSize <= 0) {
     return null;
-  }
-  // Add one to account for command byte
+  } // Add one to account for command byte
+
+
   const gameEndSize = gameEndPayloadSize + 1;
   const gameEndPosition = rawDataPosition + rawDataLength - gameEndSize;
   const buffer = new Uint8Array(gameEndSize);
   readRef(ref, buffer, 0, buffer.length, gameEndPosition);
+
   if (buffer[0] !== Command.GAME_END) {
     // This isn't even a game end payload
     return null;
   }
+
   const gameEndMessage = parseMessage(Command.GAME_END, buffer);
+
   if (!gameEndMessage) {
     return null;
   }
+
   return gameEndMessage;
 }
 function extractFinalPostFrameUpdates(slpFile) {
@@ -551,40 +640,48 @@ function extractFinalPostFrameUpdates(slpFile) {
     rawDataPosition,
     rawDataLength,
     messageSizes
-  } = slpFile;
-  // The following should exist on all replay versions
+  } = slpFile; // The following should exist on all replay versions
+
   const postFramePayloadSize = messageSizes[Command.POST_FRAME_UPDATE];
   const gameEndPayloadSize = messageSizes[Command.GAME_END];
-  const frameBookendPayloadSize = messageSizes[Command.FRAME_BOOKEND];
-  // Technically this should not be possible
+  const frameBookendPayloadSize = messageSizes[Command.FRAME_BOOKEND]; // Technically this should not be possible
+
   if (!exists(postFramePayloadSize)) {
     return [];
   }
+
   const gameEndSize = gameEndPayloadSize ? gameEndPayloadSize + 1 : 0;
   const postFrameSize = postFramePayloadSize + 1;
   const frameBookendSize = frameBookendPayloadSize ? frameBookendPayloadSize + 1 : 0;
   let frameNum = null;
   let postFramePosition = rawDataPosition + rawDataLength - gameEndSize - frameBookendSize - postFrameSize;
   const postFrameUpdates = [];
+
   do {
     const buffer = new Uint8Array(postFrameSize);
     readRef(ref, buffer, 0, buffer.length, postFramePosition);
+
     if (buffer[0] !== Command.POST_FRAME_UPDATE) {
       break;
     }
+
     const postFrameMessage = parseMessage(Command.POST_FRAME_UPDATE, buffer);
+
     if (!postFrameMessage) {
       break;
     }
+
     if (frameNum === null) {
       frameNum = postFrameMessage.frame;
     } else if (frameNum !== postFrameMessage.frame) {
       // If post frame message is found but the frame doesn't match, it's not part of the final frame
       break;
     }
+
     postFrameUpdates.unshift(postFrameMessage);
     postFramePosition -= postFrameSize;
   } while (postFramePosition >= rawDataPosition);
+
   return postFrameUpdates;
 }
 

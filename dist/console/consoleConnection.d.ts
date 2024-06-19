@@ -6,7 +6,7 @@ export declare const NETWORK_MESSAGE = "HELO\0";
 declare const consoleConnectionOptions: {
     autoReconnect: boolean;
 };
-export type ConsoleConnectionOptions = typeof consoleConnectionOptions;
+export declare type ConsoleConnectionOptions = typeof consoleConnectionOptions;
 /**
  * Responsible for maintaining connection to a Slippi relay connection or Wii connection.
  * Events are emitted whenever data is received.
