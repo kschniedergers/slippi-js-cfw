@@ -11,7 +11,8 @@
     "url": "https://github.com/JLaferri"
   },
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
   "type": "module",
   "source": "./src/index.ts",
