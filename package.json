@@ -20,9 +20,7 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "require": "./dist/index.js",
-      "import": "./dist/index.esm.js",
-      "default": "./dist/index.js"
+      "import": "./src/index.ts"
     },
     "./package.json": "./package.json"
   },
