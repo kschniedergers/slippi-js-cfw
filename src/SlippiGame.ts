@@ -36,6 +36,7 @@ import {
   openSlpFile,
   SlpInputSource,
 } from "./utils/slpReader";
+import { Buffer } from "node:buffer";
 
 /**
  * Slippi Game class that wraps a file
