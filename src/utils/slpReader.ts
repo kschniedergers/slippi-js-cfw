@@ -1,5 +1,6 @@
 import { decode } from "@shelacek/ubjson";
 import { TextDecoder } from "node:util";
+import { Buffer } from "node:buffer";
 import mapValues from "lodash/mapValues";
 
 import type {
