@@ -3,6 +3,9 @@ import { EventEmitter } from "events";
 import type { Connection, ConnectionDetails, ConnectionSettings } from "./types";
 import { ConnectionEvent, ConnectionStatus, Ports } from "./types";
 
+import { Buffer } from "node:buffer";
+
+
 const MAX_PEERS = 32;
 
 export enum DolphinMessageType {

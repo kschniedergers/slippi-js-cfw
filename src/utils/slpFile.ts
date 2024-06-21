@@ -8,6 +8,9 @@ import { Command } from "../types";
 import type { SlpCommandEventPayload } from "./slpStream";
 import { SlpStream, SlpStreamEvent, SlpStreamMode } from "./slpStream";
 
+import { Buffer } from "node:buffer";
+
+
 const DEFAULT_NICKNAME = "unknown";
 
 export type SlpFileMetadata = {

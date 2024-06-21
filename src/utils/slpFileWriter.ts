@@ -7,6 +7,9 @@ import { SlpFile } from "./slpFile";
 import type { SlpRawEventPayload, SlpStreamSettings } from "./slpStream";
 import { SlpStream, SlpStreamEvent } from "./slpStream";
 
+import { Buffer } from "node:buffer";
+
+
 /**
  * The default function to use for generating new SLP files.
  */

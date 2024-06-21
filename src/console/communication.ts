@@ -1,5 +1,8 @@
 import { decode, encode } from "@shelacek/ubjson";
 
+import { Buffer } from "node:buffer";
+
+
 export enum CommunicationType {
   HANDSHAKE = 1,
   REPLAY = 2,

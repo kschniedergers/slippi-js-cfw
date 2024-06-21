@@ -6,6 +6,9 @@ import { CommunicationType, ConsoleCommunication } from "./communication";
 import type { Connection, ConnectionDetails, ConnectionSettings } from "./types";
 import { ConnectionEvent, ConnectionStatus, Ports } from "./types";
 
+import { Buffer } from "node:buffer";
+
+
 export const NETWORK_MESSAGE = "HELO\0";
 
 const DEFAULT_CONNECTION_TIMEOUT_MS = 20000;
