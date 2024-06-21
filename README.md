@@ -1,4 +1,17 @@
-# `slippi-js`
+# slippi-js but made compatibale with cloudflare workers
+
+This is a fork of the official slippi-js library that I modifed to make usable with cloudflare workers for my project slpvault. Main changes:
+
+- removed fs module
+  - basically disabled ability to read files from disk, only works with buffers now
+- removed net module
+  - disables ability to connect to consoles
+- added type: module to package.json
+  - idk was having problems without it
+- replace iconv-lite with iconv
+  - iconv-lite dynamically imported node:buffer which i guess was a no-no
+
+## `slippi-js`
 
 [![npm version](http://img.shields.io/npm/v/@slippi/slippi-js.svg?style=flat)](https://npmjs.org/package/@slippi/slippi-js "View this project on npm")
 [![Build Status](https://github.com/project-slippi/slippi-js/workflows/build/badge.svg)](https://github.com/project-slippi/slippi-js/actions?workflow=build)
